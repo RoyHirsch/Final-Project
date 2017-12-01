@@ -1,7 +1,7 @@
 function segMetrix = createSegmentetionMatrix(pdfM,isPrint,zSlice)
 
 [H,W,D,C] = size(pdfM);
-segMetrixdfM = zeros(H,W,D);
+segMetrix = zeros(H,W,D);
 
 for i=1:H
     for j=1:W
