@@ -5,7 +5,7 @@ function pdfM = createPDFMatrix(gm,img, isPrint)
 %
 % Input:
 % gm - a GMM object
-% img - normalized input image, without zerops
+% img - normalized input image, without zeros
 % isPront - boolean value for printing the maps.
 %
 % Output:
