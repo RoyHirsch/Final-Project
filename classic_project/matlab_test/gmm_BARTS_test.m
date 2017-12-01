@@ -45,9 +45,17 @@ pdfM = createPDFMatrix(gm, im_n, 1);
 
 
 %% 3. Train gmm with bakround voxal and regularization
-gm = fitgmdist(im_n(:),5,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
-pdfM = createPDFMatrix(gm, im_n, 1);
-%%
+
+Mu=[0.12,0.3,0.43];
+Sigma(:,:,1)=0.01;
+Sigma(:,:,2)=0.04;
+Sigma(:,:,3)=0.02;
+PComponents = [0.1,0.5,0.4];
+%S = struct('mu',Mu,'Sigma',Sigma,'ComponentProportion',PComponents);
+
+gm = fitgmdist(im_n(:),4,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
+pdfM = createPDFMatrix(gm, im_n, 0);
+createSegmentetionMatrix(pdfM,1,80);
 
 %% 4. generating few GMM models for each modality
 % Generate four different vectors for each modality to train GMM model:

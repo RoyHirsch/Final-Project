@@ -1,5 +1,5 @@
 function pdfM = createPDFMatrix(gm,img, isPrint)
-% This function returns a 4D matrixes that conatins a set of n pdf
+% This function returns a 4D matrix that conatins a set of n pdf
 % matrixes. Each matrix is a propability matrix:
 % p(gi/img) = (p(img/gi) * (gi)) / sum for i(p(img/gi) * (gi)) 
 %
