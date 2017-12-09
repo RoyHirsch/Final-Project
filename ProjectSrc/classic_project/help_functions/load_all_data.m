@@ -3,7 +3,7 @@ str = which('dataBN.mat','-all');
 data = struct();
 for i=1:length(str)
     load(char(str(i)));
-    data(i).f = double(im);
+    data(i).f = double(g);
 end
 end
 

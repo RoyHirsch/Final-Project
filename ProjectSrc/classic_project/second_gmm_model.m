@@ -9,7 +9,7 @@ load('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data/BRATS_HG00
 im = double(im);
 
 % parameters:
-mod = 3;
+mod = 2;
 sliceZ = 80;
 backThs = exp(-4);
 %
@@ -20,6 +20,35 @@ maxMatrix = max(img(:));
 im_n = img / maxMatrix;
 im_n(im_n<backThs) = 0;
 im_n_vec = im_n(im_n~=0);
+
+%%
+[H, W, D] = size(im_n);
+im_a = zeros(size(im_n));
+for i=1:D
+    im_2d = im_n(:,:,i);
+    [C, S] = wavedec2(im_2d,1,'haar');
+    A = appcoef2(C,S,'haar',1);
+    im_a(:,:,i) = imresize(A,2,'bilinear')-im_n(:,:,i);
+end
+figure;imshow3D(im_a);
+
+figure;imshow3D(im_n);
+
+%%
+gmT2 = fitgmdist(im_a(:),5,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
+pdfMT2 = createPDFMatrix(gmT2, im_n(:,:,:,2), 0,1);
+segMatrixT2 = createSegmentetionMatrix(pdfMT2,1,80);
+
+
+
+
+
+
+
+
+
+
+
 
 %%
 im_g = imgaussfilt3(im_n);
