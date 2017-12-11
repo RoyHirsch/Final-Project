@@ -1,27 +1,4 @@
-%% Diffrent gmm
-
-clear all;
-%% load data
-% load the image matrix named Im
-load('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data/BRATS_HG0001/dataBN.mat')
-% load the label matrix, named gt4
-% load('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data/BRATS_HG0001/gt4.mat')
-im = double(im);
-
-% parameters:
-mod = 2;
-sliceZ = 80;
-backThs = exp(-4);
-%
-
-% select and pre-prepare a modality for gmm:
-img = im(:,:,:,mod);
-maxMatrix = max(img(:));
-im_n = img / maxMatrix;
-im_n(im_n<backThs) = 0;
-im_n_vec = im_n(im_n~=0);
-
-%%
+%% tryout for gmm models
 [H, W, D] = size(im_n);
 im_a = zeros(size(im_n));
 for i=1:D
@@ -33,22 +10,15 @@ end
 figure;imshow3D(im_a);
 
 figure;imshow3D(im_n);
-
+%%
+mu = [1 -1]; 
+SIGMA = [.9 .4; .4 .3]; 
+X = mvnrnd(mu,SIGMA,10); 
+p = mvnpdf(X,mu,SIGMA); 
 %%
 gmT2 = fitgmdist(im_a(:),5,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
 pdfMT2 = createPDFMatrix(gmT2, im_n(:,:,:,2), 0,1);
 segMatrixT2 = createSegmentetionMatrix(pdfMT2,1,80);
-
-
-
-
-
-
-
-
-
-
-
 
 %%
 im_g = imgaussfilt3(im_n);

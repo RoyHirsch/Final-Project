@@ -34,6 +34,7 @@ pdfM = createPDFMatrix(gm, im_a, 0,1);
 segMatrix = createSegmentetionMatrix(pdfM,1,80);
 figure; imshow(segMatrix(:,:,60)/5);
 %figure; imshow(im_n(:,:,105));
+
 %% 4. generating few GMM models for each modality
 % Generate four different vectors for each modality to train GMM model:
 im_n = zeros(size(im));
@@ -58,6 +59,8 @@ im_T1_vec = im_n(:,:,:,1);
 im_T2_vec = im_n(:,:,:,2);
 im_T1t_vec = im_n(:,:,:,3);
 im_FL_vec = im_n(:,:,:,4);
+
+%% multimudat gmm
 
 %% gmm train
 % gmm of T1
@@ -93,13 +96,14 @@ segMatrixT1g = createSegmentetionMatrix(pdfMT1t,1,80);
 % Create the prediction mask of T2 and FL
 predictT2 = zeros(size(segMatrixT2));
 predictFL = zeros(size(segMatrixT2));
-predictT1g = zeros(size(segMatrixT2));
+% predictT1g = zeros(size(segMatrixT2));
 
 predictT2(segMatrixT2 == 4 | segMatrixT2 == 5) = 1;
 predictFL(segMatrixFL == 4) = 1;
-predictT1g(segMatrixT1g == 3) = 1;
+% predictT1g(segMatrixT1g == 3) = 1;
 
-predict = and(and(predictT2,predictFL),predictT1g);
+% predict = and(and(predictT2,predictFL),predictT1g);
+predict = and(predictT2,predictFL);
 
 % close holes
 [X, Y, Z] = size(predict);
@@ -126,3 +130,5 @@ figure; imshow(double(gt4(:,:,100))/4);
 testim = predict(:,:,60);
 fill = imfill(testim,'holes');
 figure; imshow(testim);figure; imshow(fill);
+%%
+figure;imshow3D(predict);figure;imshow3D(double(gt4)/4);

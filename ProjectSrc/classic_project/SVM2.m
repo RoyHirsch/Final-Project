@@ -8,41 +8,41 @@
 %   x - the training data
 %   beta - the hyperplane normal (hyperplane parameters)
 %   b - bias
-% 
-% See more info:
-% https://www.mathworks.com/help/stats/support-vector-machines-for-binary-classification.html#bs3tbev-16
-% https://www.mathworks.com/help/stats/fitcsvm.html#bt8v_23-1
-
-% ideas:
-% soft edges for nonseparable data
-% adding OutlierFraction
+%
 
 clear all;
 
-% 1. Load the data
+% 1. Load the data - 4 images
+%  X = training data of numExp
+
+numExp = 4;
+
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
-% load the image matrix named Im
-load('/Data/BRATS_HG0001/dataBN.mat','im')
-% load the label matrix, named gt4
-load('/Data/BRATS_HG0001/gt4.mat')
+data = load_all_data()
+label = load_all_labels()
 
-% 2. Pre-process and re-shape the data
-X = double(im);
-[H, W, D, C] = size(im);
-X = reshape(X,[H*W*D,C]);
+X = zeros(1,4);
+for i=1:numExp
+    temp = reshape(data(i).f,[],4);
+    X = vertcat(X,temp);
+end
 
-Y = double(gt4);
-Y = reshape(Y,[H*W*D,1]);
+Y = zeros(1,1);
+for i=1:numExp
+    temp = reshape(label(i).f,[],1);
+    Y = vertcat(Y,temp);
+end
+
 Y(Y~=0) = 1;
 
 %% 3. Reduce for train and validation data:
 
 % parameters:
-params.train = 10000;
+params.train = 100000;
 params.val = 1000;
 
-ind = randi([1 5000000],1,params.train);
-indVal = randi([1000000 6000000],1,params.val);
+ind = randi([100000 20000000],1,params.train);
+indVal = randi([100000 20000000],1,params.val);
 Xtrain = X(ind,:);
 Ytrain = Y(ind);
 Xval = X(indVal,:);
@@ -51,16 +51,23 @@ Yval = Y(indVal);
 %% 3. Train simple SVM model
 SVMModel = fitcsvm(Xtrain,Ytrain,'RemoveDuplicates','on');
 
+% 
+% 
+% 
 %% 4. Validation Accuracy:
 [Ypredict,score] = predict(SVMModel,Xval);
 accuracy = sum(Ypredict==Yval)/length(Yval);
 
-%% 5. Predict for the whole data:
-[label,score] = predict(SVMModel,X);
+%% 5. Predict for the new test data
+% Load new data:
+Xtest = reshape(data(5).f,[],4);
+Ytest = reshape(label(5).f,[],1);
+%
+[label,score] = predict(SVMModel,Xtest);
 Ypredict =  reshape(label,[H,W,D]);
 
 %% 6. dice score
-dice = dice(Ypredict,double(gt4));
+dice = dice(Ypredict,Ytest);
 
 %% 7. Interactive test:
 figure;imshow3D(double(gt4)/4);
