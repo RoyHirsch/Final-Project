@@ -38,11 +38,8 @@ Y(Y~=0) = 1;
 %% 3. Reduce for train and validation data:
 
 % parameters:
-<<<<<<< HEAD
 params.train = 10000;
-=======
 params.train = 50000;
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 params.val = 1000;
 
 ind = randi([1 5000000],1,params.train);
@@ -63,8 +60,6 @@ accuracy = sum(Ypredict==Yval)/length(Yval);
 [label,score] = predict(SVMModel,X);
 Ypredict =  reshape(label,[H,W,D]);
 
-<<<<<<< HEAD
-=======
 %% 5.5 Predict for a different image
 load('/Data/BRATS_HG0004/dataBN.mat','im')
 % load the label matrix, named gt4
@@ -75,7 +70,6 @@ Xpredict = reshape(Xpredict,[],C);
 [label,score] = predict(SVMModel,Xpredict);
 Ypredict =  reshape(label,H,W,[]);
 
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 %% 6. dice score
 dice = dice(Ypredict,double(gt4));
 

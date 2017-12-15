@@ -1,4 +1,4 @@
-%  ---------- Train gmm for multi-modal input data: -------------------
+%%  ---------- Train gmm for multi-modal input data: -------------------
 
 clear all;
 %% load data
@@ -19,26 +19,20 @@ label = double(gt4);
 % (1X4 double vector) to be a part of the 4D geussian distribiution.
 % 
 % 
-<<<<<<< HEAD
 [H, W, D, C] = size(im);
 dataMatrix = zeros(H*W*D,3); % dataMatrix - a reshape of input data to shape(H*W*D,c) struct
 for i=1:C
-=======
 numChannels = 4;
 [H, W, D, C] = size(im);
 dataMatrix = zeros(H*W*D,numChannels); % dataMatrix - a reshape of input data to shape(H*W*D,c) struct
 for i=1:numChannels
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
     modeImg = im(:,:,:,i);
     minMode = min(modeImg(:));
     maxMode = max(modeImg(:));
     dataMatrix(:,i) = modeImg(:) / maxMode;
 %     dataMatrix(:,i) = modeImg(modeImg>minMode);
 end
-<<<<<<< HEAD
 
-=======
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 %% Train GMM:
 gm = fitgmdist(dataMatrix,3,'RegularizationValue',0.001,'Options',statset('MaxIter',400));
 
@@ -76,11 +70,8 @@ for i=1:classes
      pdfM(:,i) =  pdfM(:,i)*propV(i) ./ sumM;
 end
 
-<<<<<<< HEAD
-%% Eeshape pdfM to 3D probability matrices
-=======
 %% Reshape pdfM to 3D probability matrices
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
+
 % Each classes dim is a 3D probability matrix for this class.
 pdfM = reshape(pdfM,H,W,D,classes);
 for i=1:classes
@@ -100,11 +91,7 @@ for i=1:H
         end
     end
 end
-<<<<<<< HEAD
-figure; imagesc(segMetrix(:,:,60)); colorbar;
-=======
 figure; imagesc(segMetrix(:,:,80)); colorbar;
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 
 %% Evaluate the segmentation:
 predict = zeros(size(segMetrix));

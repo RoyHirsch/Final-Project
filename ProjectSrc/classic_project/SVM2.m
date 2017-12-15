@@ -38,11 +38,8 @@ Y(Y~=0) = 1;
 %% 3. Reduce for train and validation data:
 
 % parameters:
-<<<<<<< HEAD
 params.train = 100000;
-=======
 params.train = 50000;
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 params.val = 1000;
 
 ind = randi([100000 20000000],1,params.train);
@@ -55,19 +52,12 @@ Yval = Y(indVal);
 %% 3. Train simple SVM model
 SVMModel = fitcsvm(Xtrain,Ytrain,'RemoveDuplicates','on');
 
-<<<<<<< HEAD
-% 
-% 
-% 
-=======
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 %% 4. Validation Accuracy:
 [Ypredict,score] = predict(SVMModel,Xval);
 accuracy = sum(Ypredict==Yval)/length(Yval);
 
 %% 5. Predict for the new test data
 % Load new data:
-<<<<<<< HEAD
 Xtest = reshape(data(5).f,[],4);
 Ytest = reshape(label(5).f,[],1);
 %
@@ -79,7 +69,6 @@ dice = dice(Ypredict,Ytest);
 
 %% 7. Interactive test:
 figure;imshow3D(double(gt4)/4);
-=======
 [H, W, D, C] = size(data(6).f);
 
 Xtest = reshape(data(6).f,[],4);
@@ -93,5 +82,4 @@ dice = dice(Ypredict,Ytest)
 
 %% 7. Interactive test:
 figure;imshow3D(Ytest/4);
->>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 figure;imshow3D(Ypredict);
