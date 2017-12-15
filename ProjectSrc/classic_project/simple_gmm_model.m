@@ -6,14 +6,14 @@ clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 
 % Load all data and labels:
-data = load_all_data();
-label = load_all_labels();
-
+% data = load_all_data();
+% label = load_all_labels()
 %% Load single image:
 % load the image matrix named Im
 load('/Data/BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
 load('/Data/BRATS_HG0001/gt4.mat')
+
 %% Parameters:
 params.mod = 3;
 params.sliceZ = 80;
@@ -22,10 +22,11 @@ params.backThs = exp(-4);
 %% Regular gmm on a single modality
 % Select and pre-prepare a modality for gmm:
 img = im(:,:,:,params.mod);
-maxMatrix = max(img(:));
-im_n = img / maxMatrix;
+% % maxMatrix = max(img(:));
+% % im_n = img / maxMatrix;
 im_n(im_n<params.backThs) = 0;
 im_n_vec = im_n(im_n~=0);
+
 %% Train gmm with bakround voxal and regularization
 %im_n = loadMRImage('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data/BRATS_HG0004/dataBN.mat',2,exp(-4),0);
 gm = fitgmdist(im_a(:),5,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
@@ -39,7 +40,7 @@ figure; imshow(segMatrix(:,:,60)/5);
 im_n = zeros(size(im));
 for i=1:4
     temp = im(:,:,:,i);
-    maxMatrix = max(temp(:));
+    minMatrix = min(temp(:));
     im_n(:,:,:,i) = im(:,:,:,i)/maxMatrix;
     im_n(im_n<params.backThs) = 0;
     % for pre-processing of FL 

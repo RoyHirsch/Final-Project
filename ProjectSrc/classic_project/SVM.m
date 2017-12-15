@@ -38,17 +38,27 @@ Y(Y~=0) = 1;
 %% 3. Reduce for train and validation data:
 
 % parameters:
-params.train = 10000;
-params.train = 50000;
+params.train = 100000;
 params.val = 1000;
 
 ind = randi([1 5000000],1,params.train);
-indVal = randi([1000000 6000000],1,params.val);
 Xtrain = X(ind,:);
 Ytrain = Y(ind);
-Xval = X(indVal,:);
-Yval = Y(indVal);
 
+% Extract unique training data:
+% use temp data struct for unique values only
+tempMatrix = zeros(params.train,5);
+tempMatrix(:,1:4) = Xtrain;
+tempMatrix(:,5) = Ytrain;
+tempMatrixUnique = unique(tempMatrix,'rows');
+
+Xtrain = tempMatrixUnique(:,1:4);
+Ytrain =  tempMatrixUnique(:,5);
+
+% Extract validation data:
+indVal = randi([1 5000000],1,params.train);
+Xval = X(indVal,:);
+Yval = Y(indVal,:);
 %% 3. Train simple SVM model
 SVMModel = fitcsvm(Xtrain,Ytrain,'RemoveDuplicates','on');
 
@@ -64,10 +74,12 @@ Ypredict =  reshape(label,[H,W,D]);
 load('/Data/BRATS_HG0004/dataBN.mat','im')
 % load the label matrix, named gt4
 load('/Data/BRATS_HG0004/gt4.mat')
-Xpredict = double(im);
-Xpredict = reshape(Xpredict,[],C);
+Xtest = double(im);
+Xtest = reshape(Xtest,[],C);
+Ytest = double(gt4);
+Ytest(Ytest~=0) = 1;
 
-[label,score] = predict(SVMModel,Xpredict);
+[label,score] = predict(SVMModel,Xtest);
 Ypredict =  reshape(label,H,W,[]);
 
 %% 6. dice score

@@ -1,5 +1,4 @@
 %%  ---------- Train gmm for multi-modal input data: -------------------
-
 clear all;
 %% load data
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
@@ -9,6 +8,7 @@ load('/Data/BRATS_HG0001/dataBN.mat','im')
 load('/Data/BRATS_HG0001/gt4.mat')
 
 im = double(im);
+im = image_adjustment(im,0,0,1,2);
 label = double(gt4);
 %% Pre-process the data:
 % Training data in [n,d] struct where:
@@ -32,7 +32,7 @@ for i=1:numChannels
     dataMatrix(:,i) = modeImg(:) / maxMode;
 %     dataMatrix(:,i) = modeImg(modeImg>minMode);
 end
-
+end
 %% Train GMM:
 gm = fitgmdist(dataMatrix,3,'RegularizationValue',0.001,'Options',statset('MaxIter',400));
 
