@@ -27,6 +27,7 @@ im_n = img / maxMatrix;
 im_n(im_n<params.backThs) = 0;
 im_n_vec = im_n(im_n~=0);
 
+<<<<<<< HEAD
 %% Train gmm with bakround voxal and regularization
 %im_n = loadMRImage('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data/BRATS_HG0004/dataBN.mat',2,exp(-4),0);
 gm = fitgmdist(im_a(:),5,'RegularizationValue',0.003,'Options',statset('MaxIter',400));
@@ -35,6 +36,8 @@ segMatrix = createSegmentetionMatrix(pdfM,1,80);
 figure; imshow(segMatrix(:,:,60)/5);
 %figure; imshow(im_n(:,:,105));
 
+=======
+>>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 %% 4. generating few GMM models for each modality
 % Generate four different vectors for each modality to train GMM model:
 im_n = zeros(size(im));
@@ -60,9 +63,13 @@ im_T2_vec = im_n(:,:,:,2);
 im_T1t_vec = im_n(:,:,:,3);
 im_FL_vec = im_n(:,:,:,4);
 
+<<<<<<< HEAD
 %% multimudat gmm
 
 %% gmm train
+=======
+%% Multimudat gmm
+>>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 % gmm of T1
 % gmT1 = fitgmdist(im_T1_vec,3,'Options',statset('MaxIter',400));
 % pdfMT2 = createPDFMatrix(gmT1, im_n(:,:,:,1), 0,1);
@@ -83,10 +90,14 @@ gmFL = fitgmdist(im_FL_vec(:),4,'RegularizationValue',0.005,'Options',statset('M
 pdfMFL = createPDFMatrix(gmFL, im_n(:,:,:,4), 0,1);
 segMatrixFL = createSegmentetionMatrix(pdfMFL,1,80);
 
+<<<<<<< HEAD
 %% train model for T1t
 % histogram
 imhist(im_T1t_vec(im_T1t_vec~=0),256);
 %%
+=======
+%% train model for T1g
+>>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 
 gmT1t = fitgmdist(im_T1t_vec(im_T1t_vec~=0),3,'RegularizationValue',0.004,'Options',statset('MaxIter',400));
 pdfMT1t = createPDFMatrix(gmT1t, im_n(:,:,:,3), 0,1);
@@ -118,13 +129,44 @@ labels = double(gt4);
 labels(labels~=0) = 1;
 print_boundary(predict,im_n,params);
 diceScore = dice(labels,predict);
+<<<<<<< HEAD
 
+=======
+%% Chan and Vese active contours
+
+% fill 'holes'
+predict_fill_holes = zeros(size(predict));
+for z=1:Z    
+    predict_fill_holes(:,:,z) = imfill(predict(:,:,z),'holes');
+end
+
+% removes small objects
+object_size = zeros(Z,1);
+object_size(1:40) = 20;
+object_size(41:60) = 60;
+object_size(61:90) = 100;
+object_size(91:110) = 50;
+object_size(111:end) = 20;
+
+for z=1:Z    
+    predict_fill_holes_without_small(:,:,z) = bwareaopen(predict(:,:,z),object_size(z));
+end
+
+%% Chan Vese level set
+maxIterations = 199;
+img = im_n(:,:,:,2);
+CVpredict = zeros(size(predict));
+for z=1:Z
+    CVpredict(:,:,z) = activecontour(img(:,:,z),predict_fill_holes(:,:,z),maxIterations,'Chan-Vese');
+end
+>>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
 %% help:
 figure; subplot(2,2,1); imshow(im_n(:,:,100,1));title('T1');
 subplot(2,2,2); imshow(im_n(:,:,100,2));title('T2');
 subplot(2,2,3); imshow(im_n(:,:,100,3));title('T1t');
 subplot(2,2,4); imshow(im_n(:,:,100,4));title('FL');
 figure; imshow(double(gt4(:,:,100))/4);
+<<<<<<< HEAD
 
 %%
 testim = predict(:,:,60);
@@ -132,3 +174,5 @@ fill = imfill(testim,'holes');
 figure; imshow(testim);figure; imshow(fill);
 %%
 figure;imshow3D(predict);figure;imshow3D(double(gt4)/4);
+=======
+>>>>>>> 4fdd9ba27907b8048cc1664a3644950ecfaca6f0
