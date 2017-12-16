@@ -5,9 +5,9 @@
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0003/dataBN.mat','im')
+load('/Data/BRATS_HG0006/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0003/gt4.mat')
+load('/Data/BRATS_HG0006/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -43,7 +43,9 @@ quantImageFL(quantImageFL~=3) = 0;
 
 % Calculate predict mask and dicescore:
 predict = quantImage & quantImageFL;
-diceScore = dice(predict,label);
+predictClean = cleanSegmentaionMask(predict,10);
+predictClean = fillSegmentaionMask(predictClean);
+diceScore = dice(predictClean,label);
 
 %% Plot slices:
 
@@ -105,6 +107,16 @@ line([threshFL(1),threshFL(1)],ylim,'color','r');
 line([threshFL(2),threshFL(2)],ylim,'color','r');
 title('Histogram of normalized FL image:')
 
+%% Quantization over filtered images:
+
+guassianImT2 = imgaussfilt(imT2,0.5,'FilterSize',15);
+% guassianImFL = imgaussfilt(imFL,1);
+stackImages = zeros(X,Y,Z,4);
+stackImages(:,:,:,2) = guassianImT2;
+stackImages(:,:,:,4) = imFL;
+figure; imshow3D(guassianImT2);
+[diceScore, predict] = quantizationT2andFLSegmentation(stackImages,gt4);
+
 %% Evaloation on many examples:
 
 data = load_all_data();
@@ -112,8 +124,7 @@ label = load_all_labels();
 
 numOfExamples = 20;
 diceScoreArray = zeros(numOfExamples, 1);
-for i=30:35
+for i=1:numOfExamples
     [diceScoreArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
-
 end
 avarageDicScor = sum(diceScoreArray) / numOfExamples; 
