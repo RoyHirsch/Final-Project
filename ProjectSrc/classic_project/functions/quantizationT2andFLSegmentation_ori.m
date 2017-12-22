@@ -1,4 +1,4 @@
-function [dice,sens,spec, predict] = quantizationT2andFLSegmentation_ori(img, label)
+function [ predict] = quantizationT2andFLSegmentation_ori(img, label)
     label = double(label);
     label(label~=0) = 1;
 
@@ -35,11 +35,5 @@ function [dice,sens,spec, predict] = quantizationT2andFLSegmentation_ori(img, la
     quantImageFL(quantImageFL~=3) = 0;
 
     predict = double(quantImage & quantImageFL);
-
-    % imshow(quantImage)
-    dice =  2*sum(sum(sum(and(label,predict)))) / sum(sum(sum((label + predict))));
-    sens = sum(sum(sum(and(label,predict)))) / sum(sum(sum((label))));
-    spec = sum(sum(sum(and(not(label),not(predict))))) / sum(sum(sum((not(label)))));
-    
 
 end

@@ -5,9 +5,9 @@
 clear all;
 addpath(genpath('\Users\אורי\Documents\GitHub\Final-Project\ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0003/dataBN.mat','im')
+load('/Data/BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0003/gt4.mat')
+load('/Data/BRATS_HG0001/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -53,7 +53,13 @@ quantImageFL(quantImageFL~=3) = 0;
 % Calculate predict mask and dicescore:
 predict = quantImage & quantImageFL;
 diceScore = dice(predict,label);
-
+%%
+[bias,variance]=BiasVariance(predict);
+newpredict = BiasVarianceOpt(predict,0,bias,variance);
+newDice=dice(newpredict,label);
+%%
+newpredict(newpredict>10^-7)=1
+newpredict(newpredict<=10^-7)=0;
 %% Plot slices:
 
 maxT1 = max(imT1(:));
@@ -124,8 +130,15 @@ diceScoreArray = zeros(numOfExamples, 1);
 sensScoreArray = zeros(numOfExamples, 1);
 specScoreArray = zeros(numOfExamples, 1);
 for i=1:numOfExamples
-    [diceScoreArray(i),sensScoreArray(i),specScoreArray(i), predict] = quantizationT2andFLSegmentation_ori(data(i).f,label(i).f);
-
+    [predict] = quantizationT2andFLSegmentation_ori(data(i).f,label(i).f);
+    lables=double(label(i).f);
+    lables(lables~=0)=1;
+    predict = cleanSegmentaionMask(predict,30);
+%     [bias,variance]=BiasVariance(predict);
+%     predict = BiasVarianceOpt(predict,0,bias,variance);
+    diceScoreArray(i)= dice(lables,predict);
+    specScoreArray(i)= specificity(lables,predict);
+    sensScoreArray(i)= sensitivity(lables,predict);
 end
 avarageDicScor = sum(diceScoreArray) / numOfExamples; 
 avarageSensScor = sum(sensScoreArray) / numOfExamples; 
