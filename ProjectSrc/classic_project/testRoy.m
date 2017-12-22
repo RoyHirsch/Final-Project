@@ -1,4 +1,3 @@
-
 %% Using quantization for BARTS HG tumor segmentation:
 
 % 1. Load the data
