@@ -10,9 +10,9 @@
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0001/dataBN.mat','im')
+load('/Data/BRATS_HG0005/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0001/gt4.mat')
+load('/Data/BRATS_HG0005/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -30,7 +30,7 @@ imFL = im(:,:,:,4);
 % Select the relevat modality:
 %
 %
-img = imT2;
+img = imFL;
 %
 %
 
@@ -39,9 +39,9 @@ img = imT2;
 [X, Y, Z] = size(img);
 threshImg = multithresh(img, 2);
 
-quantImageT2 = zeros(X, Y, Z);
+quantImage = zeros(X, Y, Z);
 for z=1:Z
-    quantImageT2(:,:,z) = imquantize(img(:,:,z),threshImg);
+    quantImage(:,:,z) = imquantize(img(:,:,z),threshImg);
 end
 
 %% Plot the treshold lines obsereved using Outo's method ovet the histogram:
@@ -128,3 +128,8 @@ imhist(imgVect,256);hold on;
 plot(x,gausOne,'color','r');plot(x,gausTwo,'color','g');
 % plot(x,gausThree,'color','b');
 title('Results of simple gmm over the data:');
+
+%%
+tmp = imFL(:,:,80);
+edgeImg = edge(tmp,'Canny');
+figure;imshow(edgeImg)

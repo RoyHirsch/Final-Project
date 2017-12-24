@@ -5,9 +5,9 @@
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0006/dataBN.mat','im')
+load('/Data/BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0006/gt4.mat')
+load('/Data/BRATS_HG0001/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -124,7 +124,33 @@ label = load_all_labels();
 
 numOfExamples = 20;
 diceScoreArray = zeros(numOfExamples, 1);
+sensitivityArray = zeros(numOfExamples, 1);
+specificityArray = zeros(numOfExamples, 1);
 for i=1:numOfExamples
     [diceScoreArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
+    labels = double(label(i).f);
+    labels(labels~=0) = 1;
+    sensitivityArray(i) = sensitivity(labels, predict);
+    specificityArray(i) = specificity(labels, predict);
 end
-avarageDicScor = sum(diceScoreArray) / numOfExamples; 
+avarageDiceScore = sum(diceScoreArray) / numOfExamples; 
+avarageSeneScore = sum(sensitivityArray) / numOfExamples; 
+avarageSpeceScore = sum(specificityArray) / numOfExamples; 
+
+%% 4,7,8,(12),14,15
+
+i=12
+[diceScore, predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
+predictClean = cleanSegmentaionMask(predict,30);
+labels = double(label(i).f);
+labels(labels~=0) = 1;
+
+figure; imshow3D(predict);
+figure; imshow3D(labels);
+figure; imshow3D(predictClean);
+%%
+
+datas = data(i).f;
+mod = datas(:,:,:,4);
+mod = mod / max(mod(:));
+figure; imshow3D(mod);

@@ -23,13 +23,55 @@ imT2 = im(:,:,:,2);
 imT1g = im(:,:,:,3);
 imFL = im(:,:,:,4);
 
+%%
+slice = imT2(:,:,80);
+slice = slice / max(slice(:));
+slice(slice<exp(-4)) = 0;
+thrs2 = multithresh(slice,2);
+qim = imquantize(slice,thrs2);
+qim(qim==2) = 1;
+qim(qim~=3) = 0;
+qim = bwareaopen(qim,20);
+
+BW = bwperim(qim);
+figure;imshow(BW);
+%%
+slice = adapthisteq(slice);
+figure;imhist(slice);
+%%
+% figure;imshow(slice);
+% slice = imadjust(slice);
+level = graythresh(slice);
+BW = im2bw(slice,level);
+figure;imshow(BW);
+C = ~BW;
+D = -bwdist(C);
+L = watershed(D);
+slice(L==0) = 0;
+
+B=bwdist(~imT1g);
+C=-B;
+ws = watershed(C);
+
+imT1g(ws==0) = 0;
+ws = double(ws);
+ws = ws / max(ws(:));
+%%
 % Quantization for single example:
 [X, Y, Z] = size(imT2);
 threshT2 = multithresh(imT2, 2);
 
 quantImage = zeros(X, Y, Z);
 for z=1:Z
-    quantImage(:,:,z) = imquantize(imT2(:,:,z),threshT2);
+    C = mat2cell(imT2(:,:,z),[54,54,54,54],[80,80]);
+    res = cell(size(C));
+    for i=1:4
+        for j=1:2
+            thresh = multithresh(C{i,j}, 2);
+            res{i,j} = imquantize(C{i,j},thresh);
+        end
+    end
+    quantImage(:,:,z) = cell2mat(res);
 end
 
 threshFL = multithresh(imFL, 2);
@@ -38,27 +80,42 @@ for z=1:Z
     quantImageFL(:,:,z) = imquantize(imFL(:,:,z),threshFL);
 end
 
+%
+edgeT1g = zeros(X, Y, Z);
+for z=1:Z
+    edgeT1g(:,:,z) = edge (imT1g(:,:,z),'Canny');
+end
+
 % Ceate predict mask
 quantImage(quantImage~=3) = 0;
 quantImageFL(quantImageFL~=3) = 0;
 
+
+%
+edgeT1g = edgeT1g & quantImageFL;
+edgeT1g = cleanSegmentaionMask(edgeT1g,10);
+[edgelist, edgeim, etype] = edgelink(edgeT1g(:,:,80), 2);
+
 % Calculate predict mask and dicescore:
 predict = quantImage & quantImageFL;
 predictClean = cleanSegmentaionMask(predict,30);
-diceScore = dice(predict,label)
-
-%% chenvese
-
-imT2Normalize = imT2 / max(imT2(:));
-imFLNormalize = imFL / max(imFL(:));
-
-temp = chenvese(imFLNormalize(:,:,60),predictClean(:,:,60),200);
-temp2 = activecontour(imFLNormalize(:,:,80),predictClean(:,:,80),200,'Chan-Vese');
+predictClean = fillSegmentaionMask(predictClean);
+diceScore = dice(predictClean,label);
 
 
-
-%%
-chenvesePredict = zeros(X, Y, Z);
-for z=1:Z
-    chenvesePredict = chenvese(imT2Normalize(:,:,z),predict(:,:,z),200);
+%% quant in regions
+zplane = 50;
+slice = imT2(:,:,zplane);
+C = mat2cell(slice,[54,54,54,54],[80,80]);
+res = cell(size(C));
+for i=1:4
+    for j=1:2
+        thresh = multithresh(C{i,j}, 2);
+        res{i,j} = imquantize(C{i,j},thresh);
+    end
 end
+resMat = cell2mat(res);
+
+figure;subplot(1,3,1);imshow(resMat/3);
+subplot(1,3,2);imshow(quantImage(:,:,zplane)/3);title('no patch')
+subplot(1,3,3);imshow(label(:,:,zplane));imshow
