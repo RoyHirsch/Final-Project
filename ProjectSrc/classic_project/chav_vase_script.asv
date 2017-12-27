@@ -3,7 +3,7 @@
 % 1. Load the data
 
 clear all;
-addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
+%addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
 load('dataBN.mat','im')
 % load the label matrix, named gt4
@@ -43,171 +43,80 @@ quantImageFL(quantImageFL~=3) = 0;
 
 % Calculate predict mask and dicescore:
 predict = quantImage & quantImageFL;
-predictClean = cleanSegmentaionMask(predict,10);
+predictClean = cleanSegmentaionMask(predict,30);
+predictClean = fillSegmentaionMask(predictClean);
 diceScore = dice(predictClean,label);
 
 imT2 = imT2 / max(imT2(:));
-%%
-data = load_all_data();
-label = load_all_labels();
 
-%%
-numOfExamples = 5;
-smooth_weight = 1; 
-image_weight = 1e-6; 
-delta_t = 4;
+%% plot slice of phi
+zSlice = 80;
+[X, Y] = size(phi(:,:,zSlice));
 
-diceScoreArray = zeros(numOfExamples, 1);
-sensitivityArray = zeros(numOfExamples, 1);
-specificityArray = zeros(numOfExamples, 1);
+edge = zeros(X,Y);
+edge(phi(:,:,zSlice)==0) = 1;
+surf(phi(:,:,zSlice));
+colormap(jet);
+hold on; contour3(edge,'k');
 
-for i=1:numOfExamples
-    [diceScoreArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
-    predict = cleanSegmentaionMask(predict,30);
-    img = data(i).f;
-    imgMod = img(:,:,:,2);
-    imgMod = imgMod / max(imgMod(:));
-    phi = ac_reinit(predict-.5); 
-
-    for k = 1:10
-        phi = ac_ChanVese_model(imgMod, phi, smooth_weight, image_weight, delta_t, 1); 
-    end
-    
-    predictCV = zeros(size(imgMod));
-    predictCV(phi>0) = 1;
-    labels = double(label(i).f);
-    labels(labels~=0) = 1; 
-    
-    diceScoreArray(i) = dice(predictCV, labels)
-    sensitivityArray(i) = sensitivity(labels, predict);
-    specificityArray(i) = specificity(labels, predict);
-end
-avarageDiceScore = sum(diceScoreArray) / numOfExamples; 
-avarageSeneScore = sum(sensitivityArray) / numOfExamples; 
-avarageSpeceScore = sum(specificityArray) / numOfExamples; 
-
-%% Chane Vase
+%% Chane Vase parametres
 smooth_weight = 1; 
 image_weight = 1e-6; 
 delta_t = 4; 
 
-phi = ac_reinit(predictClean-.5); 
+%% Load data
+data = load_all_data()
+label = load_all_labels()
 
+%% Loop over some examples
 
-for i = 1:10
-    phi = ac_ChanVese_model(imT2, phi, smooth_weight, image_weight, delta_t, 1); 
-   % figure; imshow(phi(:,:,80));
-
-end
-%%
-predictCV = zeros(size(phi));
-predictCV(phi>0) = 1;
-diceScore = dice(predictCV,label);
-
-%% Plot slices:
-
-maxT1 = max(imT1(:));
-maxT2 = max(imT2(:));
-maxT1g = max(imT1g(:));
-maxFL = max(imFL(:));
-
-imT1 = imT1 ./ maxT1;
-imT2 = imT2 ./ maxT2;
-imT1g = imT1g ./ maxT1g;
-imFL = imFL ./ maxFL;
-
-imT1(imT1<=thr) = 0;
-imT2(imT2<=thr) = 0;
-imT1g(imT1g<=thr) = 0;
-imFL(imFL<=thr) = 0;
-
-figure;
-subplot(2,2,1);
-imshow(imT1(:,:,zSlice));
-title(' T1 image:')
-subplot(2,2,2);
-imshow(imT2(:,:,zSlice));
-title('T2 image:')
-subplot(2,2,3);
-imshow(imT1g(:,:,zSlice));
-title('T1g image:')
-subplot(2,2,4);
-imshow(imFL(:,:,zSlice));
-title('FL image:')
-
-%% Plot histograms and thresholds of quantizations:
-
-imT1_vec = imT1(imT1~=0);
-imT2_vec = imT2(imT2~=0);
-imT1g_vec = imT1g(imT1g~=0);
-imFL_vec = imFL(imFL~=0);
-
-threshT2 = threshT2 / maxT2;
-threshFL = threshFL / maxFL;
-
-figure;
-
-subplot(2,2,1);
-imhist(imT1_vec,256);
-title('Histogram of normalized T1 image:')
-subplot(2,2,2);
-imhist(imT2_vec,256);hold on;
-line([threshT2(1),threshT2(1)],ylim,'color','r');
-line([threshT2(2),threshT2(2)],ylim,'color','r');
-title('Histogram of normalized T2 image:')
-subplot(2,2,3);
-imhist(imT1g_vec,256);
-title('Histogram of normalized T1g image:')
-subplot(2,2,4);
-imhist(imFL_vec,256);hold on;
-line([threshFL(1),threshFL(1)],ylim,'color','r');
-line([threshFL(2),threshFL(2)],ylim,'color','r');
-title('Histogram of normalized FL image:')
-
-%% Quantization over filtered images:
-
-guassianImT2 = imgaussfilt(imT2,0.5,'FilterSize',15);
-% guassianImFL = imgaussfilt(imFL,1);
-stackImages = zeros(X,Y,Z,4);
-stackImages(:,:,:,2) = guassianImT2;
-stackImages(:,:,:,4) = imFL;
-figure; imshow3D(guassianImT2);
-[diceScore, predict] = quantizationT2andFLSegmentation(stackImages,gt4);
-
-%% Evaloation on many examples:
-
-data = load_all_data();
-label = load_all_labels();
-
-numOfExamples = 20;
+numOfExamples = 5;
 diceScoreArray = zeros(numOfExamples, 1);
 sensitivityArray = zeros(numOfExamples, 1);
 specificityArray = zeros(numOfExamples, 1);
+CVpredictCell = {}; % cell array for the CV predict masks
+
+startTime = tic;
 for i=1:numOfExamples
+    
     [diceScoreArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
+    predictClean = cleanSegmentaionMask(predict,30);
+    predictClean = fillSegmentaionMask(predictClean);
+    
     labels = double(label(i).f);
     labels(labels~=0) = 1;
-    sensitivityArray(i) = sensitivity(labels, predict);
-    specificityArray(i) = specificity(labels, predict);
+    orgImg = data(i).f;
+    orgMod = orgImg(:,:,:,2); % extract T2 mod
+    
+    % Chan Vase methode
+    phi = ac_reinit(predictClean-.5); 
+
+    for j = 1:10
+        phi = ac_ChanVese_model(orgMod, phi, smooth_weight, image_weight, delta_t, 1); 
+    end
+    
+    % from phi to bineary-mask
+    CVpredict = zeros(size(phi));
+    CVpredict(phi>0) = 1;
+    CVpredictCell{i} = CVpredict;
+    % measure parameters
+    diceScoreArray(i) = dice(predictClean,labels);
+    sensitivityArray(i) = sensitivity(labels, predictClean);
+    specificityArray(i) = specificity(labels, predictClean);
 end
+
 avarageDiceScore = sum(diceScoreArray) / numOfExamples; 
 avarageSeneScore = sum(sensitivityArray) / numOfExamples; 
 avarageSpeceScore = sum(specificityArray) / numOfExamples; 
 
-%% 4,7,8,(12),14,15
+endTime = toc;
+difTime = toc
+%% Single example run:
+phi = ac_reinit(predictClean-.5); 
 
-i=12
-[diceScore, predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
-predictClean = cleanSegmentaionMask(predict,30);
-labels = double(label(i).f);
-labels(labels~=0) = 1;
-
-figure; imshow3D(predict);
-figure; imshow3D(labels);
-figure; imshow3D(predictClean);
-%%
-
-datas = data(i).f;
-mod = datas(:,:,:,4);
-mod = mod / max(mod(:));
-figure; imshow3D(mod);
+for i = 1:50
+    phi = ac_ChanVese_model(imT2, phi, smooth_weight, image_weight, delta_t, 1); 
+    if mod(i,10) == 0
+        figure; imshow(phi(:,:,80));
+    end
+end
