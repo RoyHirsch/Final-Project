@@ -1,7 +1,5 @@
 %% Using quantization for BARTS HG tumor segmentation:
-
-% 1. Load the data
-
+% Senity check code
 clear all;
 %addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
@@ -49,68 +47,73 @@ diceScore = dice(predictClean,label);
 
 imT2 = imT2 / max(imT2(:));
 
-%% plot slice of phi
-zSlice = 80;
-[X, Y] = size(phi(:,:,zSlice));
+%% Chane Vase run
+% ref:
+% https://sites.google.com/site/rexstribeofimageprocessing/chan-vese-active-contours/wubiaotitiezi
+clear all;
 
-edge = zeros(X,Y);
-edge(phi(:,:,zSlice)==0) = 1;
-surf(phi(:,:,zSlice));
-colormap(jet);
-hold on; contour3(edge,'k');
-
-%% Chane Vase parametres
+% Chane-Vase parameters:
 smooth_weight = 1; 
 image_weight = 1e-6; 
 delta_t = 4; 
+num_of_iter = 10;
 
-%% Load data
+% Load all data
 data = load_all_data()
 label = load_all_labels()
 
-%% Loop over some examples
+%% Run the model on multiple examples:
 
-numOfExamples = 5;
-diceScoreArray = zeros(numOfExamples, 1);
-sensitivityArray = zeros(numOfExamples, 1);
-specificityArray = zeros(numOfExamples, 1);
+% Init parameters
+numOfExamples = 5;      
+measureBeforeCV = initMeasureBeforCV(numOfExamples);
+measureAfterCV = initMeasureAfterCV(numOfExamples);
 CVpredictCell = {}; % cell array for the CV predict masks
 
-startTime = tic;
+tic
+
 for i=1:numOfExamples
     
-    [diceScoreArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
+    % Initial segmentaion:
+    [measureBeforeCV.diceArray(i), predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
     predictClean = cleanSegmentaionMask(predict,30);
     predictClean = fillSegmentaionMask(predictClean);
-    
+   
     labels = double(label(i).f);
     labels(labels~=0) = 1;
     orgImg = data(i).f;
     orgMod = orgImg(:,:,:,2); % extract T2 mod
     
-    % Chan Vase methode
-    phi = ac_reinit(predictClean-.5); 
-
-    for j = 1:10
-        phi = ac_ChanVese_model(orgMod, phi, smooth_weight, image_weight, delta_t, 1); 
-    end
+    % measure parameters before CV
+    measureBefoerCV.diceArray(i) = dice(predictClean,labels);
+    measureBefoerCV.sensitivityArray(i) = sensitivity(labels, predictClean);
+    measureBefoerCV.specificityArray(i) = specificity(labels, predictClean);
     
-    % from phi to bineary-mask
+    % Chan Vase method
+    phi = ac_reinit(predictClean-.5); 
+    phi = ac_ChanVese_model(orgMod, phi, smooth_weight, image_weight, delta_t, num_of_iter); 
+
+    % from phi to bineary mask
     CVpredict = zeros(size(phi));
     CVpredict(phi>0) = 1;
     CVpredictCell{i} = CVpredict;
-    % measure parameters
-    diceScoreArray(i) = dice(predictClean,labels);
-    sensitivityArray(i) = sensitivity(labels, predictClean);
-    specificityArray(i) = specificity(labels, predictClean);
+    
+    % measure parameters after CV
+    measureAfterCV.diceArray(i) = dice(CVpredict,labels);
+    measureAfterCV.sensitivityArray(i) = sensitivity(labels, CVpredict);
+    measureAfterCV.specificityArray(i) = specificity(labels, CVpredict);
 end
 
-avarageDiceScore = sum(diceScoreArray) / numOfExamples; 
-avarageSeneScore = sum(sensitivityArray) / numOfExamples; 
-avarageSpeceScore = sum(specificityArray) / numOfExamples; 
+measureBeforeCV = sumMeasureStruct(measureBeforeCV, numOfExamples);
+measureAfterCV = sumMeasureStruct(measureAfterCV, numOfExamples);
 
-endTime = toc;
-difTime = startTime - endTime;
+toc
+
+%% view the prediction results
+for i=1:numOfExamples
+   img = CVpredictCell{i};
+   figure; imshow3D(img);
+end
 %% Single example run:
 phi = ac_reinit(predictClean-.5); 
 
