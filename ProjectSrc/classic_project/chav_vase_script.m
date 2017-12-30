@@ -83,17 +83,19 @@ for i=1:numOfExamples
     labels(labels~=0) = 1;
     orgImg = data(i).f;
     orgMod = orgImg(:,:,:,2); % extract T2 mod
+    orgMod = orgMod / max(orgMod(:)); % image adjustments
+    orgMod = image_adjustment(orgMod,0,0,1,2)  
     
     % measure parameters before CV
-    measureBefoerCV.diceArray(i) = dice(predictClean,labels);
-    measureBefoerCV.sensitivityArray(i) = sensitivity(labels, predictClean);
-    measureBefoerCV.specificityArray(i) = specificity(labels, predictClean);
+    measureBeforeCV.diceArray(i) = dice(predictClean,labels);ss
+    measureBeforeCV.sensitivityArray(i) = sensitivity(labels, predictClean);
+    measureBeforeCV.specificityArray(i) = specificity(labels, predictClean);
     
     % Chan Vase method
     phi = ac_reinit(predictClean-.5); 
     phi = ac_ChanVese_model(orgMod, phi, smooth_weight, image_weight, delta_t, num_of_iter); 
-
-    % from phi to bineary mask
+    
+%     from phi to bineary mask
     CVpredict = zeros(size(phi));
     CVpredict(phi>0) = 1;
     CVpredictCell{i} = CVpredict;

@@ -11,6 +11,9 @@ delta_t = 4;
 margin = 10; 
 phi = zeros(size(V)); 
 phi(margin:end-margin, margin:end-margin, margin:end-margin) = 1; 
+phi = activecontour(V,phi,300);
+figure; imshow3D(double(phi));
+%%
 phi = ac_reinit(phi-.5); 
 
 %%
