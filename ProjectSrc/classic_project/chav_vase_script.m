@@ -53,7 +53,7 @@ imT2 = imT2 / max(imT2(:));
 clear all;
 
 % Chane-Vase parameters:
-smooth_weight = 1; 
+smooth_weight = 0.5; 
 image_weight = 1e-6; 
 delta_t = 4; 
 num_of_iter = 10;
@@ -65,7 +65,7 @@ label = load_all_labels()
 %% Run the model on multiple examples:
 
 % Init parameters
-numOfExamples = 5;      
+numOfExamples = 10;      
 measureBeforeCV = initMeasureBeforCV(numOfExamples);
 measureAfterCV = initMeasureAfterCV(numOfExamples);
 CVpredictCell = {}; % cell array for the CV predict masks
@@ -84,10 +84,10 @@ for i=1:numOfExamples
     orgImg = data(i).f;
     orgMod = orgImg(:,:,:,2); % extract T2 mod
     orgMod = orgMod / max(orgMod(:)); % image adjustments
-    orgMod = image_adjustment(orgMod,0,0,1,2)  
+    orgMod = image_adjustment(orgMod,0,0,1,2);
     
     % measure parameters before CV
-    measureBeforeCV.diceArray(i) = dice(predictClean,labels);ss
+    measureBeforeCV.diceArray(i) = dice(predictClean,labels);
     measureBeforeCV.sensitivityArray(i) = sensitivity(labels, predictClean);
     measureBeforeCV.specificityArray(i) = specificity(labels, predictClean);
     
@@ -116,6 +116,20 @@ for i=1:numOfExamples
    img = CVpredictCell{i};
    figure; imshow3D(img);
 end
+
+%% View spesific examples
+num =10;
+labels = double(label(num).f);
+labels(labels~=0) = 1;
+orgImg = data(num).f;
+orgMod = orgImg(:,:,:,2); % extract T2 mod
+orgMod = orgMod / max(orgMod(:)); % image adjustments
+figure; imshow3D(CVpredictCell{num});
+figure; imshow3D(labels);
+orgMod = image_adjustment(orgMod,0,0,1,2);
+figure; imshow3D(orgMod);
+
+diceScoreRoy = dice(CVpredictCell{num},labels);
 %% Single example run:
 phi = ac_reinit(predictClean-.5); 
 
