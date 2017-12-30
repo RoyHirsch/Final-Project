@@ -48,22 +48,24 @@ diceScore = dice(predictClean,label);
 imT2 = imT2 / max(imT2(:));
 
 %% Chane Vase run
+% ref:
+% https://sites.google.com/site/rexstribeofimageprocessing/chan-vese-active-contours/wubiaotitiezi
 clear all;
 
 % Chane-Vase parameters:
 smooth_weight = 1; 
 image_weight = 1e-6; 
-delta_t = 4; 
+delta_t = 1; 
 num_of_iter = 10;
 
 % Load all data
 data = load_all_data()
 label = load_all_labels()
 
-%% Run the model on multiple esamples:
+%% Run the model on multiple examples:
 
 % Init parameters
-numOfExamples = 5;      
+numOfExamples = 10;      
 measureBeforeCV = initMeasureBeforCV(numOfExamples);
 measureAfterCV = initMeasureAfterCV(numOfExamples);
 CVpredictCell = {}; % cell array for the CV predict masks
@@ -81,22 +83,27 @@ for i=1:numOfExamples
     labels(labels~=0) = 1;
     orgImg = data(i).f;
     orgMod = orgImg(:,:,:,2); % extract T2 mod
+    orgMod = orgMod / max(orgMod(:)); % image adjustments
+    orgMod = image_adjustment(orgMod,0,0,1,2); 
     
-    measureBefoerCV.diceArray(i) = dice(predictClean,labels);
-
+    % measure parameters before CV
+    measureBeforeCV.diceArray(i) = dice(predictClean,labels);
+    measureBeforeCV.sensitivityArray(i) = sensitivity(labels, predictClean);
+    measureBeforeCV.specificityArray(i) = specificity(labels, predictClean);
+    
     % Chan Vase method
     phi = ac_reinit(predictClean-.5); 
     phi = ac_ChanVese_model(orgMod, phi, smooth_weight, image_weight, delta_t, num_of_iter); 
-
-    % from phi to bineary-mask
+    
+%     from phi to bineary mask
     CVpredict = zeros(size(phi));
     CVpredict(phi>0) = 1;
     CVpredictCell{i} = CVpredict;
     
     % measure parameters after CV
     measureAfterCV.diceArray(i) = dice(CVpredict,labels);
-    measureAfterCV.sensitivityArray(i) = sensitivity(labels, predictClean);
-    measureAfterCV.specificityArray(i) = specificity(labels, predictClean);
+    measureAfterCV.sensitivityArray(i) = sensitivity(labels, CVpredict);
+    measureAfterCV.specificityArray(i) = specificity(labels, CVpredict);
 end
 
 measureBeforeCV = sumMeasureStruct(measureBeforeCV, numOfExamples);

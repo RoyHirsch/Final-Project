@@ -55,7 +55,7 @@ clear all;
 % Chane-Vase parameters:
 smooth_weight = 1; 
 image_weight = 1e-6; 
-delta_t = 4; 
+delta_t = 1; 
 num_of_iter = 10;
 
 % Load all data
@@ -65,7 +65,7 @@ label = load_all_labels()
 %% Run the model on multiple examples:
 
 % Init parameters
-numOfExamples = 5;      
+numOfExamples = 10;      
 measureBeforeCV = initMeasureBeforCV(numOfExamples);
 measureAfterCV = initMeasureAfterCV(numOfExamples);
 CVpredictCell = {}; % cell array for the CV predict masks
@@ -84,10 +84,10 @@ for i=1:numOfExamples
     orgImg = data(i).f;
     orgMod = orgImg(:,:,:,2); % extract T2 mod
     orgMod = orgMod / max(orgMod(:)); % image adjustments
-    orgMod = image_adjustment(orgMod,0,0,1,2)  
+    orgMod = image_adjustment(orgMod,0,0,1,2); 
     
     % measure parameters before CV
-    measureBeforeCV.diceArray(i) = dice(predictClean,labels);ss
+    measureBeforeCV.diceArray(i) = dice(predictClean,labels);
     measureBeforeCV.sensitivityArray(i) = sensitivity(labels, predictClean);
     measureBeforeCV.specificityArray(i) = specificity(labels, predictClean);
     
