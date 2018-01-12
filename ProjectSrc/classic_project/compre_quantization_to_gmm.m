@@ -10,9 +10,9 @@
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0005/dataBN.mat','im')
+load('BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0005/gt4.mat')
+load('BRATS_HG0001/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -80,8 +80,9 @@ histogram(tumorVoxals(:),256,'FaceColor','r');
 hold on;
 histogram(backVoxals(:),256,'FaceColor','g');
 plot(x,PDFTumor,'r');plot(x,PDFBack,'g');
-title('A matched gaussian distribution to the labeled histogram')
-
+% title('A matched gaussian distribution to the labeled histogram')
+title('Matched gaussians to the two classes histograms, FLAIR modality:')
+legend(['Tumor class: mean-',num2str(pdTumor.mean), ' variance-',num2str(pdTumor.sigma)],['Background class: mean-',num2str(pdBack.mean), ' variance-',num2str(pdBack.sigma)])
 %% Calculate simple gmm to img:
 maxVal = max(img(:));
 imgNormTwo = img / maxVal;

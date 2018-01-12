@@ -3,12 +3,12 @@ clear all;
 %% load data
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0001/dataBN.mat','im')
+load('BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0001/gt4.mat')
+load('BRATS_HG0001/gt4.mat')
 
 im = double(im);
-im = image_adjustment(im,0,0,1,2);
+% im = image_adjustment(im,0,0,1,2);
 label = double(gt4);
 %% Pre-process the data:
 % Training data in [n,d] struct where:
@@ -33,6 +33,18 @@ for i=1:numChannels
 %     dataMatrix(:,i) = modeImg(modeImg>minMode);
 end
 end
+
+%% moltimodal - only T2 and FLAIR:
+[H, W, D, C] = size(im);
+dataMatrix = zeros(H*W*D,2);
+modeImg = im(:,:,:,2);
+maxMode = max(modeImg(:));
+dataMatrix(:,1) = modeImg(:) / maxMode;
+modeImg = im(:,:,:,4);
+maxMode = max(modeImg(:));
+dataMatrix(:,2) = modeImg(:) / maxMode;
+
+
 %% Train GMM:
 gm = fitgmdist(dataMatrix,3,'RegularizationValue',0.001,'Options',statset('MaxIter',400));
 
@@ -96,4 +108,14 @@ figure; imagesc(segMetrix(:,:,80)); colorbar;
 %% Evaluate the segmentation:
 predict = zeros(size(segMetrix));
 predict(segMetrix==1) = 1;
-diceScore = dice(predict,label)
+predict = cleanSegmentaionMask(predict,30);
+diceScore = dice(predict,label);
+
+%% Print boundries:
+B = bwboundaries(predict(:,:,80));
+L = bwboundaries(label(:,:,80));
+im_n = im(:,:,:,3);
+im_n = im_n / max(im_n(:));
+figure; imshow(im_n(:,:,80));hold on; visboundaries(B);visboundaries(L,'Color','b');
+diceScore = dice(label,predict);
+title(['Prediction vs. ground true, dice: ', num2str(diceScore),' :']);

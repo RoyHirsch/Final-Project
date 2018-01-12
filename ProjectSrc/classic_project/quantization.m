@@ -5,14 +5,14 @@
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0001/dataBN.mat','im')
+load('BRATS_HG0003/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0001/gt4.mat')
+load('BRATS_HG0003/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
 
-zSlice = 80;
+zSlice = 100;
 im = double(im);
 thr = exp(-4);
 
@@ -139,7 +139,7 @@ avarageSpeceScore = sum(specificityArray) / numOfExamples;
 
 %% 4,7,8,(12),14,15
 
-i=12
+i=4
 [diceScore, predict] = quantizationT2andFLSegmentation(data(i).f,label(i).f);
 predictClean = cleanSegmentaionMask(predict,30);
 labels = double(label(i).f);
@@ -147,10 +147,13 @@ labels(labels~=0) = 1;
 
 figure; imshow3D(predict);
 figure; imshow3D(labels);
-figure; imshow3D(predictClean);
+% figure; imshow3D(predictClean);
 %%
-
+i=1
 datas = data(i).f;
 mod = datas(:,:,:,4);
 mod = mod / max(mod(:));
 figure; imshow3D(mod);
+mod2 = datas(:,:,:,2);
+mod2 = mod2 / max(mod2(:));
+figure; imshow3D(mod2);

@@ -4,11 +4,10 @@
 
 clear all;
 addpath(genpath('/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc'))
-addpath(genpath('/Users/royhirsch/Downloads/Chan-Vese'))
 % load the image matrix named Im
-load('/Data/BRATS_HG0001/dataBN.mat','im')
+load('BRATS_HG0001/dataBN.mat','im')
 % load the label matrix, named gt4
-load('/Data/BRATS_HG0001/gt4.mat')
+load('BRATS_HG0001/gt4.mat')
 
 label = double(gt4);
 label(label~=0) = 1;
@@ -22,6 +21,30 @@ imT1 = im(:,:,:,1);
 imT2 = im(:,:,:,2);
 imT1g = im(:,:,:,3);
 imFL = im(:,:,:,4);
+
+%% 
+max1 = max(imT1(:));
+imT1 = imT1 / max1;
+imT1(imT1<thr) = 0;
+
+max2 = max(imT2(:));
+imT2 = imT2 / max2;
+imT2(imT2<thr) = 0;
+
+max3 = max(imT1g(:));
+imT1g = imT1g / max3;
+imT1g(imT1g<thr) = 0;
+
+max4 = max(imFL(:));
+imFL = imFL / max4;
+imFL(imFL<thr) = 0;
+
+figure;
+subplot(1,4,1);imshow(imT1(:,:,80));title('T1');
+subplot(1,4,2);imshow(imT2(:,:,80));title('T2');
+subplot(1,4,3);imshow(imT1g(:,:,80));title('T1g');
+subplot(1,4,4);imshow(imFL(:,:,80));title('FLAIR');
+
 
 %%
 slice = imT2(:,:,80);
