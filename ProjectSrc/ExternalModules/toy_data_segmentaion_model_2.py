@@ -49,14 +49,9 @@ def load_labels(rootDir, maxNum = 2000, isResize = True):
 				img = img/255 # normalize
 				if isResize:
 					img = ski.resize(img, [64,64])
-				class_1 = np.zeros(np.shape(img))
-				class_2 = np.zeros(np.shape(img))
-				class_1[img >= 0.5] = 1  # binary image
-				class_1[img < 0.5] = 0
-				class_2[img <= 0.5] = 1  # binary image
-				class_2[img > 0.5] = 0
-				classes = np.stack((class_1, class_2),axis=2)
-				ytrain.append(classes)
+				classImg = np.zeros(np.shape(img))
+				classImg[img >= 0.5] = 1  # binary image
+				ytrain.append(classImg)
 				ind += 1
 				if ind >= maxNum:
 					return ytrain
@@ -87,17 +82,17 @@ print('Test set', np.shape(test_dataset), np.shape(test_labels))
 
 # plt.imshow(data[0], cmap='gray')
 # plt.show()
-# tmp = label[0]
-# plt.imshow(tmp[:,:,0], cmap='gray')
-# plt.show()
-# plt.imshow(tmp[:,:,1], cmap='gray')
+# plt.imshow(label[0], cmap='gray')
 # plt.show()
 
+
 image_size = 64
-num_labels = 2
+num_labels = 1
 num_channels = 1 # grayscale
 
 def accuracy(predictions, labels):
+	predict_matrix = np.zeros(np.size(predictions))
+	predict_matrix[predictions > np.mean(predictions)] = 1
 	tmp = np.equal(np.argmax(predictions, 3), np.argmax(labels, 3))
 	return np.mean(tmp)
 	# return (100.0 * np.sum(np.argmax(predictions, 3) == np.argmax(labels, 3))
@@ -208,19 +203,14 @@ with graph.as_default():
                 print('Minibatch accuracy: %.3f%%' % accuracy(predictions, batch_labels))
                 prediction = valid_prediction.eval()
                 print('Validation accuracy: %.3f%%' % accuracy(prediction, valid_labels))
-                f, (ax1, ax2, ax3) = plt.subplots(3)
+                f, (ax1, ax2) = plt.subplots(2)
                 ax1.imshow(valid_labels[0][:, :, 0], cmap='gray')
                 ax1.set_title('ground truth:')
-                tmp0 = prediction[0][:, :, 0]
+                tmp0 = prediction[0]
                 res = np.zeros(np.shape(tmp0))
                 res[tmp0 >= np.mean(tmp0)] = 1
                 ax2.imshow(res, cmap='gray')
                 ax2.set_title('prediction: class 0: figure')
-                tmp1 = prediction[0][:, :, 1]
-                res = np.zeros(np.shape(tmp1))
-                res[tmp1 >= np.mean(tmp1)] = 1
-                ax3.imshow(res, cmap='gray')
-                ax3.set_title('prediction: class 1: background')
                 plt.show()
 
         print('Test accuracy: %.3f%%' % accuracy(test_prediction.eval(), test_labels))

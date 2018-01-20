@@ -7,6 +7,9 @@ import matplotlib.image as mpimg
 import pickle
 import sys
 
+ROOT_DIR = os.path.realpath(__file__ + "/../../")
+
+
 def get_image_from_mat_file(dir =""):
     mat = spio.loadmat(dir, squeeze_me=True)
     im = mat['im']
@@ -21,7 +24,7 @@ def get_labels_from_mat_file (dir =""):
     img = mat['gt4']
     return img
 
-def get_data_and_labels_from_folder(dir ='/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/Data'):
+def get_data_and_labels_from_folder(dir = ROOT_DIR+'/Data'):
     """
         Extracts all the BARTS data and labels
 
