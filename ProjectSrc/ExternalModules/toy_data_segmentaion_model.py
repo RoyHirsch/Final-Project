@@ -85,13 +85,13 @@ print('Training set', np.shape(train_dataset), np.shape(train_labels))
 print('Validation set', np.shape(valid_dataset), np.shape(valid_labels))
 print('Test set', np.shape(test_dataset), np.shape(test_labels))
 
-# plt.imshow(data[0], cmap='gray')
-# plt.show()
-# tmp = label[0]
-# plt.imshow(tmp[:,:,0], cmap='gray')
-# plt.show()
-# plt.imshow(tmp[:,:,1], cmap='gray')
-# plt.show()
+plt.imshow(data[0], cmap='gray')
+plt.show()
+tmp = label[0]
+plt.imshow(tmp[:,:,0], cmap='gray')
+plt.show()
+plt.imshow(tmp[:,:,1], cmap='gray')
+plt.show()
 
 image_size = 64
 num_labels = 2

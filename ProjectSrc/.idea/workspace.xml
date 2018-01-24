@@ -14,99 +14,41 @@
       <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="310" column="0" lean-forward="false" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fromnumeric.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
+      <file leaf-file-name="gen_nn_ops.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/ops/gen_nn_ops.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15844">
-              <caret line="943" column="4" lean-forward="false" selection-start-line="943" selection-start-column="4" selection-end-line="943" selection-end-column="4" />
+            <state relative-caret-position="173">
+              <caret line="393" column="0" lean-forward="false" selection-start-line="393" selection-start-column="0" selection-end-line="393" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loadData.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utilities/loadData.py">
+      <file leaf-file-name="layers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ExternalModules/network_skeleton/layers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="30" column="40" lean-forward="false" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+            <state relative-caret-position="51">
+              <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="netLuancher.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ExternalModules/network_skeleton/netLuancher.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="778">
+              <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
-                <element signature="e#248#457#0" expanded="false" />
-                <element signature="e#503#579#0" expanded="false" />
-                <element signature="e#1660#1904#0" expanded="false" />
-                <element signature="e#1958#2226#0" expanded="false" />
-                <element signature="e#2296#2652#0" expanded="false" />
-                <element signature="e#2686#2888#0" expanded="false" />
-                <element signature="e#2938#3523#0" expanded="false" />
-                <element signature="e#3551#3601#0" expanded="false" />
+                <element signature="e#0#55#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ops.py" pinned="false" current-in-tab="true">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="540" column="0" lean-forward="false" selection-start-line="540" selection-start-column="0" selection-end-line="540" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pydevd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26537">
-              <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="session.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="889" column="0" lean-forward="false" selection-start-line="889" selection-start-column="0" selection-end-line="889" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tensor_util.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/framework/tensor_util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6137">
-              <caret line="371" column="45" lean-forward="false" selection-start-line="371" selection-start-column="45" selection-end-line="371" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="toy_data_segmentaion_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
-              <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="toy_data_segmentaion_model_2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -129,19 +71,28 @@
       <find>hidden_2</find>
       <find>layer3_weights</find>
       <find>valid_labels</find>
-      <find>acc</find>
       <find>valid_la</find>
       <find>train_num</find>
       <find>train_dataset</find>
       <find>AxesSubplot</find>
       <find>newSize</find>
-      <find>resi</find>
       <find>batchNumer</find>
       <find>normalizeData</find>
+      <find>resi</find>
+      <find>plt</find>
+      <find>max_</find>
+      <find>in_node</find>
+      <find>dice</find>
+      <find>acc</find>
+      <find>accura</find>
+      <find>correct_predcorrect_pred</find>
+      <find>ma</find>
+      <find>num_labels</find>
     </findStrings>
     <replaceStrings>
       <replace>data.valSamples</replace>
       <replace>data.valLabels</replace>
+      <replace>NUM_LABELS</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -151,17 +102,24 @@
         <option value="$PROJECT_DIR$/Utilities/test_segmentaion_model.py" />
         <option value="$PROJECT_DIR$/test_segmentaion_model.py" />
         <option value="$PROJECT_DIR$/Utilities/test_face_segmentaion.py" />
-        <option value="$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py" />
-        <option value="$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py" />
         <option value="$PROJECT_DIR$/Utilities/loadData.py" />
         <option value="$PROJECT_DIR$/Utilities/pipline.py" />
+        <option value="$PROJECT_DIR$/Utilities/DataPipline.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/layers.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/loadData.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/netLuancher.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/network_skeleton/loadData.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/network_skeleton/layers.py" />
+        <option value="$PROJECT_DIR$/ExternalModules/network_skeleton/netLuancher.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="953" />
+    <option name="height" value="943" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -198,7 +156,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,12 +171,39 @@
             <path>
               <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
+              <item name="ExternalModules" type="462c0819:PsiDirectoryNode" />
+              <item name="network_skeleton" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
+              <item name="ExternalModules" type="462c0819:PsiDirectoryNode" />
+              <item name="tf_unet-master" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
+              <item name="ExternalModules" type="462c0819:PsiDirectoryNode" />
+              <item name="tf_unet-master" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
+              <item name="ExternalModules" type="462c0819:PsiDirectoryNode" />
+              <item name="tf_unet-master" type="462c0819:PsiDirectoryNode" />
+              <item name="tf_unet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
               <item name="Utilities" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -227,7 +211,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ExternalModules/network_skeleton" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ExternalModules/network_skeleton" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -243,7 +231,41 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.pipline">
+  <component name="RunManager" selected="Python.netLuancher">
+    <configuration name="DataPipline" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Utilities" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ProjectSrc" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Utilities/DataPipline.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="netLuancher" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ExternalModules/network_skeleton" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ProjectSrc" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ExternalModules/network_skeleton/netLuancher.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="pipline" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -257,40 +279,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ProjectSrc" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Utilities/pipline.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="test_face_segmentaion" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Utilities" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ProjectSrc" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Utilities/test_face_segmentaion.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="test_segmentaion_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ProjectSrc" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_segmentaion_model.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -331,18 +319,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.pipline" />
-      <item index="1" class="java.lang.String" itemvalue="Python.test_segmentaion_model" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test_face_segmentaion" />
-      <item index="3" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model" />
-      <item index="4" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model_2" />
+      <item index="1" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model" />
+      <item index="2" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model_2" />
+      <item index="3" class="java.lang.String" itemvalue="Python.DataPipline" />
+      <item index="4" class="java.lang.String" itemvalue="Python.netLuancher" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.pipline" />
+        <item index="0" class="java.lang.String" itemvalue="Python.netLuancher" />
         <item index="1" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model_2" />
         <item index="2" class="java.lang.String" itemvalue="Python.toy_data_segmentaion_model" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test_face_segmentaion" />
-        <item index="4" class="java.lang.String" itemvalue="Python.test_segmentaion_model" />
+        <item index="3" class="java.lang.String" itemvalue="Python.DataPipline" />
+        <item index="4" class="java.lang.String" itemvalue="Python.pipline" />
       </list>
     </recent_temporary>
   </component>
@@ -360,18 +348,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="953" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="943" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24345239" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32146958" sideWeight="0.50238097" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39727584" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39724454" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3757094" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37543055" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -379,7 +368,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -391,23 +379,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py</url>
-          <line>198</line>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py</url>
           <line>173</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Utilities/pipline.py</url>
-          <line>282</line>
-          <option name="timeStamp" value="112" />
+          <url>file://$PROJECT_DIR$/ExternalModules/network_skeleton/netLuancher.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="132" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -417,16 +395,38 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="114" />
+      <option name="time" value="133" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="96" column="14" lean-forward="true" selection-start-line="96" selection-start-column="14" selection-end-line="96" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#383#841#0" expanded="false" />
+            <element signature="e#902#1565#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="55" lean-forward="false" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#215#324#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/ops/array_ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8007">
           <caret line="493" column="0" lean-forward="false" selection-start-line="493" selection-start-column="0" selection-end-line="493" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -442,7 +442,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15844">
           <caret line="943" column="4" lean-forward="false" selection-start-line="943" selection-start-column="4" selection-end-line="943" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -451,9 +450,10 @@
         <state relative-caret-position="425">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="49" selection-end-column="25" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="false" />
             <element signature="e#248#457#0" expanded="false" />
             <element signature="e#503#579#0" expanded="false" />
+            <element signature="e#646#1600#0" expanded="false" />
             <element signature="e#1660#1904#0" expanded="false" />
             <element signature="e#1958#2226#0" expanded="false" />
             <element signature="e#2296#2652#0" expanded="false" />
@@ -468,34 +468,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#56#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#1340#1827#0" expanded="false" />
-            <element signature="e#1886#2229#0" expanded="false" />
-            <element signature="e#2276#2444#0" expanded="false" />
-            <element signature="e#2501#2866#0" expanded="false" />
-            <element signature="e#2918#3337#0" expanded="false" />
-            <element signature="e#3391#3582#0" expanded="false" />
-            <marker date="1516443819000" expanded="true" signature="10695:10861" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26537">
           <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -511,7 +491,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="13" lean-forward="true" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#383#841#0" expanded="false" />
+            <element signature="e#902#1565#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -519,7 +503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8007">
           <caret line="493" column="0" lean-forward="false" selection-start-line="493" selection-start-column="0" selection-end-line="493" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -535,7 +518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27931">
           <caret line="1654" column="0" lean-forward="false" selection-start-line="1654" selection-start-column="0" selection-end-line="1654" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -544,9 +526,10 @@
         <state relative-caret-position="425">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="49" selection-end-column="25" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="false" />
             <element signature="e#248#457#0" expanded="false" />
             <element signature="e#503#579#0" expanded="false" />
+            <element signature="e#646#1600#0" expanded="false" />
             <element signature="e#1660#1904#0" expanded="false" />
             <element signature="e#1958#2226#0" expanded="false" />
             <element signature="e#2296#2652#0" expanded="false" />
@@ -561,34 +544,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#56#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="226" column="0" lean-forward="false" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#1340#1827#0" expanded="false" />
-            <element signature="e#1886#2229#0" expanded="false" />
-            <element signature="e#2276#2444#0" expanded="false" />
-            <element signature="e#2501#2866#0" expanded="false" />
-            <element signature="e#2918#3337#0" expanded="false" />
-            <element signature="e#3391#3582#0" expanded="false" />
-            <marker date="1516443819000" expanded="true" signature="10695:10861" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26537">
           <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -606,9 +569,10 @@
         <state relative-caret-position="1207">
           <caret line="78" column="33" lean-forward="true" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="33" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="false" />
             <element signature="e#248#457#0" expanded="false" />
             <element signature="e#503#579#0" expanded="false" />
+            <element signature="e#646#1600#0" expanded="false" />
             <element signature="e#1660#1904#0" expanded="false" />
             <element signature="e#1958#2226#0" expanded="false" />
             <element signature="e#2296#2652#0" expanded="false" />
@@ -619,30 +583,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="36" column="24" lean-forward="false" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#1340#1827#0" expanded="false" />
-            <element signature="e#1886#2229#0" expanded="false" />
-            <element signature="e#2276#2444#0" expanded="false" />
-            <element signature="e#2501#2866#0" expanded="false" />
-            <element signature="e#2918#3337#0" expanded="false" />
-            <element signature="e#3391#3582#0" expanded="false" />
-            <marker date="1516443819000" expanded="true" signature="10695:10861" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py" />
     <entry file="file://$PROJECT_DIR$/Utilities/N4_bias_correction.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#56#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -650,424 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1093">
           <caret line="587" column="0" lean-forward="false" selection-start-line="587" selection-start-column="0" selection-end-line="587" selection-end-column="0" />
-          <folding>
-            <marker date="1515315893000" expanded="true" signature="41943:42026" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="42046:42310" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="42051:42188" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="42343:43573" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="42348:43526" ph="&quot;&quot;&quot;Set a title of the current axes....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="43611:45404" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="43616:45368" ph="&quot;&quot;&quot;Convenience method to get or set axis properties....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="45438:45866" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="45443:45818" ph="&quot;&quot;&quot;Set the *x* axis label of the current axis....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="45900:46375" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="45905:46327" ph="&quot;&quot;&quot;Set the *y* axis label of the current axis....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="46404:47099" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="46409:46969" ph="&quot;&quot;&quot;Get or set the *x* limits of the current axes....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="47128:47826" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="47133:47696" ph="&quot;&quot;&quot;Get or set the *y*-limits of the current axes....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="47883:48153" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="47888:48115" ph="&quot;&quot;&quot;Set the scaling of the *x*-axis....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="48210:48480" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="48215:48442" ph="&quot;&quot;&quot;Set the scaling of the *y*-axis....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="48511:49647" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="48516:49128" ph="&quot;&quot;&quot;Get or set the *x*-limits of the current tick locations and labels....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="49165:49234" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="49257:49333" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="49356:49449" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="49536:49590" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="49678:50845" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="49683:50295" ph="&quot;&quot;&quot;Get or set the *y*-limits of the current tick locations and labels....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="50332:50401" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50424:50500" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50523:50616" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50703:50757" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50773:50830" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50868:51076" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="50873:51050" ph="&quot;&quot;&quot;Display minor ticks on the current plot....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="51100:51189" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="51105:51162" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="51220:52637" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="51225:52241" ph="&quot;&quot;&quot;Get or set the radial gridlines on a polar plot....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="52380:52464" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="52544:52635" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="52672:54668" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="52677:54250" ph="&quot;&quot;&quot;Get or set the theta locations of the gridlines in a polar plot....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="54389:54473" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="54556:54654" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="54707:54716" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="54743:55626" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="54748:54814" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="54819:55047" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="55084:55252" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="55415:55597" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="55661:56819" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="55666:56810" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="56838:67758" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="56843:67729" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="67797:69320" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="67802:68007" ph="&quot;&quot;&quot;Generates the plotting and docstring....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="68079:68209" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="68327:68412" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="68489:68887" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="68576:68724" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69004:69089" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69145:69257" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69177:69254" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69441:69910" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69466:69797" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69520:69797" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="69552:69796" ph="'...'" />
-            <marker date="1515315893000" expanded="true" signature="69996:70518" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="70001:70375" ph="&quot;&quot;&quot;Set the color limits of the current image....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="70540:70993" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="70545:70866" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="71057:71093" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="71156:71192" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="71229:72693" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="71234:72354" ph="&quot;&quot;&quot;Display an array as a matrix in a new figure window....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="72447:72636" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="72723:73283" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="72728:72934" ph="&quot;&quot;&quot;Make a polar plot....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="73027:73208" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="73072:73208" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="73099:73207" ph="'...'" />
-            <marker date="1515315893000" expanded="true" signature="73463:77546" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="73468:75715" ph="&quot;&quot;&quot;Plot the data in a file....&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="76101:76460" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="76293:76376" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="76538:76719" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="76729:77432" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="76780:77432" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="76805:76970" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="77578:77892" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="77894:77991" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="78102:78665" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="78276:78468" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="78667:78963" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="78992:79164" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79242:79702" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79262:79349" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79398:79590" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79704:79795" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79966:80524" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="79986:80073" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80122:80314" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80323:80468" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80526:80617" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80695:81155" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80715:80802" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="80851:81043" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="81157:81248" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="81337:81812" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="81357:81444" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="81493:81685" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="81814:81905" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82001:82483" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82021:82108" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82157:82349" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82485:82576" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82665:83140" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82685:82772" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="82821:83013" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83142:83233" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83329:83811" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83349:83436" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83485:83677" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83813:83904" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83960:84446" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="83980:84067" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="84151:84343" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="84448:84539" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="84597:85084" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="84617:84704" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="84788:84980" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="85086:85177" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="85281:85761" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="85301:85388" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="85437:85629" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="85763:85854" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="86385:87634" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="86405:86492" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="86541:86733" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="86742:87578" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="87636:87727" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="87971:88640" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="87991:88078" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88127:88319" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88328:88584" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88642:88733" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88799:89292" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88819:88906" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="88990:89182" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="89294:89385" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="89449:89974" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="89469:89556" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="89640:89832" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="89976:90067" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90133:90659" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90153:90240" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90324:90516" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90661:90752" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90979:91661" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="90999:91086" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="91135:91327" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="91336:91605" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="91663:91754" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="92058:92867" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="92078:92165" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="92214:92406" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="92415:92811" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="92869:92960" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="93188:93877" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="93208:93295" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="93344:93536" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="93545:93821" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="93879:93970" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94028:94515" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94048:94135" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94219:94411" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94517:94608" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94769:95356" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94789:94876" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="94925:95117" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95126:95300" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95358:95449" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95613:96172" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95633:95720" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95769:95961" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="95970:96116" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="96174:96265" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="96621:97473" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="96641:96728" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="96777:96969" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="96978:97405" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="97475:97566" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="97880:98662" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="97900:97987" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="98036:98228" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="98237:98606" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="98664:98755" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="98920:99526" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="98940:99027" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99076:99268" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99277:99454" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99528:99619" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99764:100312" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99784:99871" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="99920:100112" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="100121:100256" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="100314:100405" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="100711:101533" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="100731:100818" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="100867:101059" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="101068:101465" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="101535:101626" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="101688:102177" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="101708:101795" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="101879:102071" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="102179:102270" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="102465:103080" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="102485:102572" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="102621:102813" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="102822:103024" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103082:103173" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103235:103736" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103255:103342" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103426:103618" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103738:103829" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103899:104404" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="103919:104006" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="104090:104282" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="104406:104497" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="104668:105226" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="104688:104775" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="104824:105016" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105025:105170" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105228:105319" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105641:106491" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105661:105748" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105797:105989" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="105998:106435" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="106493:106584" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="106642:107129" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="106662:106749" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="106833:107025" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107131:107222" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107368:107904" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107388:107475" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107524:107716" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107725:107848" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="107906:107997" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="108221:108900" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="108241:108328" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="108377:108569" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="108578:108844" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="108902:108993" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109051:109544" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109071:109158" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109238:109430" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109546:109637" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109701:110185" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109721:109808" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="109888:110080" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="110187:110278" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="110518:111211" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="110538:110625" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="110674:110866" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="110875:111143" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="111213:111304" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="111370:111861" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="111390:111477" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="111561:111753" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="111863:111954" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112020:112511" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112040:112127" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112211:112403" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112513:112604" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112913:113703" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="112933:113020" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="113069:113261" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="113270:113631" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="113705:113796" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="113867:114362" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="113887:113974" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="114058:114250" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="114364:114455" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="114513:115000" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="114533:114620" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="114704:114896" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="115002:115093" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="115157:115650" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="115177:115264" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="115348:115540" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="115652:115743" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="116075:117020" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="116095:116182" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="116231:116423" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="116432:116946" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117022:117113" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117183:117711" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117203:117290" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117374:117566" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117713:117804" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117876:118405" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="117896:117983" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="118067:118259" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="118407:118498" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="118566:119070" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="118586:118673" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="118757:118949" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="119072:119163" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="119227:119717" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="119247:119334" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="119418:119610" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="119719:119810" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120045:120744" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120065:120152" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120201:120393" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120402:120688" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120746:120837" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="120982:121530" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121002:121089" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121138:121330" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121339:121474" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121532:121623" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121782:122361" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121802:121889" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="121938:122130" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122139:122305" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122363:122454" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122510:122990" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122530:122617" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122697:122889" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="122992:123083" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123127:123164" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123166:123257" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123347:123422" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123424:123515" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123580:123635" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123637:123728" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123784:123831" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="123833:123924" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124018:124111" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124113:124204" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124273:124330" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124332:124423" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124501:124559" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124561:124652" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124751:124831" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="124833:124924" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125005:125069" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125071:125162" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125225:125277" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125279:125370" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125462:125542" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125544:125635" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125649:125885" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125654:125784" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="125888:125979" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125991:126221" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="125996:126124" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="126224:126315" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="126327:126557" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="126332:126460" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="126560:126651" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="126665:126901" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="126670:126800" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="126904:126995" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127007:127237" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127012:127140" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="127240:127331" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127343:127573" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127348:127476" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="127576:127667" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127678:127905" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="127683:127810" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="127908:127999" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128010:128237" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128015:128142" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="128240:128331" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128342:128569" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128347:128474" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="128572:128663" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128675:128905" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="128680:128808" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="128908:128999" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129012:129245" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129017:129146" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="129248:129339" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129353:129589" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129358:129488" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="129592:129683" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129697:129933" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="129702:129832" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="129936:130027" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130041:130277" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130046:130176" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="130280:130371" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130384:130617" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130389:130518" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="130620:130711" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130726:130965" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="130731:130862" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="130968:131059" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="131073:131309" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="131078:131208" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="131312:131403" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="131418:131657" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="131423:131554" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1515315893000" expanded="true" signature="131660:131751" ph="..." />
-            <marker date="1515315893000" expanded="true" signature="131777:131914" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1083,7 +610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8007">
           <caret line="493" column="0" lean-forward="false" selection-start-line="493" selection-start-column="0" selection-end-line="493" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1091,9 +617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#56#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1103,15 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26537">
           <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15844">
-          <caret line="943" column="4" lean-forward="false" selection-start-line="943" selection-start-column="4" selection-end-line="943" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1127,23 +641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="889" column="0" lean-forward="false" selection-start-line="889" selection-start-column="0" selection-end-line="889" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="310" column="0" lean-forward="false" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1151,26 +648,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py">
+    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py" />
+    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="-6327">
+          <caret line="540" column="0" lean-forward="false" selection-start-line="540" selection-start-column="0" selection-end-line="540" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="943" column="4" lean-forward="false" selection-start-line="943" selection-start-column="4" selection-end-line="943" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Utilities/loadData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="30" column="40" lean-forward="false" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+        <state relative-caret-position="85">
+          <caret line="12" column="27" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="27" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="false" />
             <element signature="e#248#457#0" expanded="false" />
             <element signature="e#503#579#0" expanded="false" />
+            <element signature="e#646#1600#0" expanded="false" />
             <element signature="e#1660#1904#0" expanded="false" />
             <element signature="e#1958#2226#0" expanded="false" />
             <element signature="e#2296#2652#0" expanded="false" />
@@ -1181,28 +685,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/pipline.py">
+    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model_2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="85" selection-end-column="10" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#1340#1827#0" expanded="false" />
-            <element signature="e#1886#2229#0" expanded="false" />
-            <element signature="e#2276#2444#0" expanded="false" />
-            <element signature="e#2501#2866#0" expanded="false" />
-            <element signature="e#2918#3337#0" expanded="false" />
-            <element signature="e#3391#3582#0" expanded="false" />
-            <marker date="1516443819000" expanded="true" signature="10695:10861" ph="..." />
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#215#324#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
+    <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/layers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="540" column="0" lean-forward="false" selection-start-line="540" selection-start-column="0" selection-end-line="540" selection-end-column="0" />
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#83#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/image_util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2217">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/DataPipline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4675">
+          <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#32#0" expanded="false" />
+            <element signature="e#8762#8957#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/network_skeleton/loadData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="31" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="31" />
+          <folding>
+            <element signature="e#129#238#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="41" column="22" lean-forward="false" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/unet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="199" column="78" lean-forward="false" selection-start-line="199" selection-start-column="24" selection-end-line="199" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/toy_data_segmentaion_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="113" column="0" lean-forward="false" selection-start-line="110" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#383#841#0" expanded="false" />
+            <element signature="e#902#1565#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/ops/gen_nn_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="393" column="0" lean-forward="false" selection-start-line="393" selection-start-column="0" selection-end-line="393" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/network_skeleton/layers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/network_skeleton/netLuancher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -80,10 +80,10 @@ print('Training set', np.shape(train_dataset), np.shape(train_labels))
 print('Validation set', np.shape(valid_dataset), np.shape(valid_labels))
 print('Test set', np.shape(test_dataset), np.shape(test_labels))
 
-# plt.imshow(data[0], cmap='gray')
-# plt.show()
-# plt.imshow(label[0], cmap='gray')
-# plt.show()
+plt.imshow(data[0], cmap='gray')
+plt.show()
+plt.imshow(label[0], cmap='gray')
+plt.show()
 
 
 image_size = 64

@@ -24,9 +24,15 @@ class DataPipline(object):
                MOD_LIST = ['T1', 'T2', 'T1g', 'FLAIR']
         :param optionsDict: additional options dictionary:
                {'zeroPadding': bool ,'paddingSize': int ,'normType': ['reg', 'clip'] }
+
+               Class attributes:
         '''
 
         print('\n#### -------- DataPipline object was created -------- ####\n')
+
+        self.trainNumberList = []
+        self.valNumberList = []
+        self.testNumberList = []
         self.batchesDict = {}
         self.modalityList = modalityList
         self.optionsDict = optionsDict
@@ -41,10 +47,6 @@ class DataPipline(object):
         '''
             randomly selects the data samples to each list.
         '''
-
-        self.trainNumberList = []
-        self.valNumberList = []
-        self.testNumberList = []
 
         list = np.random.permutation(MAX_SAMPLES).tolist()
         for _ in range(numTrain):
@@ -211,7 +213,6 @@ class DataPipline(object):
         print('\nPipline object parameters:\n"')
         pprint.pprint(self.optionsDict)
 
-
     def get_train_dataset_and_labels(self):
         return self.trainSamples, self.trainLabels
 
@@ -242,31 +243,34 @@ class DataPipline(object):
 
 # ---- Help Functions ---- #
 
-def print_img_statistics(img):
-    modalities = ['T1', 'T2', 'T1g', 'FLAIR']
-    for i in range(0, 4):
-        print('Image modality: ' + modalities[i] + ': Mean: ' +
-              str(np.mean(img[:, :, :, i])) + ' Variance: ' + str(np.std(img[:, :, :, i])))
-        print('Image max: ' + str(np.max(img)) + ' Image min: ' + str(np.min(img)))
+    @staticmethod
+    def print_img_statistics(img):
+        modalities = ['T1', 'T2', 'T1g', 'FLAIR']
+        for i in range(0, 4):
+            print('Image modality: ' + modalities[i] + ': Mean: ' +
+                  str(np.mean(img[:, :, :, i])) + ' Variance: ' + str(np.std(img[:, :, :, i])))
+            print('Image max: ' + str(np.max(img)) + ' Image min: ' + str(np.min(img)))
 
-def print_histogram(img):
+    @staticmethod
+    def print_histogram(img):
 
-    counts, bins = np.histogram(img.ravel(), bins=255)
-    # plt.bar(bins[1:-1],counts[1:])
-    plt.bar(bins[:-1], counts)
-    plt.show()
+        counts, bins = np.histogram(img.ravel(), bins=255)
+        # plt.bar(bins[1:-1],counts[1:])
+        plt.bar(bins[:-1], counts)
+        plt.show()
 
-def print_multimodal_image(img, slice):
-    fig = plt.figure()
-    plt.subplot(2, 2, 1)
-    plt.imshow(img[:, :, slice, 0], cmap='gray')
-    plt.subplot(2, 2, 2)
-    plt.imshow(img[:, :, slice, 1], cmap='gray')
-    plt.subplot(2, 2, 3)
-    plt.imshow(img[:, :, slice, 2], cmap='gray')
-    plt.subplot(2, 2, 4)
-    plt.imshow(img[:, :, slice, 3], cmap='gray')
-    plt.show()
+    @staticmethod
+    def print_multimodal_image(img, slice):
+        fig = plt.figure()
+        plt.subplot(2, 2, 1)
+        plt.imshow(img[:, :, slice, 0], cmap='gray')
+        plt.subplot(2, 2, 2)
+        plt.imshow(img[:, :, slice, 1], cmap='gray')
+        plt.subplot(2, 2, 3)
+        plt.imshow(img[:, :, slice, 2], cmap='gray')
+        plt.subplot(2, 2, 4)
+        plt.imshow(img[:, :, slice, 3], cmap='gray')
+        plt.show()
 
 # ---- Test Code ---- #
 
