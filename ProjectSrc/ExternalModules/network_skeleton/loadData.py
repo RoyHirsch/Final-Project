@@ -2,7 +2,8 @@
 import numpy as np
 import os
 import re
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+from PIL import Image
 import skimage.transform as ski
 
 def rgb2gray(rgb):
@@ -20,7 +21,8 @@ def load_data(rootDir, maxNum = 2000, isResize = True):
 			# print(filename)
 			match = re.search(r'.*.jpg', fileName)
 			if match:
-				img = plt.imread(os.path.join(root, fileName))
+				img = np.array(Image.open(os.path.join(root, fileName)), np.float32)
+				# img = plt.imread(os.path.join(root, fileName))
 				if len(np.shape(img)) > 2:
 					img = rgb2gray(np.array(img))
 				img = img / 255 #normalize
@@ -40,7 +42,8 @@ def load_labels(rootDir, maxNum = 2000, isResize = True):
 			# print(filename)
 			match = re.search(r'.*.jpg', fileName)
 			if match:
-				img = plt.imread(os.path.join(root, fileName))
+				img = np.array(Image.open(os.path.join(root, fileName)), np.float32)
+				# img = plt.imread(os.path.join(root, fileName))
 				img = img/255 # normalize
 				if isResize:
 					img = ski.resize(img, [64,64])
