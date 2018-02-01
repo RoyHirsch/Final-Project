@@ -12,7 +12,7 @@ def weight_variable(shape, stddev=0.1):
 
 def weight_variable_devonc(shape, stddev=0.1):
     """
-    weight_variable = [POOL_SIZE, POOL_SIZE, out_channel ,in_channel]
+    weight_variable = [height, width, output_channels, in_channels]
     """
     return tf.Variable(tf.truncated_normal(shape, stddev=stddev))
 
@@ -40,7 +40,10 @@ def crop_and_concat(x1,x2):
     offsets = [0, (x1_shape[1] - x2_shape[1]) // 2, (x1_shape[2] - x2_shape[2]) // 2, 0]
     size = [-1, x2_shape[1], x2_shape[2], -1]
     x1_crop = tf.slice(x1, offsets, size)
-    return tf.concat([x1_crop, x2], 3)   
+    return tf.concat([x1_crop, x2], 3)
+
+def concat(x1,x2):
+    return tf.concat([x1, x2], 3)
 
 def pixel_wise_softmax(output_map):
     exponential_map = tf.exp(output_map)

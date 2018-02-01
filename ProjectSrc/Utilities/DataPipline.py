@@ -57,15 +57,15 @@ class DataPipline(object):
             self.testNumberList.append(list.pop())
 
     def _normalize_image_modality(self, imgMod):
+        # mean 0 and std 1 per image
         if self.optionsDict['normType'] == 'clip':
             b, t = np.percentile(imgMod, (0.5, 99.5))
             imgMod = np.clip(imgMod, b, t)
         elif self.optionsDict['normType'] == 'reg':
             pass
-        minImg = np.min(imgMod)
-        maxImg = np.max(imgMod)
-        diff = maxImg - minImg
-        return (imgMod - minImg) / diff
+        mean = np.mean(imgMod)
+        var = np.std(imgMod)
+        return (imgMod - mean) / var
 
     def _normalize_image(self, img):
         normImg = np.zeros(np.shape(img))
@@ -203,7 +203,7 @@ class DataPipline(object):
         print('\n\nPipline object properties:\n')
         print('Train dataset, samples number: ' + str(self.trainNumberList) + '\n' +
               'Shape of train dataset: ' + str(np.shape(self.trainSamples)) + '\n' +
-              'Shape of train labels: ' + str(np.shape(self.trainLabels)))
+              'Shape of train labe ls: ' + str(np.shape(self.trainLabels)))
         print('Validation dataset, samples number: ' + str(self.valNumberList) + '\n' +
               'Shape of val dataset: ' + str(np.shape(self.valSamples)) + '\n' +
               'Shape of val labels: ' + str(np.shape(self.valLabels)))

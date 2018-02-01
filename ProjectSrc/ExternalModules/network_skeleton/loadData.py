@@ -13,7 +13,7 @@ def rgb2gray(rgb):
 
     return gray
 
-def load_data(rootDir, maxNum = 2000, isResize = True):
+def load_data(rootDir, maxNum = 2000, isResize = False):
 	Xtrain = []
 	ind = 0
 	for root, dirs, files in os.walk(rootDir):
@@ -25,16 +25,18 @@ def load_data(rootDir, maxNum = 2000, isResize = True):
 				# img = plt.imread(os.path.join(root, fileName))
 				if len(np.shape(img)) > 2:
 					img = rgb2gray(np.array(img))
-				img = img / 255 #normalize
+				mean = np.mean(img)
+				var = np.std(img)
+				img = (img - mean) / var
 				if isResize:
 					img = ski.resize(img, [64,64])
 				Xtrain.append(img)
 				ind += 1
 				if ind >= maxNum:
 					return Xtrain
-	return Xtrain
+	return np.array(Xtrain)
 
-def load_labels(rootDir, maxNum = 2000, isResize = True):
+def load_labels(rootDir, maxNum = 2000, isResize = False):
 	ytrain = []
 	ind = 0
 	for root, dirs, files in os.walk(rootDir):
@@ -53,4 +55,4 @@ def load_labels(rootDir, maxNum = 2000, isResize = True):
 				ind += 1
 				if ind >= maxNum:
 					return ytrain
-	return ytrain
+	return np.array(ytrain)

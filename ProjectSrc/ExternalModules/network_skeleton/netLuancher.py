@@ -1,14 +1,13 @@
 from ExternalModules.network_skeleton.loadData import *
 from ExternalModules.network_skeleton.layers import *
-
-import tensorflow as ts
+import tensorflow as tf
 import tensorboard as tb
 import numpy as np
 import os
 
 # CONSTANTS:
 
-IMAGE_SIZE = 64
+IMAGE_SIZE = 128
 NUM_CHANNELS = 1
 NUM_LABELS = 1
 BATCH_SIZE = 32
@@ -55,7 +54,6 @@ with graph.as_default():
 	valid_dataset = tf.constant(valid_dataset, dtype=tf.float32)
 	test_dataset = tf.constant(test_dataset, dtype=tf.float32)
 
-
 	### ---------- Model ----------- ####
 
 	X = tf.placeholder(dtype=tf.float32, shape=[None, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS])
@@ -96,62 +94,65 @@ with graph.as_default():
 		max3 = max_pool(conv3_2, 2)  # [N, IMAGE_SIZE // 8, IMAGE_SIZE // 8, DEPTH * 4]
 
 		# unet_layer_4
-		W4_1 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 4, DEPTH * 4])
-		b4_1 = bias_variable([DEPTH * 4])
+		W4_1 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 4, DEPTH * 8])
+		b4_1 = bias_variable([DEPTH * 8])
 		conv4_1 = conv2d(max3, W4_1, b4_1)
+		W4_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 8, DEPTH * 8])
+		b4_2 = bias_variable([DEPTH * 8])
+		conv4_2 = conv2d(conv4_1, W4_2, b4_2)
 
 		# upsample
 
 		# unet_upsample_layer_1 (deconve - concat - conv - conv)
-		WD1_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, DEPTH*2, DEPTH*4])
-		bd1_1 = bias_variable([DEPTH*2])
-		dconv1_1 = deconv2d(conv4_1, WD1_1, bd1_1, POOL_SIZE)
-		concat1 = crop_and_concat(dconv1_1, conv3_2)
+		WD1_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, DEPTH*4, DEPTH*8])
+		bd1_1 = bias_variable([DEPTH*4])
+		dconv1_1 = deconv2d(conv4_2, WD1_1, bd1_1, POOL_SIZE)
+		concat1 = concat(conv3_2, dconv1_1)
 
-		WD1_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 4, DEPTH * 2])
-		bd1_2 = bias_variable([DEPTH * 2])
-		WD1_3 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 2, DEPTH * 2])
-		bd1_3 = bias_variable([DEPTH * 2])
+		WD1_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 8, DEPTH * 4])
+		bd1_2 = bias_variable([DEPTH * 4])
+		WD1_3 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 4, DEPTH * 4])
+		bd1_3 = bias_variable([DEPTH * 4])
 		dconv1_2 = conv2d(concat1, WD1_2, bd1_2)
 		dconv1_3 = conv2d(dconv1_2, WD1_3, bd1_3)
 
 		# unet_upsample_layer_2
-		WD2_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, DEPTH, DEPTH * 2])
-		bd2_1 = bias_variable([DEPTH])
+		WD2_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, DEPTH*2, DEPTH*4])
+		bd2_1 = bias_variable([DEPTH*2])
 		dconv2_1 = deconv2d(dconv1_3, WD2_1, bd2_1, POOL_SIZE)
-		concat2 = crop_and_concat(dconv2_1, conv2_2)
+		concat2 = concat(conv2_2, dconv2_1)
 
-		WD2_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH * 2, DEPTH])
-		bd2_2 = bias_variable([DEPTH])
-		WD2_3 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH, DEPTH])
-		bd2_3 = bias_variable([DEPTH])
+		WD2_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH*4, DEPTH*2])
+		bd2_2 = bias_variable([DEPTH*2])
+		WD2_3 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH*2, DEPTH*2])
+		bd2_3 = bias_variable([DEPTH*2])
 		dconv2_2 = conv2d(concat2, WD2_2, bd2_2)
 		dconv2_3 = conv2d(dconv2_2, WD2_3, bd2_3)
 
 		# unet_upsample_layer_3
-		WD3_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, NUM_CHANNELS, DEPTH])
-		bd3_1 = bias_variable([NUM_CHANNELS])
+		WD3_1 = weight_variable_devonc([POOL_SIZE, POOL_SIZE, DEPTH, DEPTH*2])
+		bd3_1 = bias_variable([DEPTH])
 		dconv3_1 = deconv2d(dconv2_3, WD3_1, bd3_1, POOL_SIZE)
-		concat3 = crop_and_concat(dconv3_1, conv1_2)
+		concat3 = concat(conv1_2, dconv3_1)
 
-		WD3_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH, NUM_CHANNELS])
+		WD3_2 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH*2, DEPTH])
 		bd3_2 = bias_variable([DEPTH])
 		WD3_3 = weight_variable([KERNEL_SIZE, KERNEL_SIZE, DEPTH, DEPTH])
 		bd3_3 = bias_variable([DEPTH])
 		dconv3_2 = conv2d(concat3, WD3_2, bd3_2)
-		dconv3_3 = conv2d(dconv2_2, WD3_3, bd3_3)
+		dconv3_3 = conv2d(dconv3_2, WD3_3, bd3_3)
 
 		# FC (conv with kernel of 1x1)
-		Wfc = weight_variable([1,1, DEPTH, NUM_LABELS])
+		Wfc = tf.Variable(tf.truncated_normal([1, 1, DEPTH, NUM_LABELS], stddev=1),name='Wfc')
+		# Wfc = weight_variable([1, 1, DEPTH, NUM_LABELS])
 		bfc = bias_variable([NUM_LABELS])
+		# return tf.nn.conv2d(dconv3_3, Wfc, strides=[1, 1, 1, 1], padding='SAME') + bfc
 		return conv2d(dconv3_3, Wfc, bfc)
+		# temp architecture TODO: FINISH ROY
 
 	logits = unet_model(X)
-
 	loss_train = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=logits))
-
-	optimizer = tf.train.GradientDescentOptimizer(0.1).minimize(loss_train)
-
+	optimizer = tf.train.GradientDescentOptimizer(0.01).minimize(loss_train)
 	train_prediction = tf.nn.softmax(logits)
 	valid_prediction = tf.nn.softmax(unet_model(valid_dataset))
 	test_prediction = tf.nn.softmax(unet_model(test_dataset))
@@ -159,14 +160,13 @@ with graph.as_default():
 	def diceScore(prediction, groundTruth):
 		tmp = np.zeros_like(prediction)
 		tmp[prediction > np.mean(prediction)] = 1
-		return 2*np.sum((tmp and groundTruth)) / np.sum(tmp + groundTruth)
+		return 2*np.sum((np.multiply(tmp, groundTruth))) / np.sum(tmp + groundTruth)
 
 	def accuracy(prediction, groundTruth):
 		tmp = np.zeros_like(prediction)
 		tmp[prediction > np.mean(prediction)] = 1
-		eq = tf.equal(tmp, groundTruth)
-		return tf.reduce_mean(tf.cast(eq, tf.float32))
-
+		eq = np.equal(tmp, groundTruth)
+		return np.mean(eq)
 
 num_steps = 300
 
@@ -176,14 +176,14 @@ with tf.Session(graph=graph) as session:
 	for step in range(num_steps):
 		ind = np.random.randint(0, train_num - 1, BATCH_SIZE)
 		batch_data = train_dataset[ind, :, :, :]
-		batch_labels = train_labels[ind, :]
+		batch_labels = train_labels[ind, :, :, :]
 		feed_dict = {X: batch_data, Y: batch_labels}
 		_, l, predictions = session.run(
 			[optimizer, loss_train, train_prediction], feed_dict=feed_dict)
-		if (step % 20 == 0):
+		if (step % 5 == 0):
 			print('Minibatch loss at step %d: %f' % (step, l))
 			print('Minibatch accuracy: %.3f%%' % accuracy(predictions, batch_labels))
-			print('Minibatch dice: %.3f%%' % diceScore(predictions, batch_labels))
+			# print('Minibatch dice: %.3f%' % diceScore(predictions, batch_labels))
 			prediction = valid_prediction.eval()
 			print('Validation accuracy: %.3f%%' % accuracy(prediction, valid_labels))
 	print('Test accuracy: %.3f%%' % accuracy(test_prediction.eval(), test_labels))

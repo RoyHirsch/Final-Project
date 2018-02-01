@@ -104,7 +104,7 @@ def accuracy(predictions, labels):
     #         / image_size*image_size)
 
 
-batch_size = 32
+batch_size = 64
 kernel_size = 7
 depth = 32
 
@@ -132,23 +132,39 @@ with graph.as_default():
         [kernel_size, kernel_size, num_channels, depth], stddev=0.1, name='W1'))
     b1 = tf.Variable(tf.zeros([depth]), name='b1')
 
+    W1_1 = tf.Variable(tf.truncated_normal(
+	    [kernel_size, kernel_size, depth, depth], stddev=0.1, name='W1_1'))
+    b1_1 = tf.Variable(tf.zeros([depth]), name='b1_1')
+
     W2 = tf.Variable(tf.truncated_normal(
         [kernel_size, kernel_size, depth, depth*2], stddev=0.1), name='W2')
     b2 = tf.Variable(tf.constant(1.0, shape=[depth*2]), name='b2')
+
+    W2_1 = tf.Variable(tf.truncated_normal(
+	    [kernel_size, kernel_size, depth * 2, depth * 2], stddev=0.1), name='W2_1')
+    b2_1 = tf.Variable(tf.constant(1.0, shape=[depth * 2]), name='b2_1')
 
     W3 = tf.Variable(tf.truncated_normal(
 	    [2, 2, depth, depth * 2], stddev=0.1),name='W3',dtype=tf.float32)
     b3 = tf.Variable(tf.constant(1.0, shape=[depth]),name='b3',dtype=tf.float32)
 
+    W3_1 = tf.Variable(tf.truncated_normal(
+	    [2, 2, depth, depth], stddev=0.1), name='W3_1', dtype=tf.float32)
+    b3_1 = tf.Variable(tf.constant(1.0, shape=[depth]), name='b3_1', dtype=tf.float32)
+
     W4 = tf.Variable(tf.truncated_normal(
-	    [2, 2, depth, depth], stddev=0.1), name='W3',dtype=tf.float32)
+	    [2, 2, depth, depth], stddev=0.1), name='W4',dtype=tf.float32)
     b4 = tf.Variable(tf.constant(1.0, shape=[depth]), name='b4',dtype=tf.float32)
+
+    W4_1 = tf.Variable(tf.truncated_normal(
+	    [2, 2, depth, depth], stddev=0.1), name='W4_1', dtype=tf.float32)
+    b4_1 = tf.Variable(tf.constant(1.0, shape=[depth]), name='b4_1', dtype=tf.float32)
 
     W5 = tf.Variable(tf.truncated_normal(
 	    [1, 1, depth, num_labels], stddev=0.1), name='W5',dtype=tf.float32)
     b5 = tf.Variable(tf.constant(1.0, shape=[num_labels]), name='b5',dtype=tf.float32)
 
-   # Model.
+   # Model
     def model(data):
         ''''
             Model:
@@ -157,11 +173,16 @@ with graph.as_default():
         '''
         conv_1 = tf.nn.conv2d(data, W1, [1, 1, 1, 1], padding='SAME') # shape [batch_size, image_size, image_size, depth]
         relu_1 = tf.nn.relu(conv_1 + b1)
-        max_pool_1 = tf.nn.max_pool(relu_1, [1,2,2,1], [1,2,2,1], padding='SAME') # shape [batch_size, image_size/2, image_size/2, depth]
+        conv_1_1 = tf.nn.conv2d(conv_1, W1_1, [1, 1, 1, 1],padding='SAME')
+        relu_1_1 = tf.nn.relu(conv_1_1 + b1_1)
+
+        max_pool_1 = tf.nn.max_pool(relu_1_1, [1,2,2,1], [1,2,2,1], padding='SAME') # shape [batch_size, image_size/2, image_size/2, depth]
 
         conv_2 = tf.nn.conv2d(max_pool_1, W2, [1, 1, 1, 1], padding='SAME')
         relu_2 = tf.nn.relu(conv_2 + b2)
-        max_pool_2 = tf.nn.max_pool(relu_2, [1,2,2,1], [1,2,2,1], padding='SAME') # shape [batch_size, image_size/4, image_size/4, depth*2]
+        conv_2_1 = tf.nn.conv2d(relu_2, W2_1, [1, 1, 1, 1], padding='SAME')
+        relu_2_1 = tf.nn.relu(conv_2_1 + b2_1)
+        max_pool_2 = tf.nn.max_pool(relu_2_1, [1,2,2,1], [1,2,2,1], padding='SAME') # shape [batch_size, image_size/4, image_size/4, depth*2]
 
         # upsample
         # x_shape = tf.shape(x)
@@ -171,27 +192,34 @@ with graph.as_default():
         # [batch_size, image_size//2, image_size//2, depth]
         deconv_1 = tf.nn.conv2d_transpose(value=max_pool_2,filter=W3, output_shape=out_shape, strides=[1,2,2,1])
         relu_3 = tf.nn.relu(deconv_1 + b3)
+        conv_3 = tf.nn.conv2d(relu_3, W3_1, [1,1,1,1], padding='SAME')
+        relu_3_1 = tf.nn.relu(conv_3 + b3_1)
 
-        relu_3_shape = relu_3.get_shape().as_list()
-        out_shape = tf.stack([relu_3_shape[0], relu_3_shape[1] * 2, relu_3_shape[2] * 2, relu_3_shape[3]])
+        relu_3_1_shape = relu_3.get_shape().as_list()
+        out_shape = tf.stack([relu_3_1_shape[0], relu_3_1_shape[1] * 2, relu_3_1_shape[2] * 2, relu_3_1_shape[3]])
         # [batch_size, image_size, image_size, num_labels]
         deconv_2=tf.nn.conv2d_transpose(value=relu_3,filter=W4, output_shape=out_shape ,strides=[1,2,2,1]) # output size [batch_size, image_size, image_size, num_labels]
         relu_4 = tf.nn.relu(deconv_2 + b4)
-
-        return tf.nn.relu(tf.nn.conv2d(relu_4, W5, [1, 1, 1, 1], padding='SAME') + b5)
+        conv_4 = tf.nn.conv2d(relu_4, W4_1, [1,1,1,1], padding='SAME')
+        relu_4_1 = tf.nn.relu(conv_4 + b4_1)
+        return tf.nn.relu(tf.nn.conv2d(relu_4_1, W5, [1, 1, 1, 1], padding='SAME') + b5)
 
 
 # Train
     logits = model(X)
     loss_train = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=logits))
 
-    optimizer = tf.train.GradientDescentOptimizer(0.1).minimize(loss_train)
+    global_step = tf.Variable(0, trainable=False)
+    starter_learning_rate = 0.1
+    learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,
+                                               100, 0.96, staircase=True)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
 
     train_prediction = tf.nn.softmax(logits)
     valid_prediction = tf.nn.softmax(model(tf_valid_dataset))
     test_prediction = tf.nn.softmax(model(tf_test_dataset))
 
-    num_steps = 300
+    num_steps = 500
 
     with tf.Session(graph=graph) as session:
         tf.global_variables_initializer().run()
@@ -203,7 +231,7 @@ with graph.as_default():
             feed_dict = {X: batch_data, y: batch_labels}
             _, l, predictions = session.run(
                 [optimizer, loss_train, train_prediction], feed_dict=feed_dict)
-            if (step % 50 == 0):
+            if (step % 100 == 0):
                 print('Minibatch loss at step %d: %f' % (step, l))
                 print('Minibatch accuracy: %.3f%%' % accuracy(predictions, batch_labels))
                 prediction = valid_prediction.eval()
@@ -224,6 +252,3 @@ with graph.as_default():
                 plt.show()
 
         print('Test accuracy: %.3f%%' % accuracy(test_prediction.eval(), test_labels))
-
-
-
