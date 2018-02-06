@@ -1,5 +1,6 @@
 from ExternalModules.network_skeleton.loadData import *
 from ExternalModules.network_skeleton.layers import *
+from ExternalModules.network_skeleton.utils import *
 import tensorflow as tf
 import tensorboard as tb
 import numpy as np
@@ -23,7 +24,7 @@ label = load_labels(os.path.realpath(__file__ + "/../../" + 'toy_segmentaion_dat
 print('End load data\n')
 
 train_num = 1000
-val_num = 1500
+val_num = 1100
 test_num = 500
 
 train_dataset = data[:train_num]
@@ -61,6 +62,50 @@ with graph.as_default():
 
 	def unet_model(X, unet_num_layers = 3):
 
+		'''
+		the Unet model:
+
+		 downsample:
+		 1- conv2d , output channel: depth
+		    cond2d,  output channel: depth
+			max pool, stride: [1,2,2,1]
+			# output image size: image_size/2
+
+		2- conv2d , output channel: 2*depth
+		    cond2d,  output channel: 2*depth
+			max pool, stride: [1,2,2,1]
+			# output image size: image_size/4
+
+		2- conv2d , output channel: 4*depth
+		    cond2d,  output channel: 4*depth
+			max pool, stride: [1,2,2,1]
+			# output image size: image_size/8
+
+		2- conv2d , output channel: 8*depth
+		    cond2d,  output channel: 8*depth
+			# output image size: image_size/8
+
+		upsample:
+		1- 	dconv2d, input dims: image_size/8, depth: 8*depth
+					 output dims: image_size/4, depth: 4*depth
+			concat, output dims: image_size/4, depth: 8*depth
+			conv2d,  output channel: 4*depth
+
+		2- 	dconv2d, input dims: image_size/4, depth: 4*depth
+					 output dims: image_size/2, depth: 2*depth
+			concat, output dims: image_size/2, depth: 4*depth
+			conv2d,  output channel: 2*depth
+
+		3- 	dconv2d, input dims: image_size/2, depth: 2*depth
+					 output dims: image_size, depth: depth
+			concat, output dims: image_size, depth: 2*depth
+			conv2d,  output channel: depth
+
+			tensor shape() [NUMBER_OF_SAMPLES, image_size, image_size, depth]
+
+		conv2s with 1X1 kernel
+
+		'''
 		# downsample
 
 		# unet_layer_1
@@ -142,34 +187,42 @@ with graph.as_default():
 		dconv3_2 = conv2d(concat3, WD3_2, bd3_2)
 		dconv3_3 = conv2d(dconv3_2, WD3_3, bd3_3)
 
-		# FC (conv with kernel of 1x1)
-		Wfc = tf.Variable(tf.truncated_normal([1, 1, DEPTH, NUM_LABELS], stddev=1),name='Wfc')
-		# Wfc = weight_variable([1, 1, DEPTH, NUM_LABELS])
+		Wfc = weight_variable([1, 1, DEPTH, NUM_LABELS])
 		bfc = bias_variable([NUM_LABELS])
-		# return tf.nn.conv2d(dconv3_3, Wfc, strides=[1, 1, 1, 1], padding='SAME') + bfc
-		return conv2d(dconv3_3, Wfc, bfc)
-		# temp architecture TODO: FINISH ROY
+		return tf.nn.conv2d(dconv3_3, Wfc, strides=[1, 1, 1, 1], padding='SAME') + bfc
 
 	logits = unet_model(X)
-	loss_train = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=logits))
-	optimizer = tf.train.GradientDescentOptimizer(0.01).minimize(loss_train)
-	train_prediction = tf.nn.softmax(logits)
-	valid_prediction = tf.nn.softmax(unet_model(valid_dataset))
-	test_prediction = tf.nn.softmax(unet_model(test_dataset))
 
-	def diceScore(prediction, groundTruth):
-		tmp = np.zeros_like(prediction)
-		tmp[prediction > np.mean(prediction)] = 1
-		return 2*np.sum((np.multiply(tmp, groundTruth))) / np.sum(tmp + groundTruth)
+	loss_train = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=Y, logits=logits))
+	# TODO: need to rethink about the loss function, it is not effective
 
-	def accuracy(prediction, groundTruth):
-		tmp = np.zeros_like(prediction)
-		tmp[prediction > np.mean(prediction)] = 1
-		eq = np.equal(tmp, groundTruth)
+	# gradient decent decay
+	# global_step = tf.Variable(0, trainable=False)
+	# starter_learning_rate = 0.1
+	# learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,20, 0.96, staircase=True)
+	# optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
+	optimizer = tf.train.AdamOptimizer(0.01).minimize(loss_train)
+	valid_logits = unet_model(valid_dataset)
+	test_logits = unet_model(test_dataset)
+
+	def diceScore(logits, labels):
+		eps = 1e-5
+		prediction = tf.nn.sigmoid(logits).eval()
+		intersection = np.sum(prediction * labels)
+		union = eps + np.sum(logits) + np.sum(labels)
+		return 2 * intersection / union
+
+	def accuracy(logits, labels):
+		predictions = tf.nn.sigmoid(logits).eval()
+		predictionsBin = np.zeros_like(predictions)
+		meanVal = np.mean(predictions)
+		predictionsBin[predictions > meanVal] = 1
+		eq = np.equal(predictionsBin, labels)
 		return np.mean(eq)
 
 num_steps = 300
 
+collector = MetaDataCollector() # documentation object
 with tf.Session(graph=graph) as session:
 	tf.global_variables_initializer().run()
 	print('Initialized')
@@ -178,20 +231,17 @@ with tf.Session(graph=graph) as session:
 		batch_data = train_dataset[ind, :, :, :]
 		batch_labels = train_labels[ind, :, :, :]
 		feed_dict = {X: batch_data, Y: batch_labels}
-		_, l, predictions = session.run(
-			[optimizer, loss_train, train_prediction], feed_dict=feed_dict)
+		_, l, logits_out = session.run(
+			[optimizer, loss_train, logits], feed_dict=feed_dict)
 		if (step % 5 == 0):
-			print('Minibatch loss at step %d: %f' % (step, l))
-			print('Minibatch accuracy: %.3f%%' % accuracy(predictions, batch_labels))
-			# print('Minibatch dice: %.3f%' % diceScore(predictions, batch_labels))
-			prediction = valid_prediction.eval()
-			print('Validation accuracy: %.3f%%' % accuracy(prediction, valid_labels))
-	print('Test accuracy: %.3f%%' % accuracy(test_prediction.eval(), test_labels))
+			print('**** Minibatch step: %d ****' % step)
+			print('Loss: {}'.format(round(l,4)))
+			trainAcc = accuracy(logits_out, batch_labels)
+			print('Accuracy: %.3f%%' % trainAcc)
+			print('Dice: %.3f%%' % diceScore(logits_out, batch_labels))
+			valAcc = accuracy(valid_logits.eval(), valid_labels)
+			print('Validation accuracy: %.3f%%\n' % valAcc)
+			collector.getStepValues(l,trainAcc, valAcc)
+	print('Test accuracy: %.3f%%' % accuracy(test_logits.eval(), test_labels))
 
-
-
-
-
-
-
-
+# printPredictionSample(np.squeeze(logits_out[1,:,:]), np.squeeze(batch_labels[1,:,:]))

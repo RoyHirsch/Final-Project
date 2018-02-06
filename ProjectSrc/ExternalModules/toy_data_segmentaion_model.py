@@ -209,11 +209,7 @@ with graph.as_default():
     logits = model(X)
     loss_train = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=logits))
 
-    global_step = tf.Variable(0, trainable=False)
-    starter_learning_rate = 0.1
-    learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,
-                                               100, 0.96, staircase=True)
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
+    optimizer = tf.train.AdamOptimizer(0.01)
 
     train_prediction = tf.nn.softmax(logits)
     valid_prediction = tf.nn.softmax(model(tf_valid_dataset))
