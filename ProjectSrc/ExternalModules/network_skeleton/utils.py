@@ -21,9 +21,9 @@ class MetaDataCollector(object):
 	# def getValLoss(self, lossVal):
 	# 	self.trainLossArray.append(lossVal)
 
-	def printTrainLossGraph(self, numOfEpoches):
+	def printTrainLossGraph(self):
 		plt.figure()
-		plt.plot(range(numOfEpoches), self.trainLossArray)
+		plt.plot(range(len(self.trainLossArray)), self.trainLossArray)
 		plt.show()
 
 def printPredictionSample(predictionImage, validationImage):
