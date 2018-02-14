@@ -1,6 +1,7 @@
 from ExternalModules.network_skeleton.loadData import *
 from ExternalModules.network_skeleton.layers import *
 from ExternalModules.network_skeleton.utils import *
+
 import tensorflow as tf
 import tensorboard as tb
 import numpy as np
@@ -11,7 +12,7 @@ import os
 IMAGE_SIZE = 128
 NUM_CHANNELS = 1
 NUM_LABELS = 1
-BATCH_SIZE = 32
+BATCH_SIZE = 4
 KERNEL_SIZE = 3
 DEPTH = 32
 POOL_SIZE = 2
@@ -24,7 +25,7 @@ label = load_labels(os.path.realpath(__file__ + "/../../" + 'toy_segmentaion_dat
 print('End load data\n')
 
 train_num = 1000
-val_num = 1100
+val_num = 1200
 test_num = 500
 
 train_dataset = data[:train_num]
