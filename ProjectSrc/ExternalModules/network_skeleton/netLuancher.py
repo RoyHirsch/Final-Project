@@ -12,7 +12,7 @@ import os
 IMAGE_SIZE = 128
 NUM_CHANNELS = 1
 NUM_LABELS = 1
-BATCH_SIZE = 4
+BATCH_SIZE = 16
 KERNEL_SIZE = 3
 DEPTH = 32
 POOL_SIZE = 2
@@ -198,28 +198,28 @@ with graph.as_default():
 	# TODO: need to rethink about the loss function, it is not effective
 
 	# gradient decent decay
-	# global_step = tf.Variable(0, trainable=False)
-	# starter_learning_rate = 0.1
-	# learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,20, 0.96, staircase=True)
-	# optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
-	optimizer = tf.train.AdamOptimizer(0.01).minimize(loss_train)
+	global_step = tf.Variable(0, trainable=False)
+	starter_learning_rate = 0.01
+	learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,20, 0.96, staircase=True)
+	optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
+	# optimizer = tf.train.AdamOptimizer(0.01).minimize(loss_train)
 	valid_logits = unet_model(valid_dataset)
 	test_logits = unet_model(test_dataset)
 
 	def diceScore(logits, labels):
 		eps = 1e-5
-		prediction = tf.nn.sigmoid(logits).eval()
-		intersection = np.sum(prediction * labels)
-		union = eps + np.sum(logits) + np.sum(labels)
-		return 2 * intersection / union
+
+		prediction = tf.round(tf.nn.sigmoid(logits))
+		intersection = tf.reduce_sum(tf.multiply(prediction, labels))
+		union = eps + tf.reduce_sum(prediction) + tf.reduce_sum(labels)
+		res = 2 * intersection / (union + eps)
+		return res.eval()
 
 	def accuracy(logits, labels):
-		predictions = tf.nn.sigmoid(logits).eval()
-		predictionsBin = np.zeros_like(predictions)
-		meanVal = np.mean(predictions)
-		predictionsBin[predictions > meanVal] = 1
-		eq = np.equal(predictionsBin, labels)
-		return np.mean(eq)
+		predictions = tf.round(tf.nn.sigmoid(logits))
+		eq = tf.equal(predictions, labels)
+		res = tf.reduce_mean(tf.cast(eq, tf.float32))
+		return res.eval()
 
 num_steps = 300
 
@@ -234,15 +234,15 @@ with tf.Session(graph=graph) as session:
 		feed_dict = {X: batch_data, Y: batch_labels}
 		_, l, logits_out = session.run(
 			[optimizer, loss_train, logits], feed_dict=feed_dict)
-		if (step % 5 == 0):
+		if (step % 20 == 0):
 			print('**** Minibatch step: %d ****' % step)
 			print('Loss: {}'.format(round(l,4)))
 			trainAcc = accuracy(logits_out, batch_labels)
-			print('Accuracy: %.3f%%' % trainAcc)
-			print('Dice: %.3f%%' % diceScore(logits_out, batch_labels))
-			valAcc = accuracy(valid_logits.eval(), valid_labels)
-			print('Validation accuracy: %.3f%%\n' % valAcc)
-			collector.getStepValues(l,trainAcc, valAcc)
+			print('Accuracy: %.3f % %' % trainAcc)
+			print('Dice: %.3f % %\n' % diceScore(logits_out, batch_labels))
+			# valAcc = accuracy(valid_logits.eval(), valid_labels)
+			# print('Validation accuracy: %.3f%%\n' % valAcc)
+			collector.getStepValues(l,trainAcc, trainAcc)
 	print('Test accuracy: %.3f%%' % accuracy(test_logits.eval(), test_labels))
 
-# printPredictionSample(np.squeeze(logits_out[1,:,:]), np.squeeze(batch_labels[1,:,:]))
+
