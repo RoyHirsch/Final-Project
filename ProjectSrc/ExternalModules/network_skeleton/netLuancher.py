@@ -1,9 +1,10 @@
-from ExternalModules.network_skeleton.loadData import *
-from ExternalModules.network_skeleton.layers import *
-from ExternalModules.network_skeleton.utils import *
+from loadData import *
+from layers import *
+from utils import *
+import time
 
 import tensorflow as tf
-import tensorboard as tb
+#import tensorboard as tb
 import numpy as np
 import os
 
@@ -16,7 +17,8 @@ BATCH_SIZE = 16
 KERNEL_SIZE = 3
 DEPTH = 32
 POOL_SIZE = 2
-
+RESTORE=0
+DATE=None
 # LOAD DATA|:
 
 print('Start load data')
@@ -221,12 +223,18 @@ with graph.as_default():
 		res = tf.reduce_mean(tf.cast(eq, tf.float32))
 		return res.eval()
 
-num_steps = 300
+num_steps = 101
 
 collector = MetaDataCollector() # documentation object
 with tf.Session(graph=graph) as session:
 	tf.global_variables_initializer().run()
+	saver = tf.train.Saver()
 	print('Initialized')
+	if RESTORE == 1:
+		if DATE ==None:
+			DATE=time.strftime('%d%m%y')
+		print('Loading data from {}'.format("/variables/{}_{}_{}_.ckpt".format('unet', 3,DATE )))
+		saver.restore(session, "/variables/{}_{}_{}_.ckpt".format('unet', 3, time.strftime('%d%m%y')))
 	for step in range(num_steps):
 		ind = np.random.randint(0, train_num - 1, BATCH_SIZE)
 		batch_data = train_dataset[ind, :, :, :]
@@ -239,10 +247,14 @@ with tf.Session(graph=graph) as session:
 			print('Loss: {}'.format(round(l,4)))
 			trainAcc = accuracy(logits_out, batch_labels)
 			print('Accuracy: %.3f % %' % trainAcc)
-			print('Dice: %.3f % %\n' % diceScore(logits_out, batch_labels))
+			dice=diceScore(logits_out, batch_labels)
+			print('Dice: %.3f % %\n' % dice)
 			# valAcc = accuracy(valid_logits.eval(), valid_labels)
 			# print('Validation accuracy: %.3f%%\n' % valAcc)
 			collector.getStepValues(l,trainAcc, trainAcc)
+		if (step%100==0 and step!=0):
+			save_path = saver.save(session,"/variables/{}_{}_{}_.ckpt".format('unet',3,time.strftime('%d%m%y')))
+			print('Saving variables in : %s' %save_path)
 	print('Test accuracy: %.3f%%' % accuracy(test_logits.eval(), test_labels))
 
 
