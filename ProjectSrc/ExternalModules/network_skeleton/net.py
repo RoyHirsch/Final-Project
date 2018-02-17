@@ -1,6 +1,6 @@
-from loadData import *
-from layers import *
-from utils import *
+from ExternalModules.network_skeleton.loadData import *
+from ExternalModules.network_skeleton.layers import *
+from ExternalModules.network_skeleton.utils import *
 import time
 
 import tensorflow as tf
@@ -64,7 +64,6 @@ for kernel_size in KERNEL_LIST:
 
                 X = tf.placeholder(dtype=tf.float32, shape=[None, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS])
                 Y = tf.placeholder(dtype=tf.float32, shape=[None, IMAGE_SIZE, IMAGE_SIZE, NUM_LABELS])
-
 
                 def unet_model(X, unet_num_layers=3):
                     W1_1 = weight_variable([kernel_size, kernel_size, NUM_CHANNELS, depth])
