@@ -1,0 +1,4 @@
+/variables/unet_3_170218_k=3_lr=0.005_d=32.ckpt dice=0.8160095810890198
+/variables/unet_3_170218_k=3_lr=0.01_d=32.ckpt dice=0.8052756786346436
+/variables/unet_3_170218_k=5_lr=0.005_d=32.ckpt dice=nan
+/variables/unet_3_170218_k=5_lr=0.01_d=32.ckpt dice=nan

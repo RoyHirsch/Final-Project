@@ -2,7 +2,7 @@ from loadData import *
 from layers import *
 from utils import *
 import time
-
+import math
 import tensorflow as tf
 #import tensorboard as tb
 import numpy as np
@@ -14,9 +14,9 @@ IMAGE_SIZE = 128
 NUM_CHANNELS = 1
 NUM_LABELS = 1
 BATCH_SIZE = 16
-KERNEL_LIST = [3, 5, 7]
-DEPTH_LIST = [16, 32, 64]
-LEARNING_RATE = [0.03, 0.01, 0.001]
+KERNEL_LIST = [3, 5]
+DEPTH_LIST = [32 ]
+LEARNING_RATE = [0.005, 0.01]
 POOL_SIZE = 2
 RESTORE = 0
 DATE = None
@@ -58,8 +58,8 @@ for kernel_size in KERNEL_LIST:
         for lrate in LEARNING_RATE:
             graph = tf.Graph()
             with graph.as_default():
-                valid_dataset = tf.constant(valid_dataset, dtype=tf.float32)
-                test_dataset = tf.constant(test_dataset, dtype=tf.float32)
+                # valid_dataset = tf.constant(valid_dataset, dtype=tf.float32)
+                # test_dataset = tf.constant(test_dataset, dtype=tf.float32)
                 ### ---------- Model ----------- ####
 
                 X = tf.placeholder(dtype=tf.float32, shape=[None, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS])
@@ -157,12 +157,12 @@ for kernel_size in KERNEL_LIST:
 
                 # gradient decent decay
                 global_step = tf.Variable(0, trainable=False)
-                starter_learning_rate = lrate
-                learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step, 20, 0.96, staircase=True)
-                optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
-                # optimizer = tf.train.AdamOptimizer(0.01).minimize(loss_train)
-                valid_logits = unet_model(valid_dataset)
-                test_logits = unet_model(test_dataset)
+                #starter_learning_rate = lrate
+                #learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step, 20, 0.96, staircase=True)
+                #optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss_train)
+                optimizer = tf.train.AdamOptimizer(lrate).minimize(loss_train)
+                # valid_logits = unet_model(valid_dataset)
+                # test_logits = unet_model(test_dataset)
 
 
                 def diceScore(logits, labels):
@@ -181,7 +181,7 @@ for kernel_size in KERNEL_LIST:
                     res = tf.reduce_mean(tf.cast(eq, tf.float32))
                     return res.eval()
 
-            num_steps = 700
+            num_steps = 600
 
             collector = MetaDataCollector()  # documentation object
             with tf.Session(graph=graph) as session:
@@ -205,21 +205,25 @@ for kernel_size in KERNEL_LIST:
                         print('**** Minibatch step: %d ****' % step)
                         print('Loss: {}'.format(round(l, 4)))
                         trainAcc = accuracy(logits_out, batch_labels)
+                        if math.isnan(trainAcc):
+                            break
                         print('Accuracy: %.3f % %' % trainAcc)
                         dice = diceScore(logits_out, batch_labels)
+                        if math.isnan(dice):
+                            break
                         print("lr={} ker={} depth{}".format(lrate, kernel_size, depth))
                         print('Dice: %.3f % %\n' % dice)
                         # valAcc = accuracy(valid_logits.eval(), valid_labels)
                         # print('Validation accuracy: %.3f%%\n' % valAcc)
                         collector.getStepValues(l, trainAcc, trainAcc)
-                save_path = saver.save(session, "/variables/{}_{}_{}_k={}_lr={}_d={}_dice={}.ckpt".format('unet', 3,
+                save_path = saver.save(session, "/variables/{}_{}_{}_k={}_lr={}_d={}.ckpt".format('unet', 3,
                                                                                                           time.strftime(
                                                                                                               '%d%m%y'),
                                                                                                           kernel_size,
                                                                                                           lrate,
-                                                                                                          depth,
-                                                                                                          dice))
+                                                                                                          depth))
                 print('Saving variables in : %s' % save_path)
-                print('Test accuracy: %.3f%%' % accuracy(test_logits.eval(), test_labels))
+                #print('Test accuracy: %.3f%%' % accuracy(test_logits.eval(), test_labels))
                 with open('model_file.txt', 'a') as file1:
                     file1.write(save_path)
+                    file1.write("adam dice={}\n".format(dice))
