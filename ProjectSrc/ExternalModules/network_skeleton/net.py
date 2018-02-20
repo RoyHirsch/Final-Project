@@ -7,19 +7,20 @@ import tensorflow as tf
 #import tensorboard as tb
 import numpy as np
 import os
-
+from resultsDisplay import *
 # CONSTANTS:
 
 IMAGE_SIZE = 128
 NUM_CHANNELS = 1
 NUM_LABELS = 1
 BATCH_SIZE = 16
-KERNEL_LIST = [3, 5]
+KERNEL_LIST = [5]
 DEPTH_LIST = [32 ]
-LEARNING_RATE = [0.005, 0.01]
+LEARNING_RATE = [0.005]
 POOL_SIZE = 2
-RESTORE = 0
+RESTORE = 1
 DATE = None
+DISPLAY=1
 # LOAD DATA|:
 
 
@@ -190,18 +191,25 @@ for kernel_size in KERNEL_LIST:
                 print('Initialized')
                 # restoring data from model file
                 if RESTORE == 1:
-                    if DATE == None:
-                        DATE = time.strftime('%d%m%y')
-                    print('Loading data from {}'.format("/variables/{}_{}_{}_.ckpt".format('unet', 3, DATE)))
-                    saver.restore(session, "/variables/{}_{}_{}_.ckpt".format('unet', 3, time.strftime('%d%m%y')))
+                    print('Loading data from {}'.format('/variables/unet_5_170218_k=3_lr=0.005_d=32.ckpt'))
+                    saver.restore(session, '/variables/unet_3_170218_k=5_lr=0.005_d=32.ckpt')
                 for step in range(num_steps):
                     ind = np.random.randint(0, train_num - 1, BATCH_SIZE)
+                    print('ind={}'.format(ind))
                     batch_data = train_dataset[ind, :, :, :]
                     batch_labels = train_labels[ind, :, :, :]
                     feed_dict = {X: batch_data, Y: batch_labels}
                     _, l, logits_out = session.run(
                         [optimizer, loss_train, logits], feed_dict=feed_dict)
                     if (step % 20 == 0):
+                        if DISPLAY==1:
+                            nplogits=logits_out[0]
+                            nplogits[nplogits>0]=1
+                            nplogits[nplogits <= 0] = 0
+                            b=np.reshape(nplogits,[128,128])
+                            a=np.reshape(train_labels[ind[0]],[128,128])
+                            results_display(b,a)
+                            #results_display(nplogits, label=train_labels[ind[0]], data=train_dataset[ind[0]])
                         print('**** Minibatch step: %d ****' % step)
                         print('Loss: {}'.format(round(l, 4)))
                         trainAcc = accuracy(logits_out, batch_labels)

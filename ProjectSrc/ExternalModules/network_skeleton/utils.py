@@ -2,6 +2,7 @@ import matplotlib as mpl
 mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 class MetaDataCollector(object):
 
@@ -38,3 +39,5 @@ def printPredictionSample(predictionImage, validationImage):
 	ax2.set_title('prediction:')
 	plt.show()
 
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))
