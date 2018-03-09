@@ -1,5 +1,6 @@
 from Utilities.loadData import *
 import skimage.transform as ski
+from sklearn.feature_extraction import image as im
 import os
 import pprint
 
@@ -17,15 +18,24 @@ class DataPipline(object):
     def __init__(self, numTrain, numVal, numTest, modalityList, optionsDict):
 
         '''
-        :param numTrain: number of samples to use in train dataset
-        :param numVal: number of samples to use in val dataset
-        :param numTest: number of samples to use in test dataset
-        :param modalityList: list of numbers to represent the number of channels/modalities to use
-               MOD_LIST = ['T1', 'T2', 'T1g', 'FLAIR']
-        :param optionsDict: additional options dictionary:
-               {'zeroPadding': bool ,'paddingSize': int ,'normType': ['reg', 'clip'] }
 
-               Class attributes:
+        class object for holding and managing all the data for the net train and testing.
+
+        PARAMS:
+            numTrain: number of samples to use in train dataset
+            numVal: number of samples to use in val dataset
+            numTest: number of samples to use in test dataset
+            modalityList: list of numbers to represent the number of channels/modalities to use
+            MOD_LIST = ['T1', 'T2', 'T1g', 'FLAIR'] represented as: [0,1,2,3]
+
+            optionsDict: additional options dictionary:
+               'zeroPadding': bool
+               'paddingSize': int
+               'normalize': bool
+               'normType': ['reg', 'clip']
+               'binaryLabels': bool - for flattening the labels into binary classification problem
+               'resize': bool
+               'newSize': int - new image size for resize
         '''
 
         print('\n#### -------- DataPipline object was created -------- ####\n')
@@ -69,7 +79,8 @@ class DataPipline(object):
 
     def _normalize_image(self, img):
         normImg = np.zeros(np.shape(img))
-        for i in range(0, 4):
+        H, W, D, C = np.shape(img)
+        for i in range(0, C):
             normImg[:, :, :, i] = self._normalize_image_modality(img[:, :, :, i])
         return normImg
 
@@ -109,7 +120,7 @@ class DataPipline(object):
         H, W, D, C = np.shape(img)
         resizeImg = np.zeros([newSize, newSize, D, C])
         for i in range(D):
-            resizeImg[:,:,i,:] = ski.resize(img[:,:,i,:], [newSize,newSize,C])
+            resizeImg[:,:,i,:] = ski.resize(img[:,:,i,:], [newSize,newSize,C], mode='constant')
         return resizeImg
 
     def _resize_label(self, label):
@@ -117,7 +128,7 @@ class DataPipline(object):
         H, W, D = np.shape(label)
         resizeLabel = np.zeros([newSize, newSize, D])
         for i in range(D):
-            resizeLabel[:, :, i] = ski.resize(label[:, :, i], [newSize, newSize])
+            resizeLabel[:, :, i] = ski.resize(label[:, :, i], [newSize, newSize], mode='constant')
         return resizeLabel
 
         # ---- Prepare Lists ---- #
@@ -140,32 +151,45 @@ class DataPipline(object):
         outSampleArray = []
         outLabelArray = []
         for i in numbersList:
-            img = data[i]
+            img = data[i][:, :, :, self.modalityList]
             label = labels[i]
 
-            if self.optionsDict['zeroPadding']:
+            if 'binaryLabels' in self.optionsDict.keys() and self.optionsDict['binaryLabels']:
+                self.numOfLabels = 1
+                tmpLabel = np.zeros_like(label)
+                tmpLabel[label != 0] = 1
+                label = tmpLabel
+
+            else:
+                self.numOfLabels = 4
+
+            if 'zeroPadding' in self.optionsDict.keys() and self.optionsDict['zeroPadding']:
                 img = self._zero_padding_img(self.optionsDict['paddingSize'], img)
                 label = self._zero_padding_label(label)
 
-            if self.optionsDict['resize']:
+            if 'resize' in self.optionsDict.keys() and self.optionsDict['resize']:
                 img = self._resize_image(img)
                 label = self._resize_label(label)
 
-            if self.optionsDict['normalize']:
+            if 'normalize' in self.optionsDict.keys() and self.optionsDict['normalize']:
                 img = self._normalize_image(img)
 
             H, W, D, C = np.shape(img)
-            tmp = img[:, :, :, self.modalityList]
 
             for j in range(0, D):
-                outSampleArray.append(tmp[:, :, j, :])
+                outSampleArray.append(img[:, :, j, :])
                 outLabelArray.append(label[:, :, j])
 
         # a fix to locate the D dimension in it's place
         # outSampleArray = np.swapaxes(outSampleArray, 0, 2)
         # outLabelArray = np.swapaxes(outLabelArray, 0, 2)
-        outSampleArray = np.array(outSampleArray)
-        outLabelArray = np.array(outLabelArray)
+        imageSize = np.shape(outSampleArray)[1]
+        outSampleArray = np.array(outSampleArray).astype(np.float32)
+        # reshape to fit tensorflow constrains
+        outLabelArray = np.reshape(outLabelArray, [-1, imageSize, imageSize, 1]).astype(np.float32)
+
+        # if self.optionsDict['patchDivide']:
+
         return outSampleArray, outLabelArray
 
     def get_samples_list(self):
@@ -183,9 +207,11 @@ class DataPipline(object):
         self.testLabels = []
 
         data, labels = get_data_and_labels_from_folder()
-        print('Data and labels where uploaded successfully')
+        print('Data and labels were uploaded successfully.')
         self.trainSamples, self.trainLabels = self.pre_process_list('train', data, labels)
+        print('Train samples list processed successfully.')
         self.valSamples, self.valLabels = self.pre_process_list('val', data, labels)
+        print('Validation samples list processed successfully.')
         self.testSamples, self.testLabels = self.pre_process_list('test', data, labels)
         print('Train, val and test database created successfully.')
 
@@ -237,8 +263,6 @@ class DataPipline(object):
 
     def next_train_random_batch(self, batch_size):
         ind = np.random.random_integers(0, np.shape(self.trainSamples)[0]-1, batch_size)
-        self.batchesDict[self.batchNumer] = ind
-        self.batchNumer += 1
         return self.trainSamples[ind, :, :, :], self.trainLabels[ind, :, :]
 
 # ---- Help Functions ---- #
@@ -274,18 +298,17 @@ class DataPipline(object):
 
 # ---- Test Code ---- #
 
-# declare some data object
-pipObj = DataPipline(numTrain=5, numVal=1, numTest=4, modalityList=[1,2,3],
-                     optionsDict={'zeroPadding': True, 'paddingSize': 240, 'resize': True,
-                                  'newSize': 120, 'normalize': True, 'normType': 'reg'})
-
-print(np.shape(pipObj.trainLabels))
-print(np.shape(pipObj.trainSamples))
-pipObj.to_string_pipline()
-# branch few train batches
-batch_size = 64
-pipObj.init_batch_number()
-for i in range(4):
-     train_batch_data, train_batch_labels = pipObj.next_train_random_batch(batch_size)
-     print(np.shape(train_batch_data))
-     print(np.shape(train_batch_labels))
+# # declare some data object
+# pipObj = DataPipline(numTrain=5, numVal=1, numTest=4, modalityList=[1,2,3],
+#                      optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True, 'normType': 'reg'})
+#
+# print(np.shape(pipObj.trainLabels))
+# print(np.shape(pipObj.trainSamples))
+# pipObj.to_string_pipline()
+# # branch few train batches
+# batch_size = 64
+# pipObj.init_batch_number()
+# for i in range(4):
+#      train_batch_data, train_batch_labels = pipObj.next_train_random_batch(batch_size)
+#      print(np.shape(train_batch_data))
+#      print(np.shape(train_batch_labels))
