@@ -1,4 +1,5 @@
-from ExternalModules.network_skeleton.layers import *
+from UnetModel.layers import *
+
 
 class UnetModelClass(object):
 
@@ -105,7 +106,7 @@ class UnetModelClass(object):
                     self.weights_dict['b2u_{}'.format(l)] = bias_variable([int(self.depth * self.ndepth / 2)])
                     self.convu_dict['convu1_{}'.format(l)] = conv2d(self.concat_dict['conc_{}'.format(l)],
                                                                self.weights_dict['WU1_{}'.format(l)],
-                                                               self.weights_dict['b2_{}'.format(l)])
+                                                               self.weights_dict['b1u_{}'.format(l)])
                     self.convu_dict['convu2_{}'.format(l)] = conv2d(self.convu_dict['convu1_{}'.format(l)],
                                                                self.weights_dict['WU2_{}'.format(l)],
                                                                self.weights_dict['b2u_{}'.format(l)])
@@ -122,8 +123,8 @@ class UnetModelClass(object):
         flat_labels = tf.reshape(self.Y, [-1, self.num_labels])
 
         with self.graph.as_default():
-            if self.costStr == "crossEntropy":
-                    loss = tf.nn.softmax_cross_entropy_with_logits(logits=flat_logits, labels=flat_labels)
+            if self.costStr == "softmax":
+                    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=flat_logits, labels=flat_labels))
 
             elif self.costStr == "sigmoid":
                     loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=self.Y, logits=self.logits))
