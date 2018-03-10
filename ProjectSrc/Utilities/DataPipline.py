@@ -1,6 +1,6 @@
 from Utilities.loadData import *
 import skimage.transform as ski
-from sklearn.feature_extraction import image as im
+from sklearn.feature_extraction import image
 import os
 import pprint
 
@@ -36,6 +36,8 @@ class DataPipline(object):
                'binaryLabels': bool - for flattening the labels into binary classification problem
                'resize': bool
                'newSize': int - new image size for resize
+               'filterSlices': bool
+               'minParentageLabeledVoxals': int - for filtering slices, parentage in [0,1]
         '''
 
         print('\n#### -------- DataPipline object was created -------- ####\n')
@@ -177,18 +179,25 @@ class DataPipline(object):
             H, W, D, C = np.shape(img)
 
             for j in range(0, D):
-                outSampleArray.append(img[:, :, j, :])
-                outLabelArray.append(label[:, :, j])
+                if 'filterSlices' in self.optionsDict.keys() and self.optionsDict['filterSlices']:
+                    labeledVoxals = np.sum(np.not_equal(label[:, :, j], 0))
+                    parcentageLabeledVoxals = labeledVoxals / H*W
+                    if self.optionsDict['minParentageLabeledVoxals'] < parcentageLabeledVoxals:
+                        outSampleArray.append(img[:, :, j, :])
+                        outLabelArray.append(label[:, :, j])
+                else:
+                    outSampleArray.append(img[:, :, j, :])
+                    outLabelArray.append(label[:, :, j])
 
         # a fix to locate the D dimension in it's place
         # outSampleArray = np.swapaxes(outSampleArray, 0, 2)
         # outLabelArray = np.swapaxes(outLabelArray, 0, 2)
+
         imageSize = np.shape(outSampleArray)[1]
         outSampleArray = np.array(outSampleArray).astype(np.float32)
+
         # reshape to fit tensorflow constrains
         outLabelArray = np.reshape(outLabelArray, [-1, imageSize, imageSize, 1]).astype(np.float32)
-
-        # if self.optionsDict['patchDivide']:
 
         return outSampleArray, outLabelArray
 
