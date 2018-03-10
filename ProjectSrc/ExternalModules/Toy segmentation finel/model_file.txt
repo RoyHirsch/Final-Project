@@ -1,0 +1,17 @@
+/variables/unet_3_170218_k=3_lr=0.005_d=32.ckpt dice=0.8160095810890198
+/variables/unet_3_170218_k=3_lr=0.01_d=32.ckpt dice=0.8052756786346436
+/variables/unet_3_170218_k=5_lr=0.005_d=32.ckpt dice=nan
+/variables/unet_3_170218_k=5_lr=0.01_d=32.ckpt dice=nan
+/variables/unet_3_170218_k=3_lr=0.005_d=32.ckptadam dice=0.7823269963264465
+/variables/unet_3_170218_k=3_lr=0.01_d=32.ckptadam dice=0.0
+/variables/unet_3_170218_k=5_lr=0.005_d=32.ckptadam dice=0.7900040149688721
+/variables/unet_3_180218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_3_190218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_3_190218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_3_190218_k=3_lr=0.01_d=32.ckpt/variables
+/unet_3_190218_k=3_lr=0.01_d=32.ckpt/variables
+/unet_3_190218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_3_190218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_3_200218_k=3_lr=0.01_d=32.ckpt
+/variables/unet_2_010318_k=3_lr=0.01_d=32.ckpt dice=0.8792623281478882
+/variables/unet_2_010318_k=3_lr=0.01_d=32.ckpt dice=0.8238004446029663
