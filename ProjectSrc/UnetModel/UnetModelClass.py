@@ -1,10 +1,10 @@
 from UnetModel.layers import *
-
+import numpy as np
 
 class UnetModelClass(object):
 
     def __init__(self, layers, num_channels, num_labels, image_size,
-                 kernel_size, depth, pool_size, costStr, optStr, argsDict = {}):
+                 kernel_size, depth, pool_size, costStr, optStr, weightedsum='True',weightval=1, argsDict = {}):
 
         print('\n#### -------- UnetModel object was created -------- ####\n')
         
@@ -26,7 +26,10 @@ class UnetModelClass(object):
         self.concat_dict = {}
         self.max_dict = {}
         self.ndepth = 1
-        
+
+        self.weightedsum = weightedsum
+        self.weightval=weightval
+
         self.logits = self._createNet()
         with self.graph.as_default():
             self.predictions = tf.nn.sigmoid(self.logits)
@@ -34,6 +37,7 @@ class UnetModelClass(object):
         self.optimizer = self._getOptimizer()
         with self.graph.as_default():
             self.merged = tf.summary.merge_all()
+
 
     def __del__(self):
         print('\n#### -------- UnetModel object was deleted -------- ####\n')
@@ -127,7 +131,11 @@ class UnetModelClass(object):
                     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=flat_logits, labels=flat_labels))
 
             elif self.costStr == "sigmoid":
-                    loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=self.Y, logits=self.logits))
+                    if self.weightedsum:
+                        loss = tf.reduce_mean(tf.nn.weighted_cross_entropy_with_logits(targets=self.Y, logits=self.logits,pos_weight=self.weightval))
+                    else:
+                        loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=self.Y, logits=self.logits))
+
             else:
                 print ("Error : Not defined cost function.")
 
