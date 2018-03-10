@@ -1,6 +1,7 @@
-import matplotlib as mpl
+# import matplotlib as mpl
 # mpl.use('TkAgg')
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
+import tensorflow as tf
 import numpy as np
 import math
 
@@ -16,27 +17,33 @@ class MetaDataCollector(object):
 		self.trainAccArray.append(trainAcc)
 		self.valAccArray.append(valAcc)
 
-	# def getTrainLoss(self, lossVal):
-	# 	self.trainLossArray.append(lossVal)
-	#
-	# def getValLoss(self, lossVal):
-	# 	self.trainLossArray.append(lossVal)
-
 	def printTrainLossGraph(self):
 		plt.figure()
 		plt.plot(range(len(self.trainLossArray)), self.trainLossArray)
 		plt.show()
 
-def printPredictionSample(predictionImage, validationImage):
-	# predictionImage is sigmoid output (logits)
-	f, (ax1, ax2) = plt.subplots(2)
-	ax1.imshow(validationImage, cmap='gray')
-	ax1.set_title('ground truth:')
-	tmp = np.zeros_like(predictionImage)
-	meanVal = np.mean(predictionImage)
-	tmp[predictionImage >= meanVal] = 1
-	ax2.imshow(tmp, cmap='gray')
-	ax2.set_title('prediction:')
+def resultDisplay(predictions, labels, images, sampleInd, imageSize, imageMod, thresh = 0.5):
+
+	# get specific sample
+	prediction = predictions[sampleInd,:,:]
+	label = labels[sampleInd,:,:]
+	image = images[sampleInd,:,:,imageMod]
+
+	# clip prediction into bineary mask
+	prediction[prediction > thresh] = 1
+	prediction[prediction <= thresh] = 0
+
+	# print results
+	plt.figure(1)
+	plt.subplot(131)
+	plt.title('Label')
+	plt.imshow(np.reshape(label, [imageSize, imageSize]), cmap='gray')
+	plt.subplot(132)
+	plt.title('Prediction')
+	plt.imshow(np.reshape(prediction, [imageSize, imageSize]), cmap='gray')
+	plt.subplot(133)
+	plt.title('Image')
+	plt.imshow(np.reshape(image, [imageSize, imageSize]), cmap='gray')
 	plt.show()
 
 def sigmoid(x):

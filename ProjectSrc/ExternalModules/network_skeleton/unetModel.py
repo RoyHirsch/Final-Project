@@ -1,7 +1,6 @@
 import tensorflow as tf
 from ExternalModules.network_skeleton.layers import *
 
-
 def unet_model(X, layers=2, num_channels=1, num_labels=1, kernel_size=3, depth=32,
                pool_size=2):
     weights_dict = {}

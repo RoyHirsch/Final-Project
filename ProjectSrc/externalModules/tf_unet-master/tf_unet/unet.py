@@ -333,7 +333,11 @@ class Trainer(object):
             optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate_node, 
                                                **self.opt_kwargs).minimize(self.net.cost,
                                                                      global_step=global_step)
-        
+        # gradient decent decay
+        # global_step = tf.Variable(0, trainable=False)
+        # starter_learning_rate = LEARNING_RATE
+        # learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step, 20, 0.96, staircase=True)
+
         return optimizer
         
     def _initialize(self, training_iters, output_path, restore, prediction_path):
