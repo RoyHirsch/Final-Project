@@ -1,6 +1,7 @@
 from UnetModel.utils import *
 import tensorflow as tf
 import time
+import datetime
 
 class Trainer(object):
 	def __init__(self, net, batchSize, argsDict={}):
@@ -32,7 +33,7 @@ class Trainer(object):
 				feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
 				_, loss, predictions, summary = session.run(
 					[self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged], feed_dict=feed_dict)
-				if step % 5 == 0:
+				if step % 100 == 0:
 					train_writer.add_summary(summary, step)
 					epochAccuracy = accuracy(predictions, batchLabels)
 					epochDice = diceScore(predictions, batchLabels)
@@ -41,7 +42,7 @@ class Trainer(object):
 							step, loss, epochAccuracy, epochDice))
 					resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
 					              imageSize=240, imageMod=1, thresh=0.5)
-			save_path = saver.save(session, "/variables/{}_{}.ckpt".format('unet', time.strftime('%d%m%y')))
+			save_path = saver.save(session, "/variables/{}_{}.ckpt".format('unet', datetime.datetime.now()))
 			print('Saving variables in : %s' % save_path)
 			with open('model_file.txt', 'a') as file1:
 				file1.write(save_path)
@@ -61,5 +62,7 @@ def accuracy(predictions, labels):
 	eq = tf.equal(predictions, labels)
 	res = tf.reduce_mean(tf.cast(eq, tf.float32))
 	return res.eval()
+
+
 
 

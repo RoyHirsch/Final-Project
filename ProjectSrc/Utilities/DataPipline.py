@@ -15,7 +15,7 @@ class DataPipline(object):
     batch_offset = 0
     optionsDict = {}
 
-    def __init__(self, numTrain, numVal, numTest, modalityList, optionsDict):
+    def __init__(self, numTrain, numVal, numTest, modalityList,permotate, optionsDict):
 
         '''
 
@@ -48,8 +48,10 @@ class DataPipline(object):
         self.batchesDict = {}
         self.modalityList = modalityList
         self.optionsDict = optionsDict
-
-        self._permotate_samples(numTrain, numVal, numTest)
+        if permotate:
+            self._permotate_samples(numTrain, numVal, numTest)
+        else:
+            self._manual_samples(numTrain, numVal, numTest)
         self.get_samples_list()
 
     def __del__(self):
@@ -68,16 +70,33 @@ class DataPipline(object):
         for _ in range(numTest):
             self.testNumberList.append(list.pop())
 
+    def _manual_samples(self, numTrain, numVal, numTest):
+        '''
+            randomly selects the data samples to each list.
+        '''
+        self.trainNumberList=list(range(0, numTrain))
+        self.valNumberList=list(range(numTrain, numTrain+numVal))
+        self.testNumberList=list(range(numTrain+numVal, numTrain+numVal+numTest))
+
+
     def _normalize_image_modality(self, imgMod):
         # mean 0 and std 1 per image
         if self.optionsDict['normType'] == 'clip':
             b, t = np.percentile(imgMod, (0.5, 99.5))
             imgMod = np.clip(imgMod, b, t)
+            mean = np.mean(imgMod)
+            var = np.std(imgMod)
+            normImg = (imgMod - mean) / var
+
         elif self.optionsDict['normType'] == 'reg':
-            pass
-        mean = np.mean(imgMod)
-        var = np.std(imgMod)
-        return (imgMod - mean) / var
+            mean = np.mean(imgMod)
+            var = np.std(imgMod)
+            normImg = (imgMod - mean) / var
+        # between 0-1
+        elif self.optionsDict['normType'] == 'zeroToOne':
+            normImg = imgMod / np.max(imgMod)
+
+        return normImg
 
     def _normalize_image(self, img):
         normImg = np.zeros(np.shape(img))
