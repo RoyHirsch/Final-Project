@@ -75,7 +75,7 @@ class DataPipline(object):
             randomly selects the data samples to each list.
         '''
         self.trainNumberList=list(range(0, numTrain))
-        self.valNumberList=list(range(numTrain, numTrain+numVal))
+        self.valNumberList=[numVal]
         self.testNumberList=list(range(numTrain+numVal, numTrain+numVal+numTest))
 
 
@@ -168,7 +168,8 @@ class DataPipline(object):
             numbersList = self.testNumberList
         else:
             print('Error while calling pre_process_list')
-
+        fullsampelsArray=[]
+        fullLabelsArray=[]
         outSampleArray = []
         outLabelArray = []
         for i in numbersList:
@@ -180,6 +181,8 @@ class DataPipline(object):
                 tmpLabel = np.zeros_like(label)
                 tmpLabel[label != 0] = 1
                 label = tmpLabel
+
+
 
             else:
                 self.numOfLabels = 4
@@ -234,13 +237,13 @@ class DataPipline(object):
         self.testSamples = []
         self.testLabels = []
 
-        data, labels = get_data_and_labels_from_folder()
+        self.data, self.labels = get_data_and_labels_from_folder()
         print('Data and labels were uploaded successfully.')
-        self.trainSamples, self.trainLabels = self.pre_process_list('train', data, labels)
+        self.trainSamples, self.trainLabels = self.pre_process_list('train', self.data, self.labels)
         print('Train samples list processed successfully.')
-        self.valSamples, self.valLabels = self.pre_process_list('val', data, labels)
+        self.valSamples, self.valLabels = self.pre_process_list('val', self.data, self.labels)
         print('Validation samples list processed successfully.')
-        self.testSamples, self.testLabels = self.pre_process_list('test', data, labels)
+        self.testSamples, self.testLabels = self.pre_process_list('test', self.data, self.labels)
         print('Train, val and test database created successfully.')
 
         # Printings for debug:
@@ -323,6 +326,10 @@ class DataPipline(object):
         plt.subplot(2, 2, 4)
         plt.imshow(img[:, :, slice, 3], cmap='gray')
         plt.show()
+
+
+
+
 
 # ---- Test Code ---- #
 

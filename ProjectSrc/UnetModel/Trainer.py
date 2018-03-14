@@ -4,14 +4,14 @@ import time
 import datetime
 
 class Trainer(object):
-	def __init__(self, net, batchSize, argsDict={}):
+	def __init__(self, net, batchSize, argsDict={'mod':[1,3]},istrain=True):
 
 		print('\n#### -------- Trainer object was created -------- ####\n')
 
 		self.net = net
 		self.batchSize = batchSize
 		self.argsDict = argsDict
-
+		self.istrain=istrain
 	def __del__(self):
 		print('\n#### -------- Trainer object was deleted -------- ####\n')
 
@@ -27,26 +27,36 @@ class Trainer(object):
 			if restore == 1:
 				print('Loading data from {}'.format((restorePath)))
 				saver.restore(session, "{}".format((restorePath)))
-
-			for step in range(numSteps):
-				batchData, batchLabels = dataPipe.next_train_random_batch(self.batchSize)
-				feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
-				_, loss, predictions, summary = session.run(
-					[self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged], feed_dict=feed_dict)
-				if step % 100 == 0:
-					train_writer.add_summary(summary, step)
-					epochAccuracy = accuracy(predictions, batchLabels)
-					epochDice = diceScore(predictions, batchLabels)
-					print(
-						"++++++ Iteration number {:} ++++++ \nMinibatch Loss : {:.4f}\nTraining Accuracy : {:.4f}\nDice score: {:.4f}\n".format(
-							step, loss, epochAccuracy, epochDice))
-					resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
-					              imageSize=240, imageMod=1, thresh=0.5)
-			save_path = saver.save(session, "/variables/{}_{}.ckpt".format('unet', datetime.datetime.now()))
-			print('Saving variables in : %s' % save_path)
-			with open('model_file.txt', 'a') as file1:
-				file1.write(save_path)
-				file1.write(' dice={}\n'.format(epochDice))
+			if self.istrain:
+				for step in range(numSteps):
+					batchData, batchLabels = dataPipe.next_train_random_batch(self.batchSize)
+					feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
+					_, loss, predictions, summary = session.run(
+						[self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged], feed_dict=feed_dict)
+					if step % 30 == 0:
+						train_writer.add_summary(summary, step)
+						epochAccuracy = accuracy(predictions, batchLabels)
+						epochDice = diceScore(predictions, batchLabels)
+						print(
+							"++++++ Iteration number {:} ++++++ \nMinibatch Loss : {:.4f}\nTraining Accuracy : {:.4f}\nDice score: {:.4f}\n".format(
+								step, loss, epochAccuracy, epochDice))
+						resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
+									  imageSize=240, imageMod=1, thresh=0.5)
+						resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
+									  imageSize=240, imageMod=0, thresh=0.5)
+				save_path = saver.save(session, "/variables/{}_{}_{}_{}.ckpt".format('unet',self.argsDict['layers'],self.argsDict['weightval'],time.strftime('%d%m%y')))
+				print('Saving variables in : %s' % save_path)
+				with open('model_file.txt', 'a') as file1:
+					file1.write(save_path)
+					file1.write(' dice={}\n'.format(epochDice))
+			else:
+				Data, Labels = dataPipe.get_val_dataset_and_labels()
+				for i in Data:
+					batchdata=Data[i];
+					batchlabels=Labels[i];
+					feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
+					predictions = session.run([ self.net.predictions], feed_dict=feed_dict)
+					print('dice={}\n' .format(diceScore(predictions,batchLabels)))
 
 
 def diceScore(predictions, labels):
