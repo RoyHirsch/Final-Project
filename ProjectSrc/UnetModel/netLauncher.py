@@ -1,6 +1,8 @@
 from Utilities.DataPipline import *
 from UnetModel.UnetModelClass import *
 from UnetModel.Trainer import *
+from UnetModel.Tester import *
+
 import numpy as np
 import os
 
@@ -13,7 +15,7 @@ import os
 
 Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 '''
-
+train=True
 
 # CONSTANTS:
 PATH = '/variables/unet_3_200218_k=3_lr=0.01_d=32.ckpt'
@@ -30,8 +32,11 @@ unetModel = UnetModelClass(layers=3, num_channels=len(dataPipe.modalityList), nu
                         pool_size=2, costStr='sigmoid', optStr='adam',weightedsum='True',weightval=13, argsDict={})
 
 # train
-trainModel = Trainer(net=unetModel, batchSize=16, argsDict={'weightval':15,'layers':3},istrain=True)
-trainModel.train(dataPipe=dataPipe, logPath=LOG_DIR, outPath='', numSteps=600, restore=False, restorePath='/variables/unet_3_130318.ckpt')
-
+if train:
+    trainModel = Trainer(net=unetModel, batchSize=16, argsDict={'weightval':15,'layers':3},istrain=True)
+    trainModel.train(dataPipe=dataPipe, logPath=LOG_DIR, outPath='', numSteps=450, restore=True, restorePath='/variables/unet_3_15_140318.ckpt')
+else:
+    testModel=Tester( net=unetModel,testList=[1,2,3,4], argsDict={'mod':[1,3]})
+    testModel.test(dataPipe=dataPipe, logPath=LOG_DIR, restorePath='/variables/unet_3_15_140318.ckpt')
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard

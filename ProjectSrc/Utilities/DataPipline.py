@@ -154,13 +154,16 @@ class DataPipline(object):
 
         # ---- Prepare Lists ---- #
 
-    def pre_process_list(self, listName, data, labels):
+    def pre_process_list(self, listName='train',num=-1):
         '''
             Processing a list of samples (may be train, val or test list)
             This funcrion gets the optionsDist and preforms all the pre-processing on the data.
             THe output is [outSampleArray, outLabelArray] , 4D and 3D arrays containing the pre-processed data.
         '''
-        if listName == 'train':
+        if num!=-1:
+            numbersList=[num]
+            self.optionsDict['filterSlices']=False
+        elif listName == 'train':
             numbersList = self.trainNumberList
         elif listName in ['val','validation']:
             numbersList = self.valNumberList
@@ -168,13 +171,12 @@ class DataPipline(object):
             numbersList = self.testNumberList
         else:
             print('Error while calling pre_process_list')
-        fullsampelsArray=[]
-        fullLabelsArray=[]
+
         outSampleArray = []
         outLabelArray = []
         for i in numbersList:
-            img = data[i][:, :, :, self.modalityList]
-            label = labels[i]
+            img = self.data[i][:, :, :, self.modalityList]
+            label = self.labels[i]
 
             if 'binaryLabels' in self.optionsDict.keys() and self.optionsDict['binaryLabels']:
                 self.numOfLabels = 1
@@ -239,11 +241,11 @@ class DataPipline(object):
 
         self.data, self.labels = get_data_and_labels_from_folder()
         print('Data and labels were uploaded successfully.')
-        self.trainSamples, self.trainLabels = self.pre_process_list('train', self.data, self.labels)
+        self.trainSamples, self.trainLabels = self.pre_process_list(listName='train')
         print('Train samples list processed successfully.')
-        self.valSamples, self.valLabels = self.pre_process_list('val', self.data, self.labels)
+        self.valSamples, self.valLabels = self.pre_process_list(listName='val')
         print('Validation samples list processed successfully.')
-        self.testSamples, self.testLabels = self.pre_process_list('test', self.data, self.labels)
+        self.testSamples, self.testLabels = self.pre_process_list(listName='test')
         print('Train, val and test database created successfully.')
 
         # Printings for debug:
@@ -327,6 +329,9 @@ class DataPipline(object):
         plt.imshow(img[:, :, slice, 3], cmap='gray')
         plt.show()
 
+    def next_image(self,sliceNumber):
+        img,labels=self.pre_process_list(listName='train',num=sliceNumber)
+        return img,labels
 
 
 

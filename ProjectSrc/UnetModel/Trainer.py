@@ -33,9 +33,11 @@ class Trainer(object):
 					feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
 					_, loss, predictions, summary = session.run(
 						[self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged], feed_dict=feed_dict)
-					if step % 30 == 0:
+					if step % 150 == 0:
 						train_writer.add_summary(summary, step)
 						epochAccuracy = accuracy(predictions, batchLabels)
+						print(np.shape(predictions))
+
 						epochDice = diceScore(predictions, batchLabels)
 						print(
 							"++++++ Iteration number {:} ++++++ \nMinibatch Loss : {:.4f}\nTraining Accuracy : {:.4f}\nDice score: {:.4f}\n".format(
@@ -49,14 +51,6 @@ class Trainer(object):
 				with open('model_file.txt', 'a') as file1:
 					file1.write(save_path)
 					file1.write(' dice={}\n'.format(epochDice))
-			else:
-				Data, Labels = dataPipe.get_val_dataset_and_labels()
-				for i in Data:
-					batchdata=Data[i];
-					batchlabels=Labels[i];
-					feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
-					predictions = session.run([ self.net.predictions], feed_dict=feed_dict)
-					print('dice={}\n' .format(diceScore(predictions,batchLabels)))
 
 
 def diceScore(predictions, labels):
