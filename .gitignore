@@ -5,8 +5,11 @@ ProjectSrc/classic_project/chav_vase_script.m
 *.mexw64
 ProjectSrc/.idea/workspace.xml
 ProjectSrc/ExternalModules/network_skeleton/__pycache__/layers.cpython-36.pyc
+<<<<<<< HEAD
 ProjectSrc/.idea/workspace.xml
 ProjectSrc/UnetMRI/UnetModelClass.py
 *.xml
 *.OCHAYOOT-MOBL
+=======
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
 *.xml

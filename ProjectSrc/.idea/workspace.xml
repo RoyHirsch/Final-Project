@@ -45,11 +45,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Trainer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/Trainer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="301">
               <caret line="52" column="63" lean-forward="false" selection-start-line="52" selection-start-column="63" selection-end-line="52" selection-end-column="63" />
+=======
+      <file leaf-file-name="netLauncher.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UnetModel/netLauncher.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="367">
+              <caret line="32" column="48" lean-forward="false" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -57,11 +65,29 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Tester.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/Tester.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1575">
               <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+=======
+      <file leaf-file-name="session.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="1305" column="0" lean-forward="false" selection-start-line="1305" selection-start-column="0" selection-end-line="1305" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Trainer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UnetModel/Trainer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="388">
+              <caret line="43" column="12" lean-forward="false" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -69,11 +95,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/utils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="259">
               <caret line="24" column="29" lean-forward="false" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="29" />
+=======
+      <file leaf-file-name="UnetModelClass.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/UnetModel/UnetModelClass.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="123">
+              <caret line="125" column="39" lean-forward="false" selection-start-line="125" selection-start-column="32" selection-end-line="125" selection-end-column="39" />
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
               <folding />
             </state>
           </provider>
@@ -175,7 +209,11 @@
         <option value="$PROJECT_DIR$/UnetModel/model_file.txt" />
         <option value="$PROJECT_DIR$/test" />
         <option value="$PROJECT_DIR$/Utilities/DataPipline.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/UnetModel/Tester.py" />
+=======
+        <option value="$PROJECT_DIR$/UnetModel/Trainer.py" />
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
         <option value="$PROJECT_DIR$/UnetModel/netLauncher.py" />
         <option value="$PROJECT_DIR$/UnetModel/Trainer.py" />
       </list>
@@ -484,7 +522,31 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$USER_HOME$/tensorflow/lib/python3.6/site-packages/tensorflow/python/framework/ops.py" />
+=======
+    <entry file="file://$USER_HOME$/tensorflow/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="897" column="0" lean-forward="false" selection-start-line="897" selection-start-column="0" selection-end-line="897" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="569" column="0" lean-forward="false" selection-start-line="569" selection-start-column="0" selection-end-line="569" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
     <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/tf_unet/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10">
@@ -635,6 +697,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/UnetModel/Trainer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -646,6 +709,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UnetModel/netLauncher.py">
+=======
+    <entry file="file://$PROJECT_DIR$/UnetModel/layers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="13" column="7" lean-forward="false" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExternalModules/tf_unet-master/scripts/launcher.py">
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="624">
           <caret line="36" column="81" lean-forward="false" selection-start-line="36" selection-start-column="81" selection-end-line="36" selection-end-column="81" />
@@ -663,13 +737,56 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/UnetModel/UnetModelClass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="388">
           <caret line="110" column="64" lean-forward="true" selection-start-line="110" selection-start-column="64" selection-end-line="110" selection-end-column="64" />
+=======
+    <entry file="file://$PROJECT_DIR$/Utilities/DataPipline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="199" column="99" lean-forward="false" selection-start-line="199" selection-start-column="99" selection-end-line="199" selection-end-column="99" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="1305" column="0" lean-forward="false" selection-start-line="1305" selection-start-column="0" selection-end-line="1305" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/Trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="43" column="12" lean-forward="false" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/netLauncher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="32" column="48" lean-forward="false" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+>>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/UnetModelClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="125" column="39" lean-forward="false" selection-start-line="125" selection-start-column="32" selection-end-line="125" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
