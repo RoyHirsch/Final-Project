@@ -5,3 +5,8 @@ ProjectSrc/classic_project/chav_vase_script.m
 *.mexw64
 ProjectSrc/.idea/workspace.xml
 ProjectSrc/ExternalModules/network_skeleton/__pycache__/layers.cpython-36.pyc
+ProjectSrc/.idea/workspace.xml
+ProjectSrc/UnetMRI/UnetModelClass.py
+*.xml
+*.OCHAYOOT-MOBL
+*.xml
