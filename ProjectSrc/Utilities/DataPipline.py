@@ -1,6 +1,6 @@
 from Utilities.loadData import *
+from UnetModel import *
 import skimage.transform as ski
-from sklearn.feature_extraction import image
 import os
 import pprint
 
@@ -15,7 +15,7 @@ class DataPipline(object):
     batch_offset = 0
     optionsDict = {}
 
-    def __init__(self, numTrain, numVal, numTest, modalityList,permotate, optionsDict):
+    def __init__(self, numTrain, numVal, numTest, modalityList, permotate, optionsDict):
 
         '''
 
@@ -39,8 +39,8 @@ class DataPipline(object):
                'filterSlices': bool
                'minParentageLabeledVoxals': int - for filtering slices, parentage in [0,1]
         '''
-
-        print('\n#### -------- DataPipline object was created -------- ####\n')
+        logging.info('')
+        logging.info('#### -------- DataPipline object was created -------- ####\n')
 
         self.trainNumberList = []
         self.valNumberList = []
@@ -55,7 +55,8 @@ class DataPipline(object):
         self.get_samples_list()
 
     def __del__(self):
-        print('\n#### -------- DataPipline object was deleted -------- ####\n')
+        # logging.info('#### -------- DataPipline object was deleted -------- ####\n')
+        pass
 
     def _permotate_samples(self, numTrain, numVal, numTest):
         '''
@@ -170,7 +171,7 @@ class DataPipline(object):
         elif listName == 'test':
             numbersList = self.testNumberList
         else:
-            print('Error while calling pre_process_list')
+            logging.info('Error while calling pre_process_list')
 
         outSampleArray = []
         outLabelArray = []
@@ -183,8 +184,6 @@ class DataPipline(object):
                 tmpLabel = np.zeros_like(label)
                 tmpLabel[label != 0] = 1
                 label = tmpLabel
-
-
 
             else:
                 self.numOfLabels = 4
@@ -240,37 +239,37 @@ class DataPipline(object):
         self.testLabels = []
 
         self.data, self.labels = get_data_and_labels_from_folder()
-        print('Data and labels were uploaded successfully.')
+        logging.info('Data and labels were uploaded successfully.')
         self.trainSamples, self.trainLabels = self.pre_process_list(listName='train')
-        print('Train samples list processed successfully.')
+        logging.info('Train samples list processed successfully.')
         self.valSamples, self.valLabels = self.pre_process_list(listName='val')
-        print('Validation samples list processed successfully.')
+        logging.info('Validation samples list processed successfully.')
         self.testSamples, self.testLabels = self.pre_process_list(listName='test')
-        print('Train, val and test database created successfully.')
+        logging.info('Train, val and test database created successfully.')
 
-        # Printings for debug:
-        print('Train dataset, samples number: ' + str(self.trainNumberList) + '\n' +
-              'Shape of train dataset: ' + str(np.shape(self.trainSamples)))
-        print('Val dataset, samples number: ' + str(self.valNumberList) + '\n' +
-              'Shape of val dataset: ' + str(np.shape(self.valSamples)))
-        print('Test dataset, samples number: ' + str(self.testNumberList) + '\n' +
-              'Shape of test dataset: ' + str(np.shape(self.testSamples)))
+        # logging.infoings for debug:
+        logging.info('Train dataset, samples number: ' + str(self.trainNumberList))
+        logging.info('Shape of train dataset: ' + str(np.shape(self.trainSamples)))
+        logging.info('Val dataset, samples number: ' + str(self.valNumberList))
+        logging.info('Shape of val dataset: ' + str(np.shape(self.valSamples)))
+        logging.info('Test dataset, samples number: ' + str(self.testNumberList))
+        logging.info('Shape of test dataset: ' + str(np.shape(self.testSamples)))
 
     # ---- Getters ---- #
 
     def to_string_pipline(self):
-        print('\n\nPipline object properties:\n')
-        print('Train dataset, samples number: ' + str(self.trainNumberList) + '\n' +
+        logging.info('\n\nPipline object properties:\n')
+        logging.info('Train dataset, samples number: ' + str(self.trainNumberList) + '\n' +
               'Shape of train dataset: ' + str(np.shape(self.trainSamples)) + '\n' +
               'Shape of train labe ls: ' + str(np.shape(self.trainLabels)))
-        print('Validation dataset, samples number: ' + str(self.valNumberList) + '\n' +
+        logging.info('Validation dataset, samples number: ' + str(self.valNumberList) + '\n' +
               'Shape of val dataset: ' + str(np.shape(self.valSamples)) + '\n' +
               'Shape of val labels: ' + str(np.shape(self.valLabels)))
-        print('Test dataset, samples number: ' + str(self.testNumberList) + '\n' +
+        logging.info('Test dataset, samples number: ' + str(self.testNumberList) + '\n' +
               'Shape of test dataset: ' + str(np.shape(self.testSamples)) + '\n' +
               'Shape of test labels: ' + str(np.shape(self.testLabels)))
-        print('\nPipline object parameters:\n"')
-        pprint.pprint(self.optionsDict)
+        logging.info('\nPipline object parameters:\n"')
+        plogging.info.plogging.info(self.optionsDict)
 
     def get_train_dataset_and_labels(self):
         return self.trainSamples, self.trainLabels
@@ -304,9 +303,9 @@ class DataPipline(object):
     def print_img_statistics(img):
         modalities = ['T1', 'T2', 'T1g', 'FLAIR']
         for i in range(0, 4):
-            print('Image modality: ' + modalities[i] + ': Mean: ' +
+            logging.info('Image modality: ' + modalities[i] + ': Mean: ' +
                   str(np.mean(img[:, :, :, i])) + ' Variance: ' + str(np.std(img[:, :, :, i])))
-            print('Image max: ' + str(np.max(img)) + ' Image min: ' + str(np.min(img)))
+            logging.info('Image max: ' + str(np.max(img)) + ' Image min: ' + str(np.min(img)))
 
     @staticmethod
     def print_histogram(img):
@@ -330,9 +329,8 @@ class DataPipline(object):
         plt.show()
 
     def next_image(self,sliceNumber):
-        img,labels=self.pre_process_list(listName='train',num=sliceNumber)
+        img,labels=self.pre_process_list(listName='train' ,num=sliceNumber)
         return img,labels
-
 
 
 
@@ -342,13 +340,13 @@ class DataPipline(object):
 # pipObj = DataPipline(numTrain=5, numVal=1, numTest=4, modalityList=[1,2,3],
 #                      optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True, 'normType': 'reg'})
 #
-# print(np.shape(pipObj.trainLabels))
-# print(np.shape(pipObj.trainSamples))
+# logging.info(np.shape(pipObj.trainLabels))
+# logging.info(np.shape(pipObj.trainSamples))
 # pipObj.to_string_pipline()
 # # branch few train batches
 # batch_size = 64
 # pipObj.init_batch_number()
 # for i in range(4):
 #      train_batch_data, train_batch_labels = pipObj.next_train_random_batch(batch_size)
-#      print(np.shape(train_batch_data))
-#      print(np.shape(train_batch_labels))
+#      logging.info(np.shape(train_batch_data))
+#      logging.info(np.shape(train_batch_labels))

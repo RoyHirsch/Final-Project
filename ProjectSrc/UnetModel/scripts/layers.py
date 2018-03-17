@@ -1,7 +1,4 @@
-
-from __future__ import print_function, division, absolute_import, unicode_literals
-
-import tensorflow as tf
+from UnetModel import *
 
 def weight_variable(shape, stddev=0.1):
     """

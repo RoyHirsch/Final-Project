@@ -1,10 +1,4 @@
-from Utilities.DataPipline import *
-from UnetModel.UnetModelClass import *
-from UnetModel.Trainer import *
-from UnetModel.Tester import *
-
-import numpy as np
-import os
+from UnetModel import *
 
 '''
     main script for running and testing Unet model
@@ -15,28 +9,67 @@ import os
 
 Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 '''
+
 train=True
 
-# CONSTANTS:
-PATH = '/variables/unet_3_200218_k=3_lr=0.01_d=32.ckpt'
-LOG_DIR = os.path.realpath(__file__ + "/../" + "/tensorboard")
+# Make run folder
+runFolderStr = time.strftime('RunFolder_%H_%M__%d_%m_%y')
+createFolder(os.path.realpath(__file__ + "/../"), 'runData')
+createFolder(os.path.realpath(__file__ + "/../") + "/runData/", runFolderStr)
+runFolderDir = os.path.realpath(__file__ + "/../") + "/runData/" + runFolderStr
+
+# CONSTANTS
+FLAGS = tf.app.flags.FLAGS
+tf.app.flags.DEFINE_string('run_log_folder',runFolderDir,
+                           'a folder for saving all the data from the model\'s run')
+tf.app.flags.DEFINE_bool('DEGUB', False, 'deturmine the logging level')
+tf.app.flags.DEFINE_bool('train', True, 'train vs. test run mode')
+
+# PATH = '/variables/unet_3_200218_k=3_lr=0.01_d=32.ckpt'
+LOG_DIR = os.path.realpath(__file__ + "/../" + "/runData/" + runFolderStr)
 
 # load data
-dataPipe = DataPipline(numTrain=10, numVal=4, numTest=4, modalityList=[1,2,3],permotate=False,
-                     optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True,
-                                  'normType': 'reg', 'binaryLabels': True, 'filterSlices': True,
-                                  'minParentageLabeledVoxals': 0.1})
+startLogging(FLAGS.run_log_folder)
+logging.info('All load and set - let\'s go !')
+dataPipe = DataPipline(numTrain=2,  numVal=1, numTest=1,
+                       modalityList=[1,2,3], permotate=False,
+                       optionsDict={'zeroPadding': True,
+                                    'paddingSize': 240,
+                                    'normalize': True,
+                                    'normType': 'reg',
+                                    'binaryLabels': True,
+                                    'filterSlices': True,
+                                    'minParentageLabeledVoxals': 0.1})
 
 # create net model
-unetModel = UnetModelClass(layers=3, num_channels=len(dataPipe.modalityList), num_labels=1, image_size=240, kernel_size=3, depth=32,
-                        pool_size=2, costStr='sigmoid', optStr='adam',weightedsum='True',weightval=13, argsDict={})
+unetModel = UnetModelClass(layers=3,
+                           num_channels=len(dataPipe.modalityList),
+                           num_labels=1,
+                           image_size=240,
+                           kernel_size=3,
+                           depth=32,
+                           pool_size=2,
+                           costStr='sigmoid',
+                           optStr='adam',
+                           argsDict={'weightedSum': 'True', 'weightVal': 13})
 
 # train
 if train:
-    trainModel = Trainer(net=unetModel, batchSize=16, argsDict={'weightval':15,'layers':3},istrain=True)
-    trainModel.train(dataPipe=dataPipe, logPath=LOG_DIR, outPath='', numSteps=450, restore=True, restorePath='/variables/unet_3_15_140318.ckpt')
+    trainModel = Trainer(net=unetModel,argsDict={})
+
+    trainModel.train(dataPipe=dataPipe,
+                     batchSize=4,
+                     numSteps=100,
+                     printInterval=20,
+                     logPath=FLAGS.run_log_folder,
+                     restore=False,
+                     restorePath='')
+
 else:
-    testModel=Tester( net=unetModel,testList=[1,2,3,4], argsDict={'mod':[1,3]})
+    testModel = Tester(net=unetModel, testList=[1,2,3,4], argsDict={'mod':[1,3]})
     testModel.test(dataPipe=dataPipe, logPath=LOG_DIR, restorePath='/variables/unet_3_15_140318.ckpt')
+
+
+
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard

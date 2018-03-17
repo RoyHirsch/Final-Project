@@ -1,14 +1,11 @@
+from UnetModel import *
 import scipy.io as spio
 import numpy as np
 import os
 import re
-# import matplotlib.pyplot as plt
-# import matplotlib.image as mpimg
-import pickle
 import sys
 
 ROOT_DIR = os.path.realpath(__file__ + "/../../")
-
 
 def get_image_from_mat_file(dir =""):
     mat = spio.loadmat(dir, squeeze_me=True)
@@ -41,7 +38,7 @@ def get_data_and_labels_from_folder(dir = ROOT_DIR+'/Data'):
     flag = 0
     for root, dirs, files in os.walk(dir):
         for fileName in files:
-            # print(filename)
+            # logging.info(filename)
             match = re.search(r'dataBN', fileName)
             if match:
                 img = get_image_from_mat_file(os.path.join(root, fileName))
@@ -62,58 +59,9 @@ def get_single_mode_data(dataList, modality, isNorm):
         singleModeDataList.append(temp)
     return singleModeDataList
 
-def dump_data_struct_to_pickle(data, fileName):
-    try:
-        f = open(str(fileName) + '.p', 'wb')
-        pickle.dump(data, f, -1)  # dump data to f
-        f.close()
-        print('Pickling of data completed successfully.')
-    except Exception as inst:
-        print('Error while pickle data.')
-        print(inst)
-        
-def dump_data_struct_to_pickle_batches(data, fileName):
-    for i in range(len(data)):
-        try:
-            f = open(str(fileName) + str(i) + '.p', 'wb')
-            pickle.dump(data[i], f, -1)  # dump data to f
-            f.close()
-            print('Pickling of data {} completed successfully.'.format(i))
-        except Exception as inst:
-            print('Error while pickle data.')
-            print(inst)
-
-def load_pickle_file(path):
-    try:
-        with open(path, "rb") as file:
-            unpickler = pickle.Unpickler(file)
-            out = unpickler.load()
-            return out
-    except Exception as inst:
-            print(inst)
-
-def load_pickle_file_batch(dir, fileRegex):
-    # find all the files in the root dir by the fileRegex
-    pathList = []
-    for root, dirs, files in os.walk(dir):
-        for fileName in files:
-            match = re.search(str(fileRegex), fileName)
-            if match:
-                pathList.append(os.path.join(root, fileName))
-    # load all the files to out
-    out = []
-    for path in pathList:
-        try:
-            with open(path, "rb") as file:
-                unpickler = pickle.Unpickler(file)
-                out.append(unpickler.load())
-        except Exception as inst:
-                print(inst)
-    return out
-
 def get_shapes(list):
     for item in list:
-        print(np.shape(item))
+        logging.info(np.shape(item))
 
 
 # Load single pickle file

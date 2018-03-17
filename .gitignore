@@ -14,3 +14,8 @@ ProjectSrc/UnetMRI/UnetModelClass.py
 >>>>>>> 970934b1f07faa095e8e58903cafb54b9cbbba38
 *.xml
 *.RoyHirschs-MBP
+*.data-00000-of-00001
+*.index
+*.meta
+*.log
+*.local
