@@ -6,7 +6,6 @@ class UnetModelClass(object):
     def __init__(self, layers, num_channels, num_labels, image_size,
                  kernel_size, depth, pool_size, costStr, optStr, argsDict = {}):
 
-        logging.info('')
         logging.info('#### -------- UnetModel object was created -------- ####\n')
         
         self.layers = layers

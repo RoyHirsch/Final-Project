@@ -1,11 +1,8 @@
 from UnetModel import *
 
-# -------------------- Logging --------------------
-
 def startLogging(logDir, debug=False):
 	# this function starts logging the software outputs.
 	# two levels logging: DEBUG and INFO
-	# logPrint = logging.getLogger(__package__)
 
 	# init a logger set logging level
 	logFormat = '%(asctime)s - %(levelname)s - %(module)s : %(message)s'
@@ -19,17 +16,12 @@ def startLogging(logDir, debug=False):
 	logStr = time.strftime('logFile_%H_%M__%d_%m_%y') + '.log'
 
 	# connect the two streams
-	# streamHandler = logging.StreamHandler()
-	# streamHandler.setFormatter(logFormat)
-	# streamHandler.setLevel(logLevel)
-
 	fileHandler = logging.FileHandler(logDir+'/'+logStr)
 
 	fileHandler.setFormatter(logging.Formatter(logFormat))
 	fileHandler.setLevel(logLevel)
 
 	logging.getLogger('').addHandler(fileHandler)
-	# logPrint.addHandler(streamHandler)
 
 
 def resultDisplay(predictions, labels, images, sampleInd, imageSize, imageMod, thresh = 0.5):

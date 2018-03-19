@@ -10,29 +10,46 @@ from UnetModel import *
 Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 '''
 
-train=True
-
-# Make run folder
-runFolderStr = time.strftime('RunFolder_%H_%M__%d_%m_%y')
-createFolder(os.path.realpath(__file__ + "/../"), 'runData')
-createFolder(os.path.realpath(__file__ + "/../") + "/runData/", runFolderStr)
-runFolderDir = os.path.realpath(__file__ + "/../") + "/runData/" + runFolderStr
-
+##############################
 # CONSTANTS
-FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('run_log_folder',runFolderDir,
-                           'a folder for saving all the data from the model\'s run')
-tf.app.flags.DEFINE_bool('DEGUB', False, 'deturmine the logging level')
-tf.app.flags.DEFINE_bool('train', True, 'train vs. test run mode')
+##############################
+flags = tf.app.flags
 
-# PATH = '/variables/unet_3_200218_k=3_lr=0.01_d=32.ckpt'
-LOG_DIR = os.path.realpath(__file__ + "/../" + "/runData/" + runFolderStr)
+flags.DEFINE_string('runMode', 'Restore',
+                    'run mode for the whole sequence: Train, Test or Restore')
+flags.DEFINE_bool('debug', False,
+                  'logging level - if true debug mode')
+tf.app.flags.DEFINE_string('logFolder', '',
+                           'logging folder for the sequence, filled automatically')
+tf.app.flags.DEFINE_string('restoreFile', '',
+                           'path to a .ckpt file for Restore or Test run modes')
+FLAGS = flags.FLAGS
 
-# load data
-startLogging(FLAGS.run_log_folder)
+# Make new logging folder only in Train mode
+if FLAGS.runMode == 'Train':
+    createFolder(os.path.realpath(__file__ + "/../"), 'runData')
+    runFolderStr = time.strftime('RunFolder_%H_%M__%d_%m_%y')
+    createFolder(os.path.realpath(__file__ + "/../") + "/runData/", runFolderStr)
+    runFolderDir = os.path.realpath(__file__ + "/../") + "/runData/" + runFolderStr
+    FLAGS.logFolder = runFolderDir
+
+# Use perilously defined folder for Test or Restore run modes
+if FLAGS.runMode in ['Test', 'Restore']:
+    itemsList = FLAGS.restoreFile.split('/')
+    FLAGS.logFolder = '/'.join(itemsList[:-1])
+
+
+##############################
+# LOAD DATA
+##############################
+startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
-dataPipe = DataPipline(numTrain=2,  numVal=1, numTest=1,
-                       modalityList=[1,2,3], permotate=False,
+logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
+dataPipe = DataPipline(numTrain=2,
+                       numVal=1,
+                       numTest=1,
+                       modalityList=[1,2,3],
+                       permotate=False,
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
@@ -41,7 +58,9 @@ dataPipe = DataPipline(numTrain=2,  numVal=1, numTest=1,
                                     'filterSlices': True,
                                     'minParentageLabeledVoxals': 0.1})
 
-# create net model
+##############################
+# CREATE MODEL
+##############################
 unetModel = UnetModelClass(layers=3,
                            num_channels=len(dataPipe.modalityList),
                            num_labels=1,
@@ -53,23 +72,26 @@ unetModel = UnetModelClass(layers=3,
                            optStr='adam',
                            argsDict={'weightedSum': 'True', 'weightVal': 13})
 
-# train
-if train:
-    trainModel = Trainer(net=unetModel,argsDict={})
+##############################
+# RUN MODEL
+##############################
+if FLAGS.runMode in ['Train', 'Restore']:
+    trainModel = Trainer(net=unetModel, argsDict={})
 
     trainModel.train(dataPipe=dataPipe,
                      batchSize=4,
                      numSteps=100,
                      printInterval=20,
-                     logPath=FLAGS.run_log_folder,
-                     restore=False,
-                     restorePath='')
+                     logPath=FLAGS.logFolder,
+                     restore=FLAGS.runMode == 'Restore',
+                     restorePath=FLAGS.restoreFile)
+
+elif FLAGS.runMode == 'Test':
+    testModel = Tester(net=unetModel, testList=[1,2,3,4], argsDict={})
+    testModel.test(dataPipe=dataPipe, restorePath=FLAGS.restoreFile)
 
 else:
-    testModel = Tester(net=unetModel, testList=[1,2,3,4], argsDict={'mod':[1,3]})
-    testModel.test(dataPipe=dataPipe, logPath=LOG_DIR, restorePath='/variables/unet_3_15_140318.ckpt')
-
-
+    logging.info('Error - unknown runMode.')
 
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard

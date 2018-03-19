@@ -2,7 +2,6 @@ from UnetModel import *
 
 class Trainer(object):
 	def __init__(self, net, argsDict):
-		logging.info('')
 		logging.info('#### -------- Trainer object was created -------- ####\n')
 
 		self.net = net
@@ -36,10 +35,10 @@ class Trainer(object):
 					logging.info('Minibatch Loss : {:.4f}'.format(loss))
 					logging.info('Training Accuracy : {:.4f}'.format(epochAccuracy))
 					logging.info('Dice score: {:.4f}\n'.format(epochDice))
-					resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
-								  imageSize=240, imageMod=1, thresh=0.5)
+					# resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,
+					# 			  imageSize=240, imageMod=1, thresh=0.5)
 
-			save_path = saver.save(session, str(logPath)+"/{}_{}_{}_{}.ckpt".format('unet', self.net.layers, self.net.argsDict['weightVal'], time.strftime('%H:%M__%d_%m_%y')))
+			save_path = saver.save(session, str(logPath)+"/{}_{}_{}_{}.ckpt".format('unet', self.net.layers, self.net.argsDict['weightVal'], time.strftime('%H_%M__%d_%m_%y')))
 			logging.info('Saving variables in : %s' % save_path)
 			with open('model_file.txt', 'a') as file1:
 				file1.write(save_path)

@@ -2,18 +2,16 @@ from UnetModel import *
 
 class Tester(object):
     def __init__(self, net,testList=[], argsDict={'mod':[1,3]}):
-        logging.info('')
         logging.info('#### -------- Tester object was created -------- ####\n')
         self.net = net
         self.testList = testList
         self.argsDict = argsDict
 
-
     def __del__(self):
         # logging.info('#### -------- Tester object was deleted -------- ####\n')
         pass
 
-    def test(self, dataPipe, logPath, restorePath=''):
+    def test(self, dataPipe, restorePath=''):
         with tf.Session(graph=self.net.graph) as session:
             tf.global_variables_initializer().run()
             saver = tf.train.Saver()

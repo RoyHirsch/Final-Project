@@ -11,9 +11,9 @@ def get_image_from_mat_file(dir =""):
     im = mat['im']
     # optional values
     # volnames = mat['im_volnames']
-    # filenames = mat['im_filenames']
+    filenames = mat['im_filenames']
     # resolution = mat['im_resolution']
-    return im
+    return im, filenames
 
 def get_labels_from_mat_file (dir =""):
     mat = spio.loadmat(dir, squeeze_me=True)
@@ -33,19 +33,22 @@ def get_data_and_labels_from_folder(dir = ROOT_DIR+'/Data'):
         dir - a root folder where all the data is in, the function scans the root folder.
     """
     Xtrain = []
+    XtrainFilename = []
     ytrain = []
+    flag = 0
     for root, dirs, files in os.walk(dir):
         for fileName in files:
             # logging.info(filename)
             match = re.search(r'dataBN', fileName)
             if match:
-                img = get_image_from_mat_file(os.path.join(root, fileName))
+                img, filename = get_image_from_mat_file(os.path.join(root, fileName))
                 Xtrain.append(img)
+                XtrainFilename.append(filename)
             match = re.search(r'gt4', fileName)
             if match:
                 labelImg = get_labels_from_mat_file(os.path.join(root, fileName))
                 ytrain.append(labelImg)
-    return Xtrain, ytrain
+    return Xtrain, ytrain, XtrainFilename
 
 def get_single_mode_data(dataList, modality, isNorm):
     singleModeDataList = []

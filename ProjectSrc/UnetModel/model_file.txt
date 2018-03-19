@@ -1,3 +1,5 @@
 /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_03__17_03_18/unet_3_13_21:07__17_03_18.ckpt dice=0.02819000370800495
 /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_16__17_03_18/unet_3_13_21:21__17_03_18.ckpt dice=0.4789845049381256
 /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_26__17_03_18/unet_3_13_21:32__17_03_18.ckpt dice=0.0
+/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_53__17_03_18/unet_3_13_22:04__17_03_18.ckpt dice=0.7257484197616577
+/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_10_40__19_03_18/unet_3_13_10:48__19_03_18.ckpt dice=0.5520070195198059

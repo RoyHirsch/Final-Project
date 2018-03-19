@@ -73,7 +73,7 @@ class DataPipline(object):
 
     def _manual_samples(self, numTrain, numVal, numTest):
         '''
-            randomly selects the data samples to each list.
+            manualy selects the data samples to each list.
         '''
         self.trainNumberList=list(range(0, numTrain))
         self.valNumberList=[numVal]
@@ -81,7 +81,6 @@ class DataPipline(object):
 
 
     def _normalize_image_modality(self, imgMod):
-        # mean 0 and std 1 per image
         if self.optionsDict['normType'] == 'clip':
             b, t = np.percentile(imgMod, (0.5, 99.5))
             imgMod = np.clip(imgMod, b, t)
@@ -93,7 +92,7 @@ class DataPipline(object):
             mean = np.mean(imgMod)
             var = np.std(imgMod)
             normImg = (imgMod - mean) / var
-        # between 0-1
+
         elif self.optionsDict['normType'] == 'zeroToOne':
             normImg = imgMod / np.max(imgMod)
 
@@ -253,7 +252,7 @@ class DataPipline(object):
         logging.info('Val dataset, samples number: ' + str(self.valNumberList))
         logging.info('Shape of val dataset: ' + str(np.shape(self.valSamples)))
         logging.info('Test dataset, samples number: ' + str(self.testNumberList))
-        logging.info('Shape of test dataset: ' + str(np.shape(self.testSamples)))
+        logging.info('Shape of test dataset: ' + str(np.shape(self.testSamples)) + '\n')
 
     # ---- Getters ---- #
 
@@ -269,16 +268,7 @@ class DataPipline(object):
               'Shape of test dataset: ' + str(np.shape(self.testSamples)) + '\n' +
               'Shape of test labels: ' + str(np.shape(self.testLabels)))
         logging.info('\nPipline object parameters:\n"')
-        plogging.info.plogging.info(self.optionsDict)
-
-    def get_train_dataset_and_labels(self):
-        return self.trainSamples, self.trainLabels
-
-    def get_val_dataset_and_labels(self):
-        return self.valSamples, self.valLabels
-
-    def get_test_dataset_and_labels(self):
-        return self.testSamples, self.testLabels
+        logging.info(self.optionsDict)
 
     def reset_train_batch_offset(self, offset = 0):
         self.batch_train_offset = offset
@@ -315,23 +305,9 @@ class DataPipline(object):
         plt.bar(bins[:-1], counts)
         plt.show()
 
-    @staticmethod
-    def print_multimodal_image(img, slice):
-        fig = plt.figure()
-        plt.subplot(2, 2, 1)
-        plt.imshow(img[:, :, slice, 0], cmap='gray')
-        plt.subplot(2, 2, 2)
-        plt.imshow(img[:, :, slice, 1], cmap='gray')
-        plt.subplot(2, 2, 3)
-        plt.imshow(img[:, :, slice, 2], cmap='gray')
-        plt.subplot(2, 2, 4)
-        plt.imshow(img[:, :, slice, 3], cmap='gray')
-        plt.show()
-
     def next_image(self,sliceNumber):
         img,labels=self.pre_process_list(listName='train' ,num=sliceNumber)
         return img,labels
-
 
 
 # ---- Test Code ---- #
