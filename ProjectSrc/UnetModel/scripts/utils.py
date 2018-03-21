@@ -1,32 +1,5 @@
 from UnetModel import *
 
-##############################
-# INIT FUNCTIONS
-##############################
-
-def initLoggingFolder(FLAGS):
-
-	# Use perilously defined folder for Test or Restore run modes
-	if FLAGS.runMode in ['Test', 'Restore']:
-		if FLAGS.restoreFile:
-			itemsList = FLAGS.restoreFile.split('/')
-			FLAGS.logFolder = '/'.join(itemsList[:-1])
-		else:
-			print('Error - undefined restoreFile for runMode Test or Restore')
-
-	# Make new logging folder only in Train mode
-	elif FLAGS.runMode == 'Train':
-		createFolder(os.path.realpath(__file__ + "/../../"), 'runData')
-		runFolderStr = time.strftime('RunFolder_%d_%m_%y__%H_%M')
-		createFolder(os.path.realpath(__file__ + "/../../") + "/runData/", runFolderStr)
-		runFolderDir = os.path.realpath(__file__ + "/../../") + "/runData/" + runFolderStr
-		FLAGS.logFolder = runFolderDir
-
-	else:
-		print('Error - undefined runMode')
-
-	return FLAGS
-
 def startLogging(logDir, debug=False):
 	# this function starts logging the software outputs.
 	# two levels logging: DEBUG and INFO
@@ -40,7 +13,7 @@ def startLogging(logDir, debug=False):
 		logging.basicConfig(format=logFormat, stream=sys.stdout, level=logging.INFO)
 		logLevel = logging.INFO
 
-	logStr = time.strftime('logFile_%d_%m_%y__%H_%M') + '.log'
+	logStr = time.strftime('logFile_%H_%M__%d_%m_%y') + '.log'
 
 	# connect the two streams
 	fileHandler = logging.FileHandler(logDir+'/'+logStr)
