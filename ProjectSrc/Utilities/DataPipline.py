@@ -2,7 +2,7 @@ from Utilities.loadData import *
 from UnetModel import *
 import skimage.transform as ski
 import os
-import pprint
+
 
 MOD_LIST = ['T1', 'T2', 'T1g', 'FLAIR']
 MAX_SAMPLES = 30

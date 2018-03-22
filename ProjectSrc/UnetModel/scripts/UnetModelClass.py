@@ -7,7 +7,8 @@ class UnetModelClass(object):
                  kernel_size, depth, pool_size, costStr, optStr, argsDict = {}):
 
         logging.info('#### -------- UnetModel object was created -------- ####\n')
-        
+        self.dispImage=False
+        self.layersTodisplay=argsDict['layersTodisplay']
         self.layers = layers
         self.num_channels = num_channels
         self.num_labels = num_labels
@@ -32,8 +33,7 @@ class UnetModelClass(object):
             self.predictions = tf.nn.sigmoid(self.logits)
         self.loss = self._getCost()
         self.optimizer = self._getOptimizer()
-        with self.graph.as_default():
-            self.merged = tf.summary.merge_all()
+
 
 
     def __del__(self):
@@ -91,7 +91,7 @@ class UnetModelClass(object):
             for l in range(self.layers, 0, -1):
                 # deconvolution
                 with tf.name_scope('deconvolution_{}'.format(l)):
-                    self.weights_dict['W_{}'.format(l)] = weight_variable([self.kernel_size, self.kernel_size,
+                    self.weights_dict['W_{}'.format(l)] = weight_variable([2, 2,
                                                                       int(self.depth * self.ndepth / 2), self.depth * self.ndepth])
                     self.weights_dict['b_{}'.format(l)] = bias_variable([int(self.depth * self.ndepth / 2)])
                     self.deconv_dict['deconv_{}'.format(l)] = deconv2d(self.convu_dict['convu2_{}'.format(l + 1)],
@@ -113,8 +113,18 @@ class UnetModelClass(object):
                                                                self.weights_dict['WU2_{}'.format(l)],
                                                                self.weights_dict['b2u_{}'.format(l)])
                 self.ndepth = int(self.ndepth / 2)
-
-            # last layer
+            #put images in tensorboard
+            displaylist=[]
+            mergedImages = tf.summary.image('input_image', self.X)
+            displaylist.append( mergedImages)
+            for l in self.layersTodisplay:
+                for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]-1):
+                    tempMerge1=tf.summary.image('convlayer1_{}_{}'.format(l,k), self.convd_dict['convd1_{}'.format(l)][1:2,:,:,k:k+1])
+                    displaylist.append(tempMerge1)
+                for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]):
+                    tempMerge2=tf.summary.image('convlayer2_{}_{}'.format(l,k), self.convd_dict['convd2_{}'.format(l)][1:2,:,:,k:k+1])
+                    displaylist.append(tempMerge2)
+            self.merged = tf.summary.merge(displaylist)
             with tf.name_scope('Finel_Layer'):
                 Wfc = weight_variable([1, 1, self.depth, self.num_labels])
                 bfc = bias_variable([self.num_labels])
@@ -137,7 +147,8 @@ class UnetModelClass(object):
             else:
                 logging.info ("Error : Not defined cost function.")
 
-            tf.summary.scalar('Train_loss', loss)
+            loss_tensorboard=tf.summary.scalar('Train_loss', loss)
+            self.merged_loss=tf.summary.merge([loss_tensorboard])
             return loss
 
     def _getOptimizer(self):

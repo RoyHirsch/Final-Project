@@ -24,7 +24,7 @@ tf.app.flags.DEFINE_string('logFolder', '',
 tf.app.flags.DEFINE_string('restoreFile', '',
                            'path to a .ckpt file for Restore or Test run modes')
 FLAGS = flags.FLAGS
-
+FLAGS.runMode='Train'
 # Make new logging folder only in Train mode
 if FLAGS.runMode == 'Train':
     createFolder(os.path.realpath(__file__ + "/../"), 'runData')
@@ -45,7 +45,7 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=2,
+dataPipe = DataPipline(numTrain=10,
                        numVal=1,
                        numTest=1,
                        modalityList=[1,2,3],
@@ -70,7 +70,7 @@ unetModel = UnetModelClass(layers=3,
                            pool_size=2,
                            costStr='sigmoid',
                            optStr='adam',
-                           argsDict={'weightedSum': 'True', 'weightVal': 13})
+                           argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13})
 
 ##############################
 # RUN MODEL
@@ -79,9 +79,9 @@ if FLAGS.runMode in ['Train', 'Restore']:
     trainModel = Trainer(net=unetModel, argsDict={})
 
     trainModel.train(dataPipe=dataPipe,
-                     batchSize=4,
-                     numSteps=100,
-                     printInterval=20,
+                     batchSize=16,
+                     numSteps=500,
+                     printInterval=400,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
                      restorePath=FLAGS.restoreFile)

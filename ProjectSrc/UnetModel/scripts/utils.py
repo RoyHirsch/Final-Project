@@ -58,3 +58,60 @@ def createFolder(homeDir, folderName):
 		os.makedirs(directory)
 
 
+#creating 3D plot
+def make_ax(grid=False):
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.set_zlabel("z")
+    ax.grid(grid)
+    return ax,fig
+#viewer for 3D images (show the slices in 2 d)
+def slidesViewer(volume1,volume2,volume3):
+	fig, (ax1,ax2,ax3) = plt.subplots(1,3,sharey=True)
+	ax1.set_title('Image')
+	ax2.set_title('Prediction')
+	ax3.set_title('Label')
+
+	ax1.volume = volume1
+	ax2.volume = volume2
+	ax3.volume = volume3
+	ax1.index = volume1.shape[0] // 2
+	ax2.index = volume2.shape[0] // 2
+	ax3.index = volume3.shape[0] // 2
+
+	ax1.imshow(volume1[ax1.index])
+	ax2.imshow(volume2[ax2.index])
+	ax3.imshow(volume3[ax3.index])
+
+	fig.canvas.mpl_connect('key_press_event', process_key)
+
+
+
+# help function for slidesveiwer
+def process_key(event):
+	fig = event.canvas.figure
+	axes = fig.axes
+	if event.key == 'D' or event.key == 'd' :
+		for ax in axes:
+			next_slice(ax)
+	elif event.key == 'A' or event.key == 'a':
+		for ax in axes:
+			previous_slice(ax)
+
+	fig.canvas.draw()
+
+# previous_slice change to previes slice in process_key
+def previous_slice(ax):
+	volume = ax.volume
+	ax.index = (ax.index - 1) % volume.shape[0]  # wrap around using %
+	ax.images[0].set_array(volume[ax.index])
+
+# previous_slice change to previes slice in process_key
+
+def next_slice(ax):
+	volume = ax.volume
+	ax.index = (ax.index + 1) % volume.shape[0]
+	ax.images[0].set_array(volume[ax.index])
+
