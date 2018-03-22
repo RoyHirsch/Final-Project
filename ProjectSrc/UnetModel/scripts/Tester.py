@@ -2,6 +2,8 @@ from UnetModel import *
 from skimage.transform import resize
 import tensorflow as tf
 import time as time
+from UnetModel.scripts.utils import *
+import numpy as np
 class Tester(object):
     def __init__(self, net,testList=[], argsDict={'mod':[1,3]}):
         logging.info('#### -------- Tester object was created -------- ####\n')
