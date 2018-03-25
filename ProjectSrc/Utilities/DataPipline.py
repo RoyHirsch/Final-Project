@@ -178,10 +178,18 @@ class DataPipline(object):
             img = self.data[i][:, :, :, self.modalityList]
             label = self.labels[i]
 
-            if 'binaryLabels' in self.optionsDict.keys() and self.optionsDict['binaryLabels']:
+            if 'binaryLabelsWT' in self.optionsDict.keys() and self.optionsDict['binaryLabelsWT']:
                 self.numOfLabels = 1
                 tmpLabel = np.zeros_like(label)
                 tmpLabel[label != 0] = 1
+                label = tmpLabel
+            if 'binaryLabelsC' in self.optionsDict.keys() and self.optionsDict['binaryLabelsC']:
+                self.numOfLabels = 1
+                tmpLabel = np.zeros_like(label)
+                tmpLabel[label==1] = 1
+                tmpLabel[label==4] = 1
+                tmpLabel[label==3] = 1
+
                 label = tmpLabel
 
             else:

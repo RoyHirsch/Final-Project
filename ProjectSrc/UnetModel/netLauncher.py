@@ -15,16 +15,16 @@ Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 ##############################
 flags = tf.app.flags
 
-flags.DEFINE_string('runMode', 'Restore',
+flags.DEFINE_string('runMode', 'Test',
                     'run mode for the whole sequence: Train, Test or Restore')
 flags.DEFINE_bool('debug', False,
                   'logging level - if true debug mode')
 tf.app.flags.DEFINE_string('logFolder', '',
                            'logging folder for the sequence, filled automatically')
-tf.app.flags.DEFINE_string('restoreFile', '',
+tf.app.flags.DEFINE_string('restoreFile', '/Users/ochayoot/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_01__24_03_18/unet_3_13_16_08__25_03_18.ckpt',
                            'path to a .ckpt file for Restore or Test run modes')
 FLAGS = flags.FLAGS
-FLAGS.runMode='Train'
+
 # Make new logging folder only in Train mode
 if FLAGS.runMode == 'Train':
     createFolder(os.path.realpath(__file__ + "/../"), 'runData')
@@ -48,13 +48,14 @@ logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFo
 dataPipe = DataPipline(numTrain=10,
                        numVal=1,
                        numTest=1,
-                       modalityList=[1,2,3],
+                       modalityList=[0,1,2],
                        permotate=False,
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
                                     'normType': 'reg',
-                                    'binaryLabels': True,
+                                    'binaryLabelsWT': False,
+                                    'binaryLabelsC':True,
                                     'filterSlices': True,
                                     'minParentageLabeledVoxals': 0.1})
 
@@ -80,8 +81,8 @@ if FLAGS.runMode in ['Train', 'Restore']:
 
     trainModel.train(dataPipe=dataPipe,
                      batchSize=16,
-                     numSteps=500,
-                     printInterval=400,
+                     numSteps=200,
+                     printInterval=50,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
                      restorePath=FLAGS.restoreFile)
