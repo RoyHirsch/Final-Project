@@ -37,7 +37,12 @@ class DataPipline(object):
                'resize': bool
                'newSize': int - new image size for resize
                'filterSlices': bool
-               'minParentageLabeledVoxals': int - for filtering slices, parentage in [0,1]
+               'minPerentageLabeledVoxals': float - for filtering slices, parentage in [0,1]
+               'percentageOfLabeledData': float - the total percentage of labeled data in the pipline, in range [0,1]
+
+               'catPatch' - bool, True to cut the slices into patches
+               'patchSize' - int, must be a dividor of image hieght and width
+
         '''
         logging.info('')
         logging.info('#### -------- DataPipline object was created -------- ####\n')
@@ -172,8 +177,8 @@ class DataPipline(object):
         else:
             logging.info('Error while calling pre_process_list')
 
-        outSampleArray = []
-        outLabelArray = []
+        samplesList = []
+        labelList = []
         for i in numbersList:
             img = self.data[i][:, :, :, self.modalityList]
             label = self.labels[i]
@@ -183,6 +188,7 @@ class DataPipline(object):
                 tmpLabel = np.zeros_like(label)
                 tmpLabel[label != 0] = 1
                 label = tmpLabel
+
             if 'binaryLabelsC' in self.optionsDict.keys() and self.optionsDict['binaryLabelsC']:
                 self.numOfLabels = 1
                 tmpLabel = np.zeros_like(label)
@@ -206,28 +212,37 @@ class DataPipline(object):
             if 'normalize' in self.optionsDict.keys() and self.optionsDict['normalize']:
                 img = self._normalize_image(img)
 
-            H, W, D, C = np.shape(img)
+            # produce a pipeline of patches
+            if 'cutPatch' in self.optionsDict.keys() and self.optionsDict['cutPatch']:
+                img, label = self.getPatchesFromSlices(img, label)
 
-            for j in range(0, D):
-                if 'filterSlices' in self.optionsDict.keys() and self.optionsDict['filterSlices']:
-                    labeledVoxals = np.sum(np.not_equal(label[:, :, j], 0))
-                    parcentageLabeledVoxals = labeledVoxals / H*W
-                    if self.optionsDict['minParentageLabeledVoxals'] < parcentageLabeledVoxals:
-                        outSampleArray.append(img[:, :, j, :])
-                        outLabelArray.append(label[:, :, j])
-                else:
-                    outSampleArray.append(img[:, :, j, :])
-                    outLabelArray.append(label[:, :, j])
+            # filter only the train pipeline
+            if listName == 'train' and 'filterSlices' in self.optionsDict.keys() and self.optionsDict['filterSlices']:
+                img, label = self.filterTrainDataPipe(img, label)
 
-        # a fix to locate the D dimension in it's place
-        # outSampleArray = np.swapaxes(outSampleArray, 0, 2)
-        # outLabelArray = np.swapaxes(outLabelArray, 0, 2)
+            else:
+                # swap axes of the data array to match TF format
+                img = np.swapaxes(img, 0, 2)
+                label = np.swapaxes(label, 0, 2)
 
-        imageSize = np.shape(outSampleArray)[1]
-        outSampleArray = np.array(outSampleArray).astype(np.float32)
+            samplesList.append(img)
+            labelList.append(label)
+
+        # convert to numpy array and concat all the samples with axis 0 (depth / num of samples)
+        for i in range(len(samplesList)):
+            if i == 0:
+                outSampleArray = np.array(samplesList[i]).astype(np.float32)
+                outLabelArray = np.array(labelList[i]).astype(np.float32)
+            else:
+                outSampleArray = np.concatenate((outSampleArray, samplesList[i]), axis=0)
+                outLabelArray = np.concatenate((outLabelArray, labelList[i]), axis=0)
 
         # reshape to fit tensorflow constrains
+        imageSize = np.shape(outLabelArray)[1]
         outLabelArray = np.reshape(outLabelArray, [-1, imageSize, imageSize, 1]).astype(np.float32)
+
+        # outSampleArray = np.swapaxes(outSampleArray, 0, 2)
+        # outLabelArray = np.swapaxes(outLabelArray, 0, 2)
 
         return outSampleArray, outLabelArray
 
@@ -254,13 +269,70 @@ class DataPipline(object):
         self.testSamples, self.testLabels = self.pre_process_list(listName='test')
         logging.info('Train, val and test database created successfully.')
 
-        # logging.infoings for debug:
+        # logging for debug:
         logging.info('Train dataset, samples number: ' + str(self.trainNumberList))
         logging.info('Shape of train dataset: ' + str(np.shape(self.trainSamples)))
         logging.info('Val dataset, samples number: ' + str(self.valNumberList))
         logging.info('Shape of val dataset: ' + str(np.shape(self.valSamples)))
         logging.info('Test dataset, samples number: ' + str(self.testNumberList))
         logging.info('Shape of test dataset: ' + str(np.shape(self.testSamples)) + '\n')
+
+    def getPatchesFromSlices(self, image, label):
+        H, W, D, C = np.shape(image)
+        if 'patchSize' in self.optionsDict.keys() and self.optionsDict['patchSize']:
+            patchSize = self.optionsDict['patchSize']
+        else:
+            logging.info('Error - no patchSize in optionsDict')
+        # imageSize is 240 so patchSize should be a dividor of 240
+        if not(H / patchSize):
+            logging.info('Error - patchSize is not a dividor of imageSize')
+
+        n = np.shape(image)[0] // patchSize
+        ind = 0
+        patchArrayImage = np.zeros([patchSize, patchSize, D*(n*n), C])
+        patchArrayLabel = np.zeros([patchSize, patchSize, D*(n*n)])
+        for i in range(n):
+            for j in range(n):
+                patchArrayImage[:, :, D*(ind):D*(ind+1), :] = image[patchSize*i:patchSize*(i+1), patchSize*j:patchSize*(j+1), :, :]
+                patchArrayLabel[:, :, D*(ind):D*(ind+1)] = label[patchSize*i:patchSize*(i+1), patchSize*j:patchSize*(j+1), :]
+                ind += 1
+        return patchArrayImage, patchArrayLabel
+
+    def filterTrainDataPipe(self, imagesArray, labelsArray):
+        # the function filters the pipline to create a pipline with a specific percentage of labels patches\slices
+        # three parameters:
+        # filterSlices - determine if the pipline needs to be filtered
+        # minPerentageLabeledVoxals - determine if a patch\slice will be 'labeled'
+        # percentageOfLabeledData - the total percentage of labeled data in the pipline
+
+        H, W, D, C = np.shape(imagesArray)
+
+        indOfLabeledData = []
+        indOfNotLabeledData = []
+        for j in range(0, D):
+            labeledVoxals = np.sum(np.not_equal(labelsArray[:, :, j], 0))
+            parcentageLabeledVoxals = labeledVoxals / H * W
+            if self.optionsDict['minPerentageLabeledVoxals'] < parcentageLabeledVoxals:
+                indOfLabeledData.append(j) # keep the indexes of data that is 'labeled'
+            else:
+                indOfNotLabeledData.append(j)  # keep the indexes of data that is not 'labeled'
+
+        # find the number of 'not labeled' data to exclude from the pipline in order to get the desire label percentage
+        parentageOfLabeledData = self.optionsDict['percentageOfLabeledData']
+        totalNumberOfNotLabeledData = (parentageOfLabeledData * len(indOfLabeledData)) / (1 - parentageOfLabeledData)
+        indToInclude = indOfNotLabeledData[0:int(totalNumberOfNotLabeledData)]
+        indToInclude = indToInclude + indOfLabeledData
+
+        # filter out the right amount of not labeled data
+        outSampleArray = []
+        outLableArray = []
+        # newInd = 0
+        for j in range(0, D):
+            if j in indToInclude:
+                outSampleArray.append(imagesArray[:, :, j, :])
+                outLableArray.append(labelsArray[:, :, j])
+
+        return outSampleArray, outLableArray
 
     # ---- Getters ---- #
 
@@ -296,6 +368,28 @@ class DataPipline(object):
         return self.trainSamples[ind, :, :, :], self.trainLabels[ind, :, :]
 
 # ---- Help Functions ---- #
+    @staticmethod
+    def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
+        # converts an array of patches into slices
+        # input needs to be numpy arrays and not tensorflow abject
+
+        patchArrayImage = np.swapaxes(patchArrayImage, 0, 2)
+        patchArrayLabel = np.swapaxes(patchArrayLabel, 0, 2)
+        H, W, D, C = np.shape(patchArrayImage)
+        n = imageSize // H
+
+        ind = 0
+        imageArray = np.zeros([imageSize, imageSize, D // (n * n), C])
+        labelArray = np.zeros([imageSize, imageSize, D // (n * n)])
+        for i in range(n):
+            for j in range(n):
+                imageArray[H * i:H * (i + 1), H * j:H * (j + 1), :, :] = patchArrayImage[:, :,
+                                                                         D // (n * n) * (ind):D // (n * n) * (ind + 1),
+                                                                         :]
+                labelArray[H * i:H * (i + 1), H * j:H * (j + 1), :] = patchArrayLabel[:, :,
+                                                                      D // (n * n) * (ind):D // (n * n) * (ind + 1)]
+                ind += 1
+        return imageArray, labelArray
 
     @staticmethod
     def print_img_statistics(img):
@@ -315,17 +409,23 @@ class DataPipline(object):
 
     def next_image(self,sliceNumber):
         img,labels=self.pre_process_list(listName='train' ,num=sliceNumber)
-        return img,labels
-
+        return img, labels
 
 # ---- Test Code ---- #
+# Example to run different configurations of Datapipline
 
-# # declare some data object
-# pipObj = DataPipline(numTrain=5, numVal=1, numTest=4, modalityList=[1,2,3],
-#                      optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True, 'normType': 'reg'})
-#
-# logging.info(np.shape(pipObj.trainLabels))
-# logging.info(np.shape(pipObj.trainSamples))
+# pipObj = DataPipline(numTrain=1, numVal=1, numTest=1, modalityList=[1,2,3], permotate=True,
+#                      optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True,
+#                                   'normType': 'reg', 'cutPatch': True, 'patchSize': 60,
+#                                   'filterSlices': True, 'minPerentageLabeledVoxals': 0.05, 'percentageOfLabeledData': 0.5})
+
+# pipObj = DataPipline(numTrain=2, numVal=2, numTest=2, modalityList=[1,2,3], permotate=True,
+#                      optionsDict={'zeroPadding': True, 'paddingSize': 240, 'normalize': True,
+#                                   'normType': 'reg', 'filterSlices': True, 'minPerentageLabeledVoxals': 0.05, 'percentageOfLabeledData': 0.5})
+
+# imageArray, labelArray = DataPipline.getSlicesFromPatches(pipObj.trainSamples, pipObj.trainLabels, 240)
+# print(np.shape(imageArray))
+
 # pipObj.to_string_pipline()
 # # branch few train batches
 # batch_size = 64

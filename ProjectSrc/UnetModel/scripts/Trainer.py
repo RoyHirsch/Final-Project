@@ -44,7 +44,7 @@ class Trainer(object):
                     logging.info('Minibatch Loss : {:.4f}'.format(loss))
                     logging.info('Training Accuracy : {:.4f}'.format(epochAccuracy))
                     logging.info('Dice score: {:.4f}\n'.format(epochDice))
-                    resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,imageSize=240, imageMod=1, thresh=0.5)
+                    # resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,imageSize=240, imageMod=1, thresh=0.5)
 
             save_path = saver.save(session, str(logPath)+"/{}_{}_{}_{}.ckpt".format('unet', self.net.layers, self.net.argsDict['weightVal'], time.strftime('%H_%M__%d_%m_%y')))
             logging.info('Saving variables in : %s' % save_path)

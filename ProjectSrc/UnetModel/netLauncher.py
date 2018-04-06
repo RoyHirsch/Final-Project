@@ -15,13 +15,13 @@ Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 ##############################
 flags = tf.app.flags
 
-flags.DEFINE_string('runMode', 'Test',
+flags.DEFINE_string('runMode', 'Train',
                     'run mode for the whole sequence: Train, Test or Restore')
 flags.DEFINE_bool('debug', False,
                   'logging level - if true debug mode')
 tf.app.flags.DEFINE_string('logFolder', '',
                            'logging folder for the sequence, filled automatically')
-tf.app.flags.DEFINE_string('restoreFile', '/Users/ochayoot/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_21_01__24_03_18/unet_3_13_16_08__25_03_18.ckpt',
+tf.app.flags.DEFINE_string('restoreFile', '',
                            'path to a .ckpt file for Restore or Test run modes')
 FLAGS = flags.FLAGS
 
@@ -45,27 +45,29 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=10,
-                       numVal=1,
-                       numTest=1,
-                       modalityList=[0,1,2],
+dataPipe = DataPipline(numTrain=5,
+                       numVal=2,
+                       numTest=2,
+                       modalityList=[0, 1, 2],
                        permotate=False,
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
                                     'normType': 'reg',
-                                    'binaryLabelsWT': False,
+                                    'cutPatch': True,
+                                    'patchSize': 60,
                                     'binaryLabelsC':True,
                                     'filterSlices': True,
-                                    'minParentageLabeledVoxals': 0.1})
+                                    'minPerentageLabeledVoxals': 0.05,
+                                    'percentageOfLabeledData': 0.5})
 
 ##############################
 # CREATE MODEL
 ##############################
-unetModel = UnetModelClass(layers=3,
+unetModel = UnetModelClass(layers=2,
                            num_channels=len(dataPipe.modalityList),
                            num_labels=1,
-                           image_size=240,
+                           image_size=60,
                            kernel_size=3,
                            depth=32,
                            pool_size=2,
@@ -81,7 +83,7 @@ if FLAGS.runMode in ['Train', 'Restore']:
 
     trainModel.train(dataPipe=dataPipe,
                      batchSize=16,
-                     numSteps=200,
+                     numSteps=100,
                      printInterval=50,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
@@ -93,6 +95,20 @@ elif FLAGS.runMode == 'Test':
 
 else:
     logging.info('Error - unknown runMode.')
+
+# COMMENTS (070418):
+
+# if we use cutPatch option for generating a patches train pipeline, the programmer should make sure that patchSize is a
+# dividor of the original image size
+
+# filter train pipeline option gets three parameters:
+# filterSlices - determine if the pipeline needs to be filtered (bool)
+# minPerentageLabeledVoxals - determine if a patch\slice will be 'labeled', the mean percentage of labeled pixels in a labeled slice
+# percentageOfLabeledData - the total percentage of labeled data in the pipline
+
+# UnetModelClass should be suitable to the image_size:
+# for example if we will fetch patches of size: 60X60 we will be able to produce a net with 2 max-pooling
+# buy won't be able to produce a net with 3 max-pooling (60/8 = 7.5)
 
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard

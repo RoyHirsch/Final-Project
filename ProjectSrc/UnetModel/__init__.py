@@ -12,7 +12,7 @@ import logging
 import os
 import re
 import sys
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 ##############################
 ###### Unet model files ######
