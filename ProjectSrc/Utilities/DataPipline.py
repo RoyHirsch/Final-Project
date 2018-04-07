@@ -46,13 +46,14 @@ class DataPipline(object):
         '''
         logging.info('')
         logging.info('#### -------- DataPipline object was created -------- ####\n')
-
         self.trainNumberList = []
         self.valNumberList = []
         self.testNumberList = []
         self.batchesDict = {}
         self.modalityList = modalityList
         self.optionsDict = optionsDict
+        self.to_string()
+
         if permotate:
             self._permotate_samples(numTrain, numVal, numTest)
         else:
@@ -336,19 +337,11 @@ class DataPipline(object):
 
     # ---- Getters ---- #
 
-    def to_string_pipline(self):
-        logging.info('\n\nPipline object properties:\n')
-        logging.info('Train dataset, samples number: ' + str(self.trainNumberList) + '\n' +
-              'Shape of train dataset: ' + str(np.shape(self.trainSamples)) + '\n' +
-              'Shape of train labe ls: ' + str(np.shape(self.trainLabels)))
-        logging.info('Validation dataset, samples number: ' + str(self.valNumberList) + '\n' +
-              'Shape of val dataset: ' + str(np.shape(self.valSamples)) + '\n' +
-              'Shape of val labels: ' + str(np.shape(self.valLabels)))
-        logging.info('Test dataset, samples number: ' + str(self.testNumberList) + '\n' +
-              'Shape of test dataset: ' + str(np.shape(self.testSamples)) + '\n' +
-              'Shape of test labels: ' + str(np.shape(self.testLabels)))
-        logging.info('\nPipline object parameters:\n"')
-        logging.info(self.optionsDict)
+    def to_string(self):
+        logging.info('Pipline object properties:')
+        for key, value in self.optionsDict.items():
+            logging.info(str(key) + ' : ' + str(value))
+        logging.info('\n')
 
     def reset_train_batch_offset(self, offset = 0):
         self.batch_train_offset = offset

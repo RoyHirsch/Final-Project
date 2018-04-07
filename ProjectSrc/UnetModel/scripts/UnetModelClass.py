@@ -27,13 +27,26 @@ class UnetModelClass(object):
         self.concat_dict = {}
         self.max_dict = {}
         self.ndepth = 1
-
+        self.to_string()
         self.logits = self._createNet()
         with self.graph.as_default():
             self.predictions = tf.nn.sigmoid(self.logits)
         self.loss = self._getCost()
         self.optimizer = self._getOptimizer()
 
+    def to_string(self):
+        logging.info('UnetModel object properties:')
+        logging.info('layers : ' + str(self.layers))
+        logging.info('num_channels : ' + str(self.num_channels))
+        logging.info('num_labels : ' + str(self.num_labels))
+        logging.info('image_size : ' + str(self.image_size))
+        logging.info('depth : ' + str(self.depth))
+        logging.info('pool_size : ' + str(self.pool_size))
+        logging.info('costStr : ' + str(self.costStr))
+        logging.info('optStr : ' + str(self.optStr))
+        for key, value in self.argsDict.items():
+            logging.info(str(key) + ' : ' + str(value))
+        logging.info('\n')
 
 
     def __del__(self):

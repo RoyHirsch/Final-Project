@@ -60,7 +60,6 @@ dataPipe = DataPipline(numTrain=5,
                                     'filterSlices': True,
                                     'minPerentageLabeledVoxals': 0.05,
                                     'percentageOfLabeledData': 0.5})
-
 ##############################
 # CREATE MODEL
 ##############################

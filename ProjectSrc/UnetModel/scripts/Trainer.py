@@ -13,7 +13,18 @@ class Trainer(object):
     def __del__(self):
         pass
 
+    def to_string(self, batchSize, numSteps, printInterval):
+        logging.info('Trainer object properties:')
+        logging.info('batchSize : ' + str(batchSize))
+        logging.info('numSteps : ' + str(numSteps))
+        logging.info('printInterval : ' + str(printInterval))
+        for key, value in self.argsDict.items():
+            logging.info(str(key) + ' : ' + str(value))
+        logging.info('\n')
+
     def train(self, dataPipe, batchSize, numSteps, printInterval, logPath, restore=False, restorePath=''):
+
+        self.to_string(batchSize, numSteps, printInterval)
 
         with tf.Session(graph=self.net.graph) as session:
             tf.global_variables_initializer().run()
