@@ -19,6 +19,7 @@ import sys
 ##############################
 from UnetModel.scripts.Tester import *
 from UnetModel.scripts.UnetModelClass import *
+from UnetModel.scripts.Vgg16Model import *
 from UnetModel.scripts.utils import *
 from UnetModel.scripts.Trainer import *
 from UnetModel.scripts.layers import *

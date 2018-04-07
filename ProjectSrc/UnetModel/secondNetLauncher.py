@@ -44,9 +44,10 @@ if FLAGS.runMode in ['Test', 'Restore']:
 ##############################
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
+logging.info('Testing the second NN for voxal classification!')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
 dataPipe = DataPipline(numTrain=2,
-                       numVal=2,
+                       numVal=1,
                        numTest=2,
                        modalityList=[0, 1, 2],
                        permotate=False,
@@ -55,24 +56,24 @@ dataPipe = DataPipline(numTrain=2,
                                     'normalize': True,
                                     'normType': 'reg',
                                     'cutPatch': True,
-                                    'patchSize': 60,
-                                    'binaryLabelsC':True,
+                                    'patchSize': 40,
+                                    'binaryLabelsWT': True,
                                     'filterSlices': True,
-                                    'minPerentageLabeledVoxals': 0.05,
-                                    'percentageOfLabeledData': 0.5})
+                                    'minPerentageLabeledVoxals': 0.5,
+                                    'percentageOfLabeledData': 0.99})
 ##############################
 # CREATE MODEL
 ##############################
-unetModel = UnetModelClass(layers=2,
-                           num_channels=len(dataPipe.modalityList),
-                           num_labels=1,
-                           image_size=60,
-                           kernel_size=3,
-                           depth=32,
-                           pool_size=2,
-                           costStr='sigmoid',
-                           optStr='adam',
-                           argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13})
+unetModel = Vgg16Model(num_channels=len(dataPipe.modalityList),
+                            num_labels=1,
+                            image_size=40,
+                            kernel_size=3,
+                            depth=32,
+                            pool_size=2,
+							hiddenSize=4096,
+                            costStr='softmax',
+                            optStr='adam',
+                            argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13})
 
 ##############################
 # RUN MODEL
@@ -94,20 +95,6 @@ elif FLAGS.runMode == 'Test':
 
 else:
     logging.info('Error - unknown runMode.')
-
-# COMMENTS (070418):
-
-# if we use cutPatch option for generating a patches train pipeline, the programmer should make sure that patchSize is a
-# dividor of the original image size
-
-# filter train pipeline option gets three parameters:
-# filterSlices - determine if the pipeline needs to be filtered (bool)
-# minPerentageLabeledVoxals - determine if a patch\slice will be 'labeled', the mean percentage of labeled pixels in a labeled slice
-# percentageOfLabeledData - the total percentage of labeled data in the pipline
-
-# UnetModelClass should be suitable to the image_size:
-# for example if we will fetch patches of size: 60X60 we will be able to produce a net with 2 max-pooling
-# buy won't be able to produce a net with 3 max-pooling (60/8 = 7.5)
 
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard
