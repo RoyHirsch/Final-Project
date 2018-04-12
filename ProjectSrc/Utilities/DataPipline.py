@@ -94,6 +94,7 @@ class DataPipline(object):
             var = np.std(imgMod)
             normImg = (imgMod - mean) / var
 
+        # standartization
         elif self.optionsDict['normType'] == 'reg':
             mean = np.mean(imgMod)
             var = np.std(imgMod)
@@ -238,7 +239,7 @@ class DataPipline(object):
                 outSampleArray = np.concatenate((outSampleArray, samplesList[i]), axis=0)
                 outLabelArray = np.concatenate((outLabelArray, labelList[i]), axis=0)
 
-        # reshape to fit tensorflow constrains
+        # reshape to fit tensorflow's constrains
         imageSize = np.shape(outLabelArray)[1]
         outLabelArray = np.reshape(outLabelArray, [-1, imageSize, imageSize, 1]).astype(np.float32)
 
@@ -360,7 +361,22 @@ class DataPipline(object):
         ind = np.random.random_integers(0, np.shape(self.trainSamples)[0]-1, batch_size)
         return self.trainSamples[ind, :, :, :], self.trainLabels[ind, :, :]
 
-# ---- Help Functions ---- #
+# new batching method:
+
+    # create a random permutation vector in size of train data
+    def initBatchStackCopy(self):
+        self.batchStack = np.random.permutation(np.shape(self.trainSamples)[0])
+        self.batchNumer = 0
+        return
+
+    # extracts a randomly selected batch for train
+    def nextBatchFromPermutation(self, batch_size):
+        batchImage = self.trainSamples[self.batchStack[self.batchNumer: self.batchNumer + batch_size]]
+        batchLabel = self.trainLabels[self.batchStack[self.batchNumer: self.batchNumer + batch_size]]
+        self.batchNumer += batch_size
+        return batchImage, batchLabel
+
+        # ---- Help Functions ---- #
     @staticmethod
     def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
         # converts an array of patches into slices

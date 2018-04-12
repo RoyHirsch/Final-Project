@@ -37,16 +37,26 @@ class Trainer(object):
                 logging.info('Loading data from {}'.format((restorePath)))
                 saver.restore(session, "{}".format((restorePath)))
 
+            self.numEpoches = len(dataPipe.trainSamples) // batchSize
+
             for step in range(numSteps):
-                batchData, batchLabels = dataPipe.next_train_random_batch(batchSize)
+
+                if step % (len(dataPipe.trainSamples) // batchSize) == 0:
+                    logging.info("######## Epoch number {:} ########\n".format(int(step / (len(dataPipe.trainSamples) // batchSize))))
+                    dataPipe.initBatchStackCopy()
+
+                batchData, batchLabels = dataPipe.nextBatchFromPermutation(batchSize)
                 feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
+
                 if step == (numSteps - 1):
                     summary = session.run(self.net.merged, feed_dict=feed_dict)
                     train_writer.add_summary(summary, step)
+
                 else:
                     _, loss, predictions, summary = session.run(
                         [self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged_loss],
                         feed_dict=feed_dict)
+
                 if step % printInterval == 0:
                     train_writer.add_summary(summary, step)
                     epochAccuracy = accuracy(predictions, batchLabels)

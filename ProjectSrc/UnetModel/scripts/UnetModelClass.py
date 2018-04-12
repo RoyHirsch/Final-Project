@@ -179,4 +179,3 @@ class UnetModelClass(object):
 
     def getLogits(self):
         return self.logits
-

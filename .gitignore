@@ -26,3 +26,4 @@ ProjectSrc/UnetModel/runData/RunFolder_21_53__17_03_18/checkpoint
 *.txt
 ProjectSrc/UnetModel/runData/RunFolder_10_40__19_03_18/checkpoint
 *.txt
+*.pyc
