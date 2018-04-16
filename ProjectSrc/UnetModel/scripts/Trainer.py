@@ -67,6 +67,19 @@ class Trainer(object):
                     logging.info('Dice score: {:.4f}\n'.format(epochDice))
                     # resultDisplay(predictions=predictions, labels=batchLabels, images=batchData, sampleInd=1,imageSize=240, imageMod=1, thresh=0.5)
 
+                # print validation data
+                if 'printValidation' in self.argsDict.keys() and self.argsDict['printValidation']:
+                    if step % self.argsDict['printValidation'] == 0:
+                        feed_dict = {self.net.X: dataPipe.valSamples, self.net.Y: dataPipe.valLabels}
+                        _, lossVal, predictionsVal= session.run(
+                            [self.net.optimizer, self.net.loss, self.net.predictions],feed_dict=feed_dict)
+                        epochAccuracyVal = accuracy(predictionsVal, dataPipe.valLabels)
+                        epochDiceVal = diceScore(predictionsVal, dataPipe.valLabels)
+                        logging.info("++++++ Validation for step num {:} ++++++".format(step))
+                        logging.info('Minibatch Loss : {:.4f}'.format(lossVal))
+                        logging.info('Training Accuracy : {:.4f}'.format(epochAccuracyVal))
+                        logging.info('Dice score: {:.4f}\n'.format(epochDiceVal))
+
             save_path = saver.save(session, str(logPath)+"/{}_{}_{}_{}.ckpt".format('unet', self.net.layers, self.net.argsDict['weightVal'], time.strftime('%H_%M__%d_%m_%y')))
             logging.info('Saving variables in : %s' % save_path)
             with open('model_file.txt', 'a') as file1:

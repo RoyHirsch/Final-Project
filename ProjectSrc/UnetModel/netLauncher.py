@@ -15,13 +15,13 @@ Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 ##############################
 flags = tf.app.flags
 
-flags.DEFINE_string('runMode', 'Train',
+flags.DEFINE_string('runMode', 'Test',
                     'run mode for the whole sequence: Train, Test or Restore')
 flags.DEFINE_bool('debug', False,
                   'logging level - if true debug mode')
 tf.app.flags.DEFINE_string('logFolder', '',
                            'logging folder for the sequence, filled automatically')
-tf.app.flags.DEFINE_string('restoreFile', '',
+tf.app.flags.DEFINE_string('restoreFile', '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_22_26__14_04_18/unet_2_13_10_37__15_04_18.ckpt',
                            'path to a .ckpt file for Restore or Test run modes')
 FLAGS = flags.FLAGS
 
@@ -45,9 +45,9 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=2,
+dataPipe = DataPipline(numTrain=12,
                        numVal=2,
-                       numTest=2,
+                       numTest=5,
                        modalityList=[0, 1, 2],
                        permotate=False,
                        optionsDict={'zeroPadding': True,
@@ -81,16 +81,16 @@ if FLAGS.runMode in ['Train', 'Restore']:
     trainModel = Trainer(net=unetModel, argsDict={})
 
     trainModel.train(dataPipe=dataPipe,
-                     batchSize=16,
-                     numSteps=100,
+                     batchSize=32,
+                     numSteps=5000,
                      printInterval=50,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
                      restorePath=FLAGS.restoreFile)
 
 elif FLAGS.runMode == 'Test':
-    testModel = Tester(net=unetModel, testList=[1,2,3,4], argsDict={})
-    testModel.test(dataPipe=dataPipe, restorePath=FLAGS.restoreFile)
+    testModel = Tester(net=unetModel, testList=[1, 2, 3, 4], argsDict={})
+    testModel.test(dataPipe=dataPipe, batchSize=64, restorePath=FLAGS.restoreFile)
 
 else:
     logging.info('Error - unknown runMode.')
@@ -111,3 +111,6 @@ else:
 
 # Roy: call for tensorboard
 # python3 -m tensorboard.main --logdir /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/tensorboard
+
+# goof run
+# /Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_22_26__14_04_18/unet_2_13_10_37__15_04_18.ckpt

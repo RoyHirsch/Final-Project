@@ -68,6 +68,7 @@ def make_ax(grid=False):
     ax.grid(grid)
     return ax,fig
 #viewer for 3D images (show the slices in 2 d)
+
 def slidesViewer(volume1,volume2,volume3):
 	fig, (ax1,ax2,ax3) = plt.subplots(1,3,sharey=True)
 	ax1.set_title('Image')

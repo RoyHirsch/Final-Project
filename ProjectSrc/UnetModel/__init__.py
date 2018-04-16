@@ -12,7 +12,7 @@ import logging
 import os
 import re
 import sys
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 
 ##############################
 ###### Unet model files ######
@@ -28,7 +28,7 @@ from UnetModel.scripts.layers import *
 ###### External files ######
 ############################
 
-from Utilities.DataPipline import *
+from Utilities.DataPipline import DataPipline
 from Utilities.loadData import *
 # TODO: there are also imports to UnetModel folder in those files (Roy 1703)
 
