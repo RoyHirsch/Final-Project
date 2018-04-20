@@ -16,7 +16,7 @@ class Tester(object):
         # logging.info('#### -------- Tester object was deleted -------- ####\n')
         pass
 
-    def test(self, dataPipe, batchSize, restorePath='/UnetModel/runData/RunFolder_23_13__21_03_18/unet_3_13_23_19__21_03_18.ckpt'):
+    def test(self, dataPipe, batchSize, restorePath):
         with tf.Session(graph=self.net.graph) as session:
             tf.global_variables_initializer().run()
             saver = tf.train.Saver()
@@ -29,57 +29,59 @@ class Tester(object):
             accList = []
 
             for item in self.testList:
-                starttime = time.time()
-                batchData, batchLabels = dataPipe.next_image(item)
-                predictionlist=[]
+
+                startTime = time.time()
+
+                imageArray, labelArray = dataPipe.next_image(item)
+                predictionList=[]
                 batchLabellist=[]
 
-                for j in range(0, batchData.shape[0], batchSize):
-                    batchDatatemp=batchData[j:j+batchSize, :, :, :]
-                    batchLabelstemp=batchLabels[j:j+batchSize, :, :]
+                for j in range(0, imageArray.shape[0], batchSize):
+                    imageSlicesBatch = imageArray[j:j+batchSize, :, :, :]
+                    labelSlicesBatch = labelArray[j:j+batchSize, :, :]
 
-                    feed_dict = {self.net.X: batchDatatemp, self.net.Y: batchLabelstemp}
-                    predictions = session.run([self.net.predictions], feed_dict=feed_dict)
+                    feed_dict = {self.net.X: imageSlicesBatch, self.net.Y: labelSlicesBatch}
+                    predictionBatch = session.run(self.net.predictions, feed_dict=feed_dict)
+                    predictionList.append(predictionBatch)
+                predictedArray = np.concatenate(predictionList, axis=0)
 
-                    predictionstemp=predictions[0]
-                    predictionlist.append(predictionstemp)
-                    batchLabellist.append(batchLabelstemp)
+                endTime = time.time()
+                logging.info('Duration time for image prediction = {}'.format(endTime - startTime))
 
-                predictionscheck = np.array(predictionlist)
-                batchLabelcheck=np.array(batchLabellist)
-                predictionscheck= np.reshape(predictionscheck,(-1, self.net.image_size, self.net.image_size, 1))
-                batchLabelcheck= np.reshape(batchLabelcheck,(-1, self.net.image_size, self.net.image_size, 1))
-                endtime = time.time()
-                logging.info('Total example time={}'.format(endtime - starttime))
-
-                sampleDice = diceScore(predictionscheck, batchLabelcheck)
-                sampleAcc = accuracy(predictionscheck, batchLabelcheck)
-                logging.info('Dice score : {}  :: Accuracy {}'.format(round(sampleDice, 4), round(sampleAcc, 4)))
+                sampleDice = diceScore(predictedArray, labelArray)
+                sampleAcc = accuracy(predictedArray, labelArray)
+                logging.info('Dice score : {}  :: Accuracy: {}'.format(round(sampleDice, 4), round(sampleAcc, 4)))
                 diceList.append(sampleDice)
                 accList.append(sampleAcc)
 
                 # convert from patches to slices:
-                predicationImage, predictionLabel = getSlicesFromPatches(predictionscheck, np.squeeze(batchLabelcheck), 240)
-                predicationImage = np.squeeze(predicationImage)
+                if 'isPatches' in self.argsDict.keys() and self.argsDict['isPatches']:
+                    predicatedLabel, _ = getSlicesFromPatches(predictedArray, np.squeeze(labelArray), 240)
+                    image, label = getSlicesFromPatches(imageArray, np.squeeze(labelArray), 240)
+                    predicatedLabel = np.squeeze(predicatedLabel)
+
+                # the data is slices
+                else:
+                    image = imageArray
+                    label = np.squeeze(labelArray)
+                    predicatedLabel = np.squeeze(predictedArray)
 
                 while (True):
                     index = input('\nFor 3d viewer press V\nFor next example press Q:\n')
 
-                    if index == 'Q':
+                    if index in ['Q', 'q']:
                         break
 
-                    elif index == 'V':
-                        modality = input('Please enter modality to view from the list {}\n'
-                                         '0=T1 ,1=T2 ,2=T1g,3=Flair :'.format(dataPipe.modalityList))
+                    elif index in ['V', 'v']:
+                        modality = input('Please enter modality to view from the list {}\n'.format(dataPipe.modalityList))
 
-                        reconstractedImage, _ = getSlicesFromPatches(batchData, np.squeeze(batchLabelcheck), 240)
-                        modview = reconstractedImage[0:predicationImage.shape[0], :, :, int(modality)]
-                        slidesViewer(modview, predicationImage[:, :, :], predictionLabel[:, :, :])
+                        imageSingleModality = image[:, :, :, int(modality)]
+                        slidesViewer(imageSingleModality, predicatedLabel, label)
                         plt.show()
 
                     elif index == 'F':
                         ax, fig = make_ax()
-                        img3d = predicationImage[:, :, :, 0]
+                        img3d = image[:, :, :, 0]
                         img3d = (img3d - np.min(img3d)) / (np.max(img3d) - np.min(img3d))
                         img3d = resize(img3d, (img3d.shape[0] // 2, img3d.shape[1] // 2, img3d.shape[2] // 2),
                                        mode='constant')

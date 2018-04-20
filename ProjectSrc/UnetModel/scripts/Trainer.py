@@ -71,8 +71,8 @@ class Trainer(object):
                 if 'printValidation' in self.argsDict.keys() and self.argsDict['printValidation']:
                     if step % self.argsDict['printValidation'] == 0:
                         feed_dict = {self.net.X: dataPipe.valSamples, self.net.Y: dataPipe.valLabels}
-                        _, lossVal, predictionsVal= session.run(
-                            [self.net.optimizer, self.net.loss, self.net.predictions],feed_dict=feed_dict)
+                        lossVal, predictionsVal= session.run(
+                            [self.net.loss, self.net.predictions],feed_dict=feed_dict)
                         epochAccuracyVal = accuracy(predictionsVal, dataPipe.valLabels)
                         epochDiceVal = diceScore(predictionsVal, dataPipe.valLabels)
                         logging.info("++++++ Validation for step num {:} ++++++".format(step))

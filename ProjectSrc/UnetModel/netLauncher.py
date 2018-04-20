@@ -45,7 +45,7 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=12,
+dataPipe = DataPipline(numTrain=2,
                        numVal=2,
                        numTest=5,
                        modalityList=[0, 1, 2],
@@ -81,15 +81,15 @@ if FLAGS.runMode in ['Train', 'Restore']:
     trainModel = Trainer(net=unetModel, argsDict={})
 
     trainModel.train(dataPipe=dataPipe,
-                     batchSize=32,
-                     numSteps=5000,
+                     batchSize=8,
+                     numSteps=100,
                      printInterval=50,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
                      restorePath=FLAGS.restoreFile)
 
 elif FLAGS.runMode == 'Test':
-    testModel = Tester(net=unetModel, testList=[1, 2, 3, 4], argsDict={})
+    testModel = Tester(net=unetModel, testList=[1], argsDict={'isPatches': True})
     testModel.test(dataPipe=dataPipe, batchSize=64, restorePath=FLAGS.restoreFile)
 
 else:
