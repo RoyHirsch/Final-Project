@@ -7,8 +7,6 @@ class UnetModelClass(object):
                  kernel_size, depth, pool_size, costStr, optStr, argsDict = {}):
 
         logging.info('#### -------- UnetModel object was created -------- ####\n')
-        self.dispImage=False
-        self.layersTodisplay=argsDict['layersTodisplay']
         self.layers = layers
         self.num_channels = num_channels
         self.num_labels = num_labels
@@ -18,6 +16,8 @@ class UnetModelClass(object):
         self.pool_size = pool_size
         self.costStr = costStr
         self.optStr = optStr
+        self.layersTodisplay = argsDict.pop('layersTodisplay', [0])
+        self.isBatchNorm = argsDict.pop('isBatchNorm', False)
         self.argsDict = argsDict
             
         self.weights_dict = {}
@@ -60,6 +60,7 @@ class UnetModelClass(object):
             # placeholders for training
             self.X = tf.placeholder(dtype=tf.float32, shape=[None, self.image_size, self.image_size, self.num_channels])
             self.Y = tf.placeholder(dtype=tf.float32, shape=[None, self.image_size, self.image_size, self.num_labels])
+            self.isTrain = tf.placeholder(dtype=tf.bool, name='isTrain')
 
             # creates weights,convolution self.layers and downs samples
             for l in range(1, self.layers + 2):
@@ -71,10 +72,10 @@ class UnetModelClass(object):
                         self.weights_dict['b1_{}'.format(l)] = bias_variable([self.depth])
                         self.weights_dict['b2_{}'.format(l)] = bias_variable([self.depth])
                         self.convd_dict['convd1_{}'.format(l)] = conv2d(self.X, self.weights_dict['WD1_{}'.format(l)],
-                                                                   self.weights_dict['b1_{}'.format(l)])
+                                                                   self.weights_dict['b1_{}'.format(l)], self.isBatchNorm, self.isTrain)
                         self.convd_dict['convd2_{}'.format(l)] = conv2d(self.convd_dict['convd1_{}'.format(l)],
                                                                    self.weights_dict['WD2_{}'.format(l)],
-                                                                   self.weights_dict['b2_{}'.format(l)])
+                                                                   self.weights_dict['b2_{}'.format(l)], self.isBatchNorm, self.isTrain)
                     with tf.name_scope('Max_Pool{}'.format(l)):
                         self.max_dict['max_{}'.format(l)] = max_pool(self.convd_dict['convd2_{}'.format(l)], 2)
                 else:
@@ -89,10 +90,10 @@ class UnetModelClass(object):
                         self.weights_dict['b2_{}'.format(l)] = bias_variable([self.depth * self.ndepth])
                         self.convd_dict['convd1_{}'.format(l)] = conv2d(self.max_dict['max_{}'.format(l - 1)],
                                                                    self.weights_dict['WD1_{}'.format(l)],
-                                                                   self.weights_dict['b1_{}'.format(l)])
+                                                                   self.weights_dict['b1_{}'.format(l)], self.isBatchNorm, self.isTrain)
                         self.convd_dict['convd2_{}'.format(l)] = conv2d(self.convd_dict['convd1_{}'.format(l)],
                                                                    self.weights_dict['WD2_{}'.format(l)],
-                                                                   self.weights_dict['b2_{}'.format(l)])
+                                                                   self.weights_dict['b2_{}'.format(l)], self.isBatchNorm, self.isTrain)
                     if l != (self.layers + 1):
                         with tf.name_scope('Max_Pool{}'.format(l)):
                             self.max_dict['max_{}'.format(l)] = max_pool(self.convd_dict['convd2_{}'.format(l)], 2)
@@ -121,14 +122,16 @@ class UnetModelClass(object):
                     self.weights_dict['b2u_{}'.format(l)] = bias_variable([int(self.depth * self.ndepth / 2)])
                     self.convu_dict['convu1_{}'.format(l)] = conv2d(self.concat_dict['conc_{}'.format(l)],
                                                                self.weights_dict['WU1_{}'.format(l)],
-                                                               self.weights_dict['b1u_{}'.format(l)])
+                                                               self.weights_dict['b1u_{}'.format(l)], self.isBatchNorm, self.isTrain)
                     self.convu_dict['convu2_{}'.format(l)] = conv2d(self.convu_dict['convu1_{}'.format(l)],
                                                                self.weights_dict['WU2_{}'.format(l)],
-                                                               self.weights_dict['b2u_{}'.format(l)])
+                                                               self.weights_dict['b2u_{}'.format(l)], self.isBatchNorm, self.isTrain)
                 self.ndepth = int(self.ndepth / 2)
+
             #put images in tensorboard
             displaylist=[]
             mergedImages = tf.summary.image('input_image', self.X)
+
             displaylist.append( mergedImages)
             for l in self.layersTodisplay:
                 for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]-1):
@@ -138,6 +141,7 @@ class UnetModelClass(object):
                     tempMerge2=tf.summary.image('convlayer2_{}_{}'.format(l,k), self.convd_dict['convd2_{}'.format(l)][1:2,:,:,k:k+1])
                     displaylist.append(tempMerge2)
             self.merged = tf.summary.merge(displaylist)
+
             with tf.name_scope('Finel_Layer'):
                 Wfc = weight_variable([1, 1, self.depth, self.num_labels])
                 bfc = bias_variable([self.num_labels])
@@ -157,24 +161,36 @@ class UnetModelClass(object):
                     else:
                         loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=self.Y, logits=self.logits))
 
+            elif self.costStr == 'dice':
+                eps = 1e-5
+                intersection = tf.reduce_sum(tf.multiply(self.predictions, self.Y))
+                union = eps + tf.reduce_sum(self.predictions) + tf.reduce_sum(self.Y)
+                loss = 2 * intersection / (union + eps)
+
             else:
-                logging.info ("Error : Not defined cost function.")
+                logging.info ("Error : Not defined cost function {}.".format(self.costStr))
 
             loss_tensorboard=tf.summary.scalar('Train_loss', loss)
             self.merged_loss=tf.summary.merge([loss_tensorboard])
             return loss
 
     def _getOptimizer(self):
-        learningRate = self.argsDict.pop('learningRate', 0.01)
-        with self.graph.as_default():
-            if self.optStr == 'adam':
-                    optimizer = tf.train.AdamOptimizer(learningRate).minimize(self.loss)
 
-            elif self.optStr == 'momentum':
-                    momentum = self.argsDict.pop("momentum", 0.2)
-                    optimizer = tf.train.MomentumOptimizer(learning_rate=learningRate, momentum=momentum).minimize(self.loss)
-            else:
-                logging.info ("Error : Not defined optimizer.")
+        learningRate = self.argsDict.pop('learningRate', 0.01)
+
+        with self.graph.as_default():
+
+            update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+            with tf.control_dependencies(update_ops):
+
+                if self.optStr == 'adam':
+                        optimizer = tf.train.AdamOptimizer(learningRate).minimize(self.loss)
+
+                elif self.optStr == 'momentum':
+                        momentum = self.argsDict.pop("momentum", 0.2)
+                        optimizer = tf.train.MomentumOptimizer(learning_rate=learningRate, momentum=momentum).minimize(self.loss)
+                else:
+                    logging.info ("Error : Not defined optimizer.")
             return optimizer
 
     def getLogits(self):

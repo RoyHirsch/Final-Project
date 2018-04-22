@@ -15,13 +15,13 @@ Created by Roy Hirsch and Ori Chayoot, 2018, BGU
 ##############################
 flags = tf.app.flags
 
-flags.DEFINE_string('runMode', 'Test',
+flags.DEFINE_string('runMode', 'Train',
                     'run mode for the whole sequence: Train, Test or Restore')
 flags.DEFINE_bool('debug', False,
                   'logging level - if true debug mode')
 tf.app.flags.DEFINE_string('logFolder', '',
                            'logging folder for the sequence, filled automatically')
-tf.app.flags.DEFINE_string('restoreFile', '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_22_26__14_04_18/unet_2_13_10_37__15_04_18.ckpt',
+tf.app.flags.DEFINE_string('restoreFile', '',
                            'path to a .ckpt file for Restore or Test run modes')
 FLAGS = flags.FLAGS
 
@@ -45,9 +45,9 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=2,
-                       numVal=2,
-                       numTest=5,
+dataPipe = DataPipline(numTrain=1,
+                       numVal=1,
+                       numTest=1,
                        modalityList=[0, 1, 2],
                        permotate=False,
                        optionsDict={'zeroPadding': True,
@@ -55,7 +55,7 @@ dataPipe = DataPipline(numTrain=2,
                                     'normalize': True,
                                     'normType': 'reg',
                                     'cutPatch': True,
-                                    'patchSize': 60,
+                                    'patchSize': 64,
                                     'binaryLabelsC':True,
                                     'filterSlices': True,
                                     'minPerentageLabeledVoxals': 0.05,
@@ -63,30 +63,31 @@ dataPipe = DataPipline(numTrain=2,
 ##############################
 # CREATE MODEL
 ##############################
-unetModel = UnetModelClass(layers=2,
+unetModel = UnetModelClass(layers=3,
                            num_channels=len(dataPipe.modalityList),
                            num_labels=1,
-                           image_size=60,
+                           image_size=64,
                            kernel_size=3,
                            depth=32,
                            pool_size=2,
                            costStr='sigmoid',
                            optStr='adam',
-                           argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13})
+                           argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13, 'isBatchNorm': True})
 
 ##############################
 # RUN MODEL
 ##############################
 if FLAGS.runMode in ['Train', 'Restore']:
-    trainModel = Trainer(net=unetModel, argsDict={})
+    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 99})
 
     trainModel.train(dataPipe=dataPipe,
                      batchSize=8,
                      numSteps=100,
-                     printInterval=50,
+                     printInterval=20,
                      logPath=FLAGS.logFolder,
                      restore=FLAGS.runMode == 'Restore',
-                     restorePath=FLAGS.restoreFile)
+                     restorePath=FLAGS.restoreFile,
+                     getStat=True)
 
 elif FLAGS.runMode == 'Test':
     testModel = Tester(net=unetModel, testList=[1], argsDict={'isPatches': True})

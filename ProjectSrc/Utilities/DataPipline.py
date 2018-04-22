@@ -1,6 +1,6 @@
 from Utilities.loadData import *
 from UnetModel import *
-import skimage.transform as ski
+# import skimage.transform as ski
 import os
 
 
@@ -85,7 +85,6 @@ class DataPipline(object):
         self.valNumberList=[numVal]
         self.testNumberList=list(range(numTrain+numVal, numTrain+numVal+numTest))
 
-
     def _normalize_image_modality(self, imgMod):
         if self.optionsDict['normType'] == 'clip':
             b, t = np.percentile(imgMod, (0.5, 99.5))
@@ -143,21 +142,21 @@ class DataPipline(object):
         cropedImg = img[diffH:H - diffH, diffW:W - diffW, :, :]
         return cropedImg
 
-    def _resize_image(self, img):
-        newSize = self.optionsDict['newSize']
-        H, W, D, C = np.shape(img)
-        resizeImg = np.zeros([newSize, newSize, D, C])
-        for i in range(D):
-            resizeImg[:,:,i,:] = ski.resize(img[:,:,i,:], [newSize,newSize,C], mode='constant')
-        return resizeImg
-
-    def _resize_label(self, label):
-        newSize = self.optionsDict['newSize']
-        H, W, D = np.shape(label)
-        resizeLabel = np.zeros([newSize, newSize, D])
-        for i in range(D):
-            resizeLabel[:, :, i] = ski.resize(label[:, :, i], [newSize, newSize], mode='constant')
-        return resizeLabel
+    # def _resize_image(self, img):
+    #     newSize = self.optionsDict['newSize']
+    #     H, W, D, C = np.shape(img)
+    #     resizeImg = np.zeros([newSize, newSize, D, C])
+    #     for i in range(D):
+    #         resizeImg[:,:,i,:] = ski.resize(img[:,:,i,:], [newSize,newSize,C], mode='constant')
+    #     return resizeImg
+    #
+    # def _resize_label(self, label):
+    #     newSize = self.optionsDict['newSize']
+    #     H, W, D = np.shape(label)
+    #     resizeLabel = np.zeros([newSize, newSize, D])
+    #     for i in range(D):
+    #         resizeLabel[:, :, i] = ski.resize(label[:, :, i], [newSize, newSize], mode='constant')
+    #     return resizeLabel
 
         # ---- Prepare Lists ---- #
 
