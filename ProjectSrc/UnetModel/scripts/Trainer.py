@@ -40,13 +40,14 @@ class Trainer(object):
             self.numEpoches = len(dataPipe.trainSamples) // batchSize
 
             for step in range(numSteps):
+                startTime = time.time()
 
                 if step % (len(dataPipe.trainSamples) // batchSize) == 0:
                     logging.info("######## Epoch number {:} ########\n".format(int(step / (len(dataPipe.trainSamples) // batchSize))))
                     dataPipe.initBatchStackCopy()
 
                 batchData, batchLabels = dataPipe.nextBatchFromPermutation(batchSize)
-                feed_dict = {self.net.X: batchData, self.net.Y: batchLabels}
+                feed_dict = {self.net.X: batchData, self.net.Y: batchLabels, self.net.isTrain: True}
 
                 if step == (numSteps - 1):
                     summary = session.run(self.net.merged, feed_dict=feed_dict)
@@ -69,8 +70,8 @@ class Trainer(object):
 
                 # print validation data
                 if 'printValidation' in self.argsDict.keys() and self.argsDict['printValidation']:
-                    if step % self.argsDict['printValidation'] == 0:
-                        feed_dict = {self.net.X: dataPipe.valSamples, self.net.Y: dataPipe.valLabels}
+                    if (step % self.argsDict['printValidation'] == 0) and step:
+                        feed_dict = {self.net.X: dataPipe.valSamples, self.net.Y: dataPipe.valLabels, self.net.isTrain: False}
                         lossVal, predictionsVal= session.run(
                             [self.net.loss, self.net.predictions],feed_dict=feed_dict)
                         epochAccuracyVal = accuracy(predictionsVal, dataPipe.valLabels)
@@ -79,12 +80,16 @@ class Trainer(object):
                         logging.info('Minibatch Loss : {:.4f}'.format(lossVal))
                         logging.info('Training Accuracy : {:.4f}'.format(epochAccuracyVal))
                         logging.info('Dice score: {:.4f}\n'.format(epochDiceVal))
-
             save_path = saver.save(session, str(logPath)+"/{}_{}_{}_{}.ckpt".format('unet', self.net.layers, self.net.argsDict['weightVal'], time.strftime('%H_%M__%d_%m_%y')))
+
             logging.info('Saving variables in : %s' % save_path)
             with open('model_file.txt', 'a') as file1:
                 file1.write(save_path)
                 file1.write(' dice={}\n'.format(epochDice))
+            endTime = time.time()
+            logging.info('Total run time of train is : {} min.'.format(round((endTime-startTime)/60, 4)))
+
+            return
 
 
 def diceScore(predictions, labels):
@@ -100,7 +105,3 @@ def accuracy(predictions, labels):
     eq = tf.equal(predictions, labels)
     res = tf.reduce_mean(tf.cast(eq, tf.float32))
     return res.eval()
-
-
-
-

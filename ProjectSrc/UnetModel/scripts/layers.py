@@ -17,9 +17,16 @@ def bias_variable(shape):
     initial = tf.constant(0.1, shape=shape)
     return tf.Variable(initial)
 
-def conv2d(x, W, b):
+def conv2d(x, W, b, isBatchNorm, isTrain):
     conv2d = tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
-    # batchNorm = tf.layers.batch_normalization(conv2d, unetObj.isTrain)
+    if isBatchNorm:
+        conv2d = tf.layers.batch_normalization(inputs=conv2d,
+                                           axis=-1,
+                                           momentum=0.99,
+                                           epsilon=1e-3,
+                                           center=True,
+                                           scale=True,
+                                           training=isTrain)
     return tf.nn.relu(conv2d + b)
 
 def deconv2d(x, W, b, stride):
