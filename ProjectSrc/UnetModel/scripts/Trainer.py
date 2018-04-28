@@ -81,8 +81,6 @@ class Trainer(object):
                         logging.info('Training Accuracy : {:.4f}'.format(accuracyVal))
                         logging.info('Dice score: {:.4f}\n'.format(diceVal))
 
-        with tf.Session(graph=self.net.graph) as session: #### bew session to test
-
             # test statistics
             testBatchSize = 32
             sizeTestArray = np.shape(dataPipe.testSamples)[0]
