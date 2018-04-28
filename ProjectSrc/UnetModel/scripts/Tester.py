@@ -43,6 +43,7 @@ class Tester(object):
                     feed_dict = {self.net.X: imageSlicesBatch, self.net.Y: labelSlicesBatch}
                     predictionBatch = session.run(self.net.predictions, feed_dict=feed_dict)
                     predictionList.append(predictionBatch)
+
                 predictedArray = np.concatenate(predictionList, axis=0)
 
                 endTime = time.time()

@@ -47,9 +47,9 @@ logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
 dataPipe = DataPipline(numTrain=1,
                        numVal=1,
-                       numTest=1,
+                       numTest=4,
                        modalityList=[0, 1, 2],
-                       permotate=False,
+                       permotate=True,#################
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
@@ -78,16 +78,14 @@ unetModel = UnetModelClass(layers=3,
 # RUN MODEL
 ##############################
 if FLAGS.runMode in ['Train', 'Restore']:
-    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 99})
-
+    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 5})
+    #
     trainModel.train(dataPipe=dataPipe,
                      batchSize=8,
-                     numSteps=100,
-                     printInterval=20,
+                     numSteps=10,
+                     printInterval=5,
                      logPath=FLAGS.logFolder,
-                     restore=FLAGS.runMode == 'Restore',
-                     restorePath=FLAGS.restoreFile,
-                     getStat=True)
+                     serialNum=0)
 
 elif FLAGS.runMode == 'Test':
     testModel = Tester(net=unetModel, testList=[1], argsDict={'isPatches': True})

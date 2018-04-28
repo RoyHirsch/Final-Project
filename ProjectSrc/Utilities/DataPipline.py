@@ -81,9 +81,9 @@ class DataPipline(object):
         '''
             manualy selects the data samples to each list.
         '''
-        self.trainNumberList=list(range(0, numTrain))
-        self.valNumberList=[numVal]
-        self.testNumberList=list(range(numTrain+numVal, numTrain+numVal+numTest))
+        self.trainNumberList = [27, 20, 5, 9, 22, 4, 8, 0, 18, 14, 12, 23, 10, 17, 25, 7, 16, 15, 3, 2]
+        self.valNumberList = [19, 29, 24, 26, 28, 13]
+        self.testNumberList = [6, 1, 21, 11]
 
     def _normalize_image_modality(self, imgMod):
         if self.optionsDict['normType'] == 'clip':

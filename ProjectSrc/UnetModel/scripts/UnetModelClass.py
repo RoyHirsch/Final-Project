@@ -29,8 +29,7 @@ class UnetModelClass(object):
         self.ndepth = 1
         self.to_string()
         self.logits = self._createNet()
-        with self.graph.as_default():
-            self.predictions = tf.nn.sigmoid(self.logits)
+        self.predictions = tf.nn.sigmoid(self.logits)
         self.loss = self._getCost()
         self.optimizer = self._getOptimizer()
 
@@ -129,23 +128,23 @@ class UnetModelClass(object):
                 self.ndepth = int(self.ndepth / 2)
 
             #put images in tensorboard
-            displaylist=[]
-            mergedImages = tf.summary.image('input_image', self.X)
-
-            displaylist.append( mergedImages)
-            for l in self.layersTodisplay:
-                for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]-1):
-                    tempMerge1=tf.summary.image('convlayer1_{}_{}'.format(l,k), self.convd_dict['convd1_{}'.format(l)][1:2,:,:,k:k+1])
-                    displaylist.append(tempMerge1)
-                for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]):
-                    tempMerge2=tf.summary.image('convlayer2_{}_{}'.format(l,k), self.convd_dict['convd2_{}'.format(l)][1:2,:,:,k:k+1])
-                    displaylist.append(tempMerge2)
-            self.merged = tf.summary.merge(displaylist)
+            # displaylist=[]
+            # mergedImages = tf.summary.image('input_image', self.X)
+            #
+            # displaylist.append(mergedImages)
+            # for l in self.layersTodisplay:
+            #     for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]-1):
+            #         tempMerge1=tf.summary.image('convlayer1_{}_{}'.format(l,k), self.convd_dict['convd1_{}'.format(l)][1:2,:,:,k:k+1])
+            #         displaylist.append(tempMerge1)
+            #     for k in range(self.convd_dict['convd1_{}'.format(l)].shape[3]):
+            #         tempMerge2=tf.summary.image('convlayer2_{}_{}'.format(l,k), self.convd_dict['convd2_{}'.format(l)][1:2,:,:,k:k+1])
+            #         displaylist.append(tempMerge2)
+            # self.merged = tf.summary.merge(displaylist)
 
             with tf.name_scope('Finel_Layer'):
                 Wfc = weight_variable([1, 1, self.depth, self.num_labels])
                 bfc = bias_variable([self.num_labels])
-                return tf.nn.conv2d(self.convu_dict['convu2_{}'.format(l)], Wfc, strides=[1, 1, 1, 1], padding='SAME') + bfc
+        return tf.nn.conv2d(self.convu_dict['convu2_{}'.format(l)], Wfc, strides=[1, 1, 1, 1], padding='SAME') + bfc
 
     def _getCost(self):
         flat_logits = tf.reshape(self.logits, [-1, self.num_labels])
