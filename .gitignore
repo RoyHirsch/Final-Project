@@ -28,3 +28,4 @@ ProjectSrc/UnetModel/runData/RunFolder_10_40__19_03_18/checkpoint
 *.txt
 *.pyc
 *.xml
+*.pyc
