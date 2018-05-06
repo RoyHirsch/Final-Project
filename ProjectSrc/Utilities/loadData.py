@@ -34,17 +34,28 @@ def get_data_and_labels_from_folder(dir = ROOT_DIR+'/Data'):
     """
     Xtrain = []
     ytrain = []
-    for root, dirs, files in os.walk(dir):
-        for fileName in files:
-            # logging.info(filename)
-            match = re.search(r'dataBN', fileName)
-            if match:
-                img = get_image_from_mat_file(os.path.join(root, fileName))
-                Xtrain.append(img)
-            match = re.search(r'gt4', fileName)
-            if match:
-                labelImg = get_labels_from_mat_file(os.path.join(root, fileName))
-                ytrain.append(labelImg)
+
+    files = sorted(os.listdir(dir))[1:]
+    for folder in files:
+        fullPath = os.path.join(dir, folder)
+        dataPath = os.path.join(fullPath, 'dataBN.mat')
+        labelPath = os.path.join(fullPath, 'gt4.mat')
+        img = get_image_from_mat_file(dataPath)
+        Xtrain.append(img)
+        labelImg = get_labels_from_mat_file(labelPath)
+        ytrain.append(labelImg)
+
+    # for root, dirs, files in os.walk(dir):
+    #     for fileName in files:
+    #         # logging.info(filename)
+    #         match = re.search(r'dataBN', fileName)
+    #         if match:
+    #             img = get_image_from_mat_file(os.path.join(root, fileName))
+    #             Xtrain.append(img)
+    #         match = re.search(r'gt4', fileName)
+    #         if match:
+    #             labelImg = get_labels_from_mat_file(os.path.join(root, fileName))
+    #             ytrain.append(labelImg)
     return Xtrain, ytrain
 
 def get_single_mode_data(dataList, modality, isNorm):

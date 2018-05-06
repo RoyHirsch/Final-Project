@@ -47,17 +47,17 @@ logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
 dataPipe = DataPipline(numTrain=1,
                        numVal=1,
-                       numTest=4,
+                       numTest=1,
                        modalityList=[0, 1, 2],
                        permotate=True,#################
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
                                     'normType': 'reg',
-                                    'cutPatch': True,
+                                    'cutPatch': False, #####
                                     'patchSize': 64,
                                     'binaryLabelsC':True,
-                                    'filterSlices': True,
+                                    'filterSlices': False, #####
                                     'minPerentageLabeledVoxals': 0.05,
                                     'percentageOfLabeledData': 0.5})
 ##############################
@@ -66,11 +66,11 @@ dataPipe = DataPipline(numTrain=1,
 unetModel = UnetModelClass(layers=3,
                            num_channels=len(dataPipe.modalityList),
                            num_labels=1,
-                           image_size=64,
+                           image_size=240,
                            kernel_size=3,
                            depth=32,
                            pool_size=2,
-                           costStr='sigmoid',
+                           costStr='dice',
                            optStr='adam',
                            argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13, 'isBatchNorm': True})
 
@@ -82,8 +82,8 @@ if FLAGS.runMode in ['Train', 'Restore']:
     #
     trainModel.train(dataPipe=dataPipe,
                      batchSize=8,
-                     numSteps=10,
-                     printInterval=5,
+                     numSteps=200,
+                     printInterval=20,
                      logPath=FLAGS.logFolder,
                      serialNum=0)
 

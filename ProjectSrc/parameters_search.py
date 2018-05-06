@@ -10,6 +10,7 @@ class PermutationDict(object):
     '''
 
     def __init__(self):
+        self.cutPatch = [True, False]
         self.patch_size = [48, 80]
         self.filterSlices = [True, False]
         self.min_perentage_labeled_voxals = [0.01, 0.05]
@@ -32,8 +33,10 @@ class PermutationDict(object):
 
         paramsDict = {}
 
-        paramsDict['patch_size'] = self.patch_size[self.random_bool()]
-        paramsDict['filterSlices'] = self.filterSlices[self.random_bool()]
+        paramsDict['cutPatch'] = self.cutPatch[self.random_bool()]
+        paramsDict['patch_size'] = self.patch_size[self.random_bool()] if paramsDict['cutPatch'] else 240
+        paramsDict['filterSlices'] = True if paramsDict['cutPatch'] else False
+
         num = self.random_bool()
         paramsDict['min_perentage_labeled_voxals'] = self.min_perentage_labeled_voxals[num]
         paramsDict['percentage_of_labeled_data'] = self.percentage_of_labeled_data[num]
@@ -88,12 +91,12 @@ def main_func(number):
                            numVal=1,
                            numTest=1,
                            modalityList=[0, 1, 2, 3],
-                           permotate=True, ##################################### TODO #################################
+                           permotate=False, # if FALSE - load the manual data lists
                            optionsDict={'zeroPadding': True,
                                         'paddingSize': 240,
                                         'normalize': True,
                                         'normType': 'reg',
-                                        'cutPatch': True,
+                                        'cutPatch': paramsDict['cutPatch'], # Added option not to cut patched - no filter !
                                         'patchSize': paramsDict['patch_size'],
                                         'binaryLabelsC':True,
                                         'filterSlices': paramsDict['filterSlices'],
@@ -114,12 +117,12 @@ def main_func(number):
                                          'isBatchNorm': paramsDict['isBatchNorm']})
 
     # TRAIN AND TEST MODEL
-    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 5})
+    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 500})
 
     trainModel.train(dataPipe=dataPipe,
                      batchSize=paramsDict['batchSize'],
-                     numSteps=10,
-                     printInterval=5,
+                     numSteps=1001,
+                     printInterval=100,
                      logPath=logFolder,
                      serialNum=number)
 

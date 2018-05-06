@@ -26,7 +26,7 @@ class Trainer(object):
 
         self.to_string(batchSize, numSteps, printInterval)
 
-        with tf.Session(graph=self.net.graph) as session:
+        with tf.Session() as session:
 
             tf.global_variables_initializer().run()
             train_writer = tf.summary.FileWriter(logPath, session.graph)
@@ -35,6 +35,9 @@ class Trainer(object):
 
             self.numEpoches = len(dataPipe.trainSamples) // batchSize
             startTime = time.time()
+            diceValList = []
+            dicetrainList = []
+
             for step in range(numSteps):
 
                 if step % self.numEpoches == 0:
@@ -55,13 +58,24 @@ class Trainer(object):
                     logging.info('Minibatch Loss : {:.4f}'.format(loss))
                     logging.info('Training Accuracy : {:.4f}'.format(epochAccuracy))
                     logging.info('Dice score: {:.4f}\n'.format(epochDice))
+                    dicetrainList.append(epochDice)
+
+                # Early stop - train loss is not convarging
+
+                # Break if train dice is 0
+                if len(dicetrainList) >= 4 and (all(not(dicetrainList[-1:-4]))):
+                    break
+
+                # Break if train dice is 0
+                # if (len(dicetrainList) >= 4) and (dicetrainList[-1] < dicetrainList[-2]) and (dicetrainList[-2] < dicetrainList[-3]):
+                #     break
 
                 # print validation data
                 if 'printValidation' in self.argsDict.keys() and self.argsDict['printValidation']:
                     if step % self.argsDict['printValidation'] == 0 and step:
 
                         valPredictionList = []
-                        valBatchSize = 32
+                        valBatchSize = 128
                         sizeValArray = np.shape(dataPipe.valSamples)[0]
 
                         for valBatchInd in range(0, sizeValArray, valBatchSize):
@@ -75,14 +89,23 @@ class Trainer(object):
                         valPredictions = np.concatenate(valPredictionList, axis=0)
                         accuracyVal = accuracy(valPredictions, dataPipe.valLabels)
                         diceVal = diceScore(valPredictions, dataPipe.valLabels)
+                        diceValList.append(diceVal)
 
                         logging.info("++++++ Validation for step num {:} ++++++".format(step))
                         # logging.info('Minibatch Loss : {:.4f}'.format(lossVal))
                         logging.info('Training Accuracy : {:.4f}'.format(accuracyVal))
                         logging.info('Dice score: {:.4f}\n'.format(diceVal))
 
+                # Save checkPoint
+                saver.save(session, str(logPath)+"/{}_{}_{}.ckpt".format('per_number_', serialNum, time.strftime('%H_%M__%d_%m_%y')),
+                           global_step=self.argsDict['printValidation'], write_meta_graph=False)
+
+                # Early stop - over-fitting
+                if (len(diceValList) >= 3) and (diceValList[-1] < diceValList[-2]) and (diceValList[-2] < diceValList[-3]):
+                    break
+
             # test statistics
-            testBatchSize = 32
+            testBatchSize = 128
             sizeTestArray = np.shape(dataPipe.testSamples)[0]
             testPredictionList = []
 
@@ -103,7 +126,7 @@ class Trainer(object):
             logging.info('Training Accuracy : {:.4f}'.format(accuracyTest))
             logging.info('Dice score: {:.4f}\n'.format(diceTest))
 
-            save_path = saver.save(session, str(logPath)+"/{}_{}_{}.ckpt".format('per_number_', serialNum, time.strftime('%H_%M__%d_%m_%y')))
+            save_path = saver.save(session, str(logPath)+"/{}_{}_{}.ckpt".format('final_save_', serialNum, time.strftime('%H_%M__%d_%m_%y')))
 
             logging.info('Saving variables in : %s' % save_path)
             with open('model_file.txt', 'a') as file1:
@@ -120,7 +143,7 @@ def diceScore(predictions, labels):
     predictions = tf.round(predictions)
     intersection = tf.reduce_sum(tf.multiply(predictions, labels))
     union = eps + tf.reduce_sum(predictions) + tf.reduce_sum(labels)
-    res = 2 * intersection / (union + eps)
+    res = (2. * intersection) / (union + eps)
     return res.eval()
 
 def accuracy(predictions, labels):
