@@ -1,4 +1,5 @@
 from UnetModel import *
+import matplotlib.pyplot as plt
 
 def startLogging(logDir, debug=False):
 	# this function starts logging the software outputs.

@@ -158,18 +158,18 @@ class UnetModelClass(object):
 
             intersection = tf.reduce_sum(tf.multiply(flatten_predictions, flatten_Y))
             union = eps + tf.reduce_sum(flatten_predictions) + tf.reduce_sum(flatten_predictions)
-            loss = -(2. * intersection) / (union + eps)
+            loss = 1 - ((2. * intersection) / (union + eps))
 
         elif self.costStr == 'combined':
-            # gamma have to be negetive !
-            gamma = -0.1
+
+            gamma = 0.1
             eps = 1e-10
             flatten_predictions = tf.reshape(self.predictions, [-1, self.num_labels])
             flatten_Y = tf.reshape(self.Y, [-1, self.num_labels])
 
             intersection = tf.reduce_sum(tf.multiply(flatten_predictions, flatten_Y))
             union = eps + tf.reduce_sum(flatten_predictions) + tf.reduce_sum(flatten_predictions)
-            diceLoss = (2. * intersection) / (union + eps)
+            diceLoss =  1 - ((2. * intersection) / (union + eps))
 
             if 'weightedSum' in self.argsDict.keys() and self.argsDict['weightedSum']:
                 crossEntrophy = tf.reduce_mean(tf.nn.weighted_cross_entropy_with_logits(targets=self.Y, logits=self.logits,

@@ -11,7 +11,7 @@ import pandas as pd
 # debug = '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/runData/RunFolder_24_04_18__10_49_iter_num_22/logFile_10_49__24_04_18.log'
 # runDataRootDir = '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/runData'
 
-runDataRootDir = '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/runDataFromTheServer/06_05__8_36'
+runDataRootDir = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/07_05__10_39'
 csvPath = runDataRootDir + '/summery.csv'
 
 # get all permutaion params as dicts:
@@ -55,7 +55,7 @@ for root, dirs, files in os.walk(runDataRootDir):
 
 			logsDicts.append(dictParams)
 
-table = pd.DataFrame([] ,columns=dictParams.keys())
+table = pd.DataFrame(logsDicts ,columns=dictParams.keys())
 for dict in logsDicts:
 	newRow = pd.DataFrame([dict], columns=dict.keys())
 	table = pd.concat([table, newRow], axis=0, ignore_index=True)

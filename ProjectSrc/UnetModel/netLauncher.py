@@ -45,19 +45,19 @@ if FLAGS.runMode in ['Test', 'Restore']:
 startLogging(FLAGS.logFolder, FLAGS.debug)
 logging.info('All load and set - let\'s go !')
 logging.info('Run mode: {} :: logging dir: {}'.format(FLAGS.runMode, FLAGS.logFolder))
-dataPipe = DataPipline(numTrain=1,
+dataPipe = DataPipline(numTrain=6,
                        numVal=1,
                        numTest=1,
-                       modalityList=[0, 1, 2],
+                       modalityList=[0, 1, 2, 3],
                        permotate=True,#################
                        optionsDict={'zeroPadding': True,
                                     'paddingSize': 240,
                                     'normalize': True,
                                     'normType': 'reg',
-                                    'cutPatch': False, #####
+                                    'cutPatch': True, #####
                                     'patchSize': 64,
                                     'binaryLabelsC':True,
-                                    'filterSlices': False, #####
+                                    'filterSlices': True, #####
                                     'minPerentageLabeledVoxals': 0.05,
                                     'percentageOfLabeledData': 0.5})
 ##############################
@@ -66,11 +66,11 @@ dataPipe = DataPipline(numTrain=1,
 unetModel = UnetModelClass(layers=3,
                            num_channels=len(dataPipe.modalityList),
                            num_labels=1,
-                           image_size=240,
+                           image_size=64,
                            kernel_size=3,
                            depth=32,
                            pool_size=2,
-                           costStr='dice',
+                           costStr='combined',
                            optStr='adam',
                            argsDict={'layersTodisplay':[1],'weightedSum': 'True', 'weightVal': 13, 'isBatchNorm': True})
 
@@ -78,10 +78,10 @@ unetModel = UnetModelClass(layers=3,
 # RUN MODEL
 ##############################
 if FLAGS.runMode in ['Train', 'Restore']:
-    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 5})
+    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 50})
     #
     trainModel.train(dataPipe=dataPipe,
-                     batchSize=8,
+                     batchSize=16,
                      numSteps=200,
                      printInterval=20,
                      logPath=FLAGS.logFolder,

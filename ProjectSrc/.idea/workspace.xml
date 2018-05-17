@@ -11,20 +11,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UnetModel/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding>
-                <marker date="1525594690756" expanded="true" signature="352:444" ph="..." />
-                <marker date="1525594690756" expanded="true" signature="692:778" ph="..." />
-                <marker date="1525594690756" expanded="true" signature="859:1029" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -38,19 +24,16 @@
       <file leaf-file-name="ModelTester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/UnetModel/scripts/ModelTester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+            <state relative-caret-position="388">
+              <caret line="105" column="0" lean-forward="true" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#86#1236#1" expanded="false" />
                 <element signature="e#1276#1715#0" expanded="false" />
                 <element signature="e#1753#2208#0" expanded="false" />
                 <element signature="e#2239#2465#0" expanded="false" />
-                <element signature="e#2499#3162#0" expanded="false" />
-                <element signature="e#3208#5066#0" expanded="false" />
-                <element signature="e#5108#5591#0" expanded="false" />
-                <element signature="e#5625#7525#0" expanded="false" />
-                <element signature="e#7566#9094#0" expanded="false" />
-                <element signature="e#9168#10212#0" expanded="false" />
+                <element signature="e#7781#9714#0" expanded="false" />
+                <element signature="e#10208#11252#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,18 +52,38 @@
       <file leaf-file-name="parameters_search.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parameters_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="2363">
+              <caret line="139" column="26" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="139" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read_results.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UnetModel/scripts/read_results.py">
+      <file leaf-file-name="pydevd.py" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="10" column="45" lean-forward="false" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
+            <state relative-caret-position="26537">
+              <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="restore_n_train.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restore_n_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1258">
+              <caret line="74" column="72" lean-forward="false" selection-start-line="74" selection-start-column="72" selection-end-line="74" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="session.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="1305" column="0" lean-forward="false" selection-start-line="1305" selection-start-column="0" selection-end-line="1305" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -89,8 +92,8 @@
       <file leaf-file-name="Tester.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="78" column="75" lean-forward="false" selection-start-line="78" selection-start-column="75" selection-end-line="78" selection-end-column="75" />
+            <state relative-caret-position="221">
+              <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -101,18 +104,8 @@
       <file leaf-file-name="Trainer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Trainer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="83" column="52" lean-forward="false" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UnetModelClass.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UnetModel/scripts/UnetModelClass.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="149" column="62" lean-forward="false" selection-start-line="149" selection-start-column="62" selection-end-line="149" selection-end-column="62" />
+            <state relative-caret-position="2533">
+              <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -121,9 +114,11 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnetModel/scripts/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="1207">
+              <caret line="72" column="4" lean-forward="false" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,9 +134,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>time</find>
-      <find>pre_pr</find>
-      <find>save</find>
       <find>self.predictions</find>
       <find>startTime</find>
       <find>filter</find>
@@ -168,7 +160,10 @@
       <find>paramsDict[</find>
       <find>res</find>
       <find>predi</find>
+      <find>Saver</find>
       <find>cost</find>
+      <find>comb</find>
+      <find>com</find>
     </findStrings>
     <replaceStrings>
       <replace>logging.info</replace>
@@ -193,28 +188,29 @@
         <option value="$PROJECT_DIR$/UnetModel/secondNetLauncher.py" />
         <option value="$PROJECT_DIR$/UnetModel/scripts/Vgg16Model.py" />
         <option value="$PROJECT_DIR$/Utilities/SecondDataPipline.py" />
-        <option value="$PROJECT_DIR$/UnetModel/scripts/utils.py" />
         <option value="$PROJECT_DIR$/UnetModel/scripts/layers.py" />
         <option value="$PROJECT_DIR$/UnetModel/paramets_search.py" />
         <option value="$PROJECT_DIR$/paramets_search.py" />
         <option value="$PROJECT_DIR$/Utilities/loadData.py" />
         <option value="$PROJECT_DIR$/Utilities/DataPipline.py" />
-        <option value="$PROJECT_DIR$/UnetModel/scripts/UnetModelClass.py" />
-        <option value="$PROJECT_DIR$/parameters_search.py" />
         <option value="$PROJECT_DIR$/UnetModel/__init__.py" />
         <option value="$PROJECT_DIR$/UnetModel/scripts/Tester.py" />
+        <option value="$PROJECT_DIR$/UnetModel/scripts/UnetModelClass.py" />
         <option value="$PROJECT_DIR$/UnetModel/netLauncher.py" />
-        <option value="$PROJECT_DIR$/UnetModel/scripts/Trainer.py" />
         <option value="$PROJECT_DIR$/UnetModel/scripts/read_results.py" />
+        <option value="$PROJECT_DIR$/UnetModel/scripts/utils.py" />
+        <option value="$PROJECT_DIR$/parameters_search.py" />
+        <option value="$PROJECT_DIR$/Utilities/restore_n_train.py" />
+        <option value="$PROJECT_DIR$/UnetModel/scripts/Trainer.py" />
+        <option value="$PROJECT_DIR$/restore_n_train.py" />
         <option value="$PROJECT_DIR$/UnetModel/scripts/ModelTester.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="19" />
-    <option name="y" value="38" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="957" />
+    <option name="height" value="956" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -262,17 +258,6 @@
             <path>
               <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
-              <item name="UnetModel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
-              <item name="UnetModel" type="462c0819:PsiDirectoryNode" />
-              <item name="scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectSrc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectSrc" type="462c0819:PsiDirectoryNode" />
               <item name="Utilities" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -286,11 +271,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/UnetModel/scripts" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Utilities" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/UnetModel/scripts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -305,7 +291,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.read_results">
+  <component name="RunManager" selected="Python.ModelTester">
     <configuration name="ModelTester" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -357,23 +343,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="parameters_search" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ProjectSrc" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/parameters_search.py" />
-      <option name="PARAMETERS" value="22" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <configuration name="read_results" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -391,20 +360,37 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
+    <configuration name="restore_n_train" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Utilities" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ProjectSrc" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/restore_n_train.py" />
+      <option name="PARAMETERS" value="6" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.netLauncher" />
-      <item index="1" class="java.lang.String" itemvalue="Python.parameters_search" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Trainer" />
-      <item index="3" class="java.lang.String" itemvalue="Python.read_results" />
-      <item index="4" class="java.lang.String" itemvalue="Python.ModelTester" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Trainer" />
+      <item index="2" class="java.lang.String" itemvalue="Python.read_results" />
+      <item index="3" class="java.lang.String" itemvalue="Python.ModelTester" />
+      <item index="4" class="java.lang.String" itemvalue="Python.restore_n_train" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.read_results" />
-        <item index="1" class="java.lang.String" itemvalue="Python.netLauncher" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Trainer" />
-        <item index="3" class="java.lang.String" itemvalue="Python.ModelTester" />
-        <item index="4" class="java.lang.String" itemvalue="Python.parameters_search" />
+        <item index="0" class="java.lang.String" itemvalue="Python.ModelTester" />
+        <item index="1" class="java.lang.String" itemvalue="Python.restore_n_train" />
+        <item index="2" class="java.lang.String" itemvalue="Python.read_results" />
+        <item index="3" class="java.lang.String" itemvalue="Python.netLauncher" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Trainer" />
       </list>
     </recent_temporary>
   </component>
@@ -431,26 +417,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1680" height="957" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="956" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21978022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896304" sideWeight="0.495116" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15262516" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32816228" sideWeight="0.495116" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30796254" sideWeight="0.42368743" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32816228" sideWeight="0.492674" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25983313" sideWeight="0.6813187" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33651552" sideWeight="0.6813187" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32816228" sideWeight="0.495116" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35876042" sideWeight="0.57326007" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29713604" sideWeight="0.57326007" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -491,19 +477,9 @@
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Utilities/SecondDataPipline.py</url>
-          <line>253</line>
-          <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Utilities/SecondDataPipline.py</url>
-          <line>242</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/UnetModel/scripts/ModelTester.py</url>
-          <line>195</line>
-          <option name="timeStamp" value="166" />
+          <line>313</line>
+          <option name="timeStamp" value="178" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -516,18 +492,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="177" />
+      <option name="time" value="192" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5236">
-          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Utilities/DataPipline.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5559">
@@ -674,25 +643,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnetModel/secondNetLauncher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="772">
-          <caret line="75" column="100" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/SecondDataPipline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3238">
-          <caret line="233" column="8" lean-forward="false" selection-start-line="233" selection-start-column="8" selection-end-line="233" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-            <element signature="e#4027#4392#0" expanded="false" />
-            <element signature="e#11013#12768#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/secondNetLauncher.py" />
+    <entry file="file://$PROJECT_DIR$/Utilities/SecondDataPipline.py" />
     <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Vgg16Model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -707,13 +659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="527" column="0" lean-forward="false" selection-start-line="527" selection-start-column="0" selection-end-line="527" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26401">
-          <caret line="1590" column="40" lean-forward="false" selection-start-line="1590" selection-start-column="40" selection-end-line="1590" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -733,13 +678,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/loadData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/scipy/io/matlab/mio5.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -747,24 +685,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="894" column="0" lean-forward="false" selection-start-line="894" selection-start-column="0" selection-end-line="894" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="1743" column="0" lean-forward="false" selection-start-line="1743" selection-start-column="0" selection-end-line="1743" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utilities/DataPipline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -782,49 +706,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
+    <entry file="file://$PROJECT_DIR$/UnetModel/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5270">
-          <caret line="310" column="0" lean-forward="false" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/DataPipline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/loadData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="58" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/UnetModelClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="155" column="49" lean-forward="false" selection-start-line="155" selection-start-column="49" selection-end-line="155" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UnetModel/scripts/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnetModel/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <marker date="1525594690756" expanded="true" signature="352:444" ph="..." />
-            <marker date="1525594690756" expanded="true" signature="692:778" ph="..." />
-            <marker date="1525594690756" expanded="true" signature="859:1029" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Tester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="78" column="75" lean-forward="false" selection-start-line="78" selection-start-column="75" selection-end-line="78" selection-end-column="75" />
+        <state relative-caret-position="1207">
+          <caret line="72" column="4" lean-forward="false" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="4" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parameters_search.py">
+    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/read_results.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="757">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -836,46 +759,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2363">
+          <caret line="139" column="26" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="139" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5270">
+          <caret line="310" column="0" lean-forward="false" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26537">
+          <caret line="1598" column="0" lean-forward="false" selection-start-line="1598" selection-start-column="0" selection-end-line="1598" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restore_n_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1258">
+          <caret line="74" column="72" lean-forward="false" selection-start-line="74" selection-start-column="72" selection-end-line="74" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/UnetModel/scripts/Trainer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="83" column="52" lean-forward="false" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/UnetModelClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="149" column="62" lean-forward="false" selection-start-line="149" selection-start-column="62" selection-end-line="149" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnetModel/scripts/read_results.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="45" lean-forward="false" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
+        <state relative-caret-position="2533">
+          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UnetModel/scripts/ModelTester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+        <state relative-caret-position="388">
+          <caret line="105" column="0" lean-forward="true" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#86#1236#1" expanded="false" />
             <element signature="e#1276#1715#0" expanded="false" />
             <element signature="e#1753#2208#0" expanded="false" />
             <element signature="e#2239#2465#0" expanded="false" />
-            <element signature="e#2499#3162#0" expanded="false" />
-            <element signature="e#3208#5066#0" expanded="false" />
-            <element signature="e#5108#5591#0" expanded="false" />
-            <element signature="e#5625#7525#0" expanded="false" />
-            <element signature="e#7566#9094#0" expanded="false" />
-            <element signature="e#9168#10212#0" expanded="false" />
+            <element signature="e#7781#9714#0" expanded="false" />
+            <element signature="e#10208#11252#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="1305" column="0" lean-forward="false" selection-start-line="1305" selection-start-column="0" selection-end-line="1305" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

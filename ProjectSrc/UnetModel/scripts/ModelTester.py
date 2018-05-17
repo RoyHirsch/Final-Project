@@ -167,8 +167,9 @@ class ModelTester(object):
 				self.labelList = []
 				startTime = time.time()
 
+				predictList = np.concatenate((self.dataPipe.testNumberList ,self.dataPipe.valNumberList))
 				print('Start predictions for test data.')
-				for item in self.dataPipe.testNumberList:
+				for item in predictList:
 
 					imageArray, labelArray = self.dataPipe.next_image(item)
 					predictionList = []
@@ -187,7 +188,7 @@ class ModelTester(object):
 
 					sampleDice = diceScore(predictionImagesList[-1], labelArray)
 					sampleAcc = accuracy(predictionImagesList[-1], labelArray)
-					print('Sample statistics: Dice score : {}  :: Accuracy: {}'.format(round(sampleDice, 4), round(sampleAcc, 4)))
+					print('Sample number {} statistics: Dice score : {}  :: Accuracy: {}'.format(item, round(sampleDice, 4), round(sampleAcc, 4)))
 					diceList.append(sampleDice)
 					accList.append(sampleAcc)
 					self.imagesList.append(imageArray)
@@ -198,6 +199,8 @@ class ModelTester(object):
 				endTime = time.time()
 				print('Duration time for  prediction = {}'.format(endTime - startTime))
 				print('Statistics to the model: Dice: {}, Accuracy: {}'.format(np.mean(diceList), np.mean(accList)))
+				print('Dice statistics: mean {}, std {} median {}'.format(np.mean(diceList), np.std(diceList), np.median(diceList)))
+
 
 		# TODO: NO META MODE
 		else:
@@ -217,6 +220,7 @@ class ModelTester(object):
 				image = self.imagesList[num]
 				label = np.squeeze(self.imagesList[num])
 				predicatedLabel = np.squeeze(self.predictionList[num])
+				predicatedLabel = np.swapaxes(predicatedLabel, 0, 1)
 
 			while (True):
 				index = input('\nFor 3d viewer press V\nFor next example press Q:\n')
@@ -229,6 +233,12 @@ class ModelTester(object):
 
 					imageSingleModality = image[:, :, :, int(modality)]
 					binaryPredicatedLabel = np.round(predicatedLabel)
+					imageSingleModality = np.swapaxes(imageSingleModality, 0, 2)
+					binaryPredicatedLabel = np.swapaxes(binaryPredicatedLabel, 0, 2)
+					label = np.swapaxes(label, 0, 2)
+					imageSingleModality = np.swapaxes(imageSingleModality, 2, 1)
+					binaryPredicatedLabel = np.swapaxes(binaryPredicatedLabel, 2, 1)
+					label = np.swapaxes(label, 2, 1)
 					slidesViewer(imageSingleModality, binaryPredicatedLabel, label)
 					plt.show()
 
@@ -243,6 +253,20 @@ class ModelTester(object):
 
 				else:
 					print('Wrong option, please try again:\n')
+
+	def save_data_for_the_next_nn(self, samplesToSave, outFileDir):
+	# if being used samplesToSave needs to contain the ind that we would like to save
+
+		if not(samplesToSave):
+			samplesToSave = np.concatenate((self.dataPipe.testNumberList, self.dataPipe.valNumberList))
+
+		predictArraySave = []
+		for item in samplesToSave:
+			predictArraySave.append(np.squeeze(item))
+		np.save(outFileDir ,predictArraySave)
+		return
+
+
 
 def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
 	# converts an array of patches into slices
@@ -269,13 +293,25 @@ def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
 	return imageArray, labelArray
 
 
+# def save_data_for_the_next_nn(modelTesterObj, samplesToSave, outFileDir='/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5'+'/out_predict.npy'):
+# # if being used samplesToSave needs to contain the ind that we would like to save
+#
+# 	if not(samplesToSave):
+# 		samplesToSave = np.concatenate((modelTesterObj.dataPipe.testNumberList, modelTesterObj.dataPipe.valNumberList))
+#
+# 	predictArraySave = []
+# 	for item in samplesToSave:
+# 		predictArraySave.append(np.squeeze(item))
+# 	np.save(outFileDir, predictArraySave)
+# 	return
+
 #############################
 # Test code
 #############################
-# runDir = '/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/runDataFromIntel/RunFolder_02_05_18__07_18_iter_num_33/RunFolder_02_05_18__07_18_iter_num_33'
-# testObj = ModelTester(runDir)
-# testObj.predict_test_data()
-# testObj.view_predictions_results()
+runDir = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__05_44_iter_num_12'
+testObj = ModelTester(runDir)
+testObj.predict_test_data()
+testObj.view_predictions_results()
 
 
 

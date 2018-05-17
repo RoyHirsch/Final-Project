@@ -22,15 +22,19 @@ class Trainer(object):
             logging.info(str(key) + ' : ' + str(value))
         logging.info('\n')
 
-    def train(self, dataPipe, batchSize, numSteps, printInterval, logPath, serialNum):
+    def train(self, dataPipe, batchSize, numSteps, printInterval, logPath, serialNum, isRestore, restorePath):
 
         self.to_string(batchSize, numSteps, printInterval)
 
         with tf.Session() as session:
 
             tf.global_variables_initializer().run()
-            train_writer = tf.summary.FileWriter(logPath, session.graph)
-            saver = tf.train.Saver()
+            # train_writer = tf.summary.FileWriter(logPath, session.graph)
+
+            # Save checkPoint
+            saver = tf.train.Saver(max_to_keep=6)
+            if isRestore:
+                saver.restore(session, restorePath)
             logging.info('Session begun\n')
 
             self.numEpoches = len(dataPipe.trainSamples) // batchSize
@@ -51,7 +55,6 @@ class Trainer(object):
                     [self.net.optimizer, self.net.loss, self.net.predictions, self.net.merged_loss],feed_dict=feed_dict)
 
                 if step % printInterval == 0:
-                    train_writer.add_summary(summary, step)
                     epochAccuracy = accuracy(predictions, batchLabels)
                     epochDice = diceScore(predictions, batchLabels)
                     logging.info("++++++ Iteration number {:} ++++++".format(step))
@@ -63,11 +66,7 @@ class Trainer(object):
                 # Early stop - train loss is not convarging
 
                 # Break if train dice is 0
-                if len(dicetrainList) >= 4 and (all(not(dicetrainList[-1:-4]))):
-                    break
-
-                # Break if train dice is 0
-                # if (len(dicetrainList) >= 4) and (dicetrainList[-1] < dicetrainList[-2]) and (dicetrainList[-2] < dicetrainList[-3]):
+                # if len(dicetrainList) >= 4 and (all(not(dicetrainList[-4:-1]))):
                 #     break
 
                 # print validation data
@@ -96,13 +95,12 @@ class Trainer(object):
                         logging.info('Training Accuracy : {:.4f}'.format(accuracyVal))
                         logging.info('Dice score: {:.4f}\n'.format(diceVal))
 
-                # Save checkPoint
-                saver.save(session, str(logPath)+"/{}_{}_{}.ckpt".format('per_number_', serialNum, time.strftime('%H_%M__%d_%m_%y')),
-                           global_step=self.argsDict['printValidation'], write_meta_graph=False)
+                        if step % (2 * self.argsDict['printValidation']) == 0:
+                            saver.save(session, str(logPath)+'/validation_save_step_{}.ckpt'.format(step), write_meta_graph=False)
 
-                # Early stop - over-fitting
-                if (len(diceValList) >= 3) and (diceValList[-1] < diceValList[-2]) and (diceValList[-2] < diceValList[-3]):
-                    break
+                        # Early stop - over-fitting
+                # if (len(diceValList) >= 3) and (diceValList[-1] < diceValList[-2]) and (diceValList[-2] < diceValList[-3]):
+                #     break
 
             # test statistics
             testBatchSize = 128
@@ -151,52 +149,3 @@ def accuracy(predictions, labels):
     eq = tf.equal(predictions, labels)
     res = tf.reduce_mean(tf.cast(eq, tf.float32))
     return res.eval()
-
-# class SaveStatistics(object):
-#
-#     def __init__(self):
-#         self.trainDict = {}
-#         self.trainDict['loss'] = []
-#         self.trainDict['accuracy'] = []
-#         self.trainDict['dice'] = []
-#         self.valDict = {}
-#         self.valDict['loss'] = []
-#         self.valDict['accuracy'] = []
-#         self.valDict['dice'] = []
-#         self.testDict = {}
-#
-#     def pushTrainStatistics(self, batchLoss, batchAcc, batchDice):
-#         self.trainDict['loss'].append(batchLoss)
-#         self.trainDict['accuracy'].append(batchAcc)
-#         self.trainDict['dice'].append(batchDice)
-#
-#     def pushValStatistics(self, valLoss, valAcc, valDice):
-#         self.valDict['loss'].append(valLoss)
-#         self.valDict['accuracy'].append(valAcc)
-#         self.valDict['dice'].append(valDice)
-#
-#     def getNetStatiscits(self, testLoss, testAcc, testDice):
-#         # sum the results from train and val data
-#
-#         self.trainDict['meanLoss'] = round(np.mean(self.trainDict['loss']),4)
-#         self.trainDict['meanAccuracy'] = round(np.mean(self.trainDict['accuracy']),4)
-#         self.trainDict['meanDice'] = round(np.mean(self.trainDict['dice']),4)
-#
-#         if len(self.valDict['loss']):
-#             self.valDict['meanLoss'] = round(np.mean(self.valDict['loss']),4)
-#             self.valDict['meanAccuracy'] = round(np.mean(self.valDict['accuracy']),4)
-#             self.valDict['meanDice'] = round(np.mean(self.valDict['dice']),4)
-#
-#         # a fix for a case where no validation was tested
-#         else:
-#             self.valDict['meanLoss'] = 0
-#             self.valDict['meanAccuracy'] = 0
-#             self.valDict['meanDice'] = 0
-#
-#         self.testDict['loss'] = round(testLoss,4)
-#         self.testDict['accuracy'] = round(testAcc,4)
-#         self.testDict['dice'] = round(testDice,4)
-#
-#         return self.trainDict, self.valDict, self.testDict
-
-
