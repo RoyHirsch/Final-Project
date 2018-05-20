@@ -19,8 +19,8 @@ def get_params_dict(logDir):
 
 def main_func(number):
 
-    logDir = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__05_44_iter_num_12/logFile_05_44__07_05_18.log'
-    restorePath = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__05_44_iter_num_12/validation_save_step_3600.ckpt'
+    logDir = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5 copy/logFile_02_02__07_05_18.log'
+    restorePath = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5 copy/validation_save_step_3000.ckpt'
 
     createFolder(os.path.realpath(__file__ + "/../"), 'runData')
     runFolderStr = time.strftime('RunFolder_restore_%d_%m_%y__%H_%M_iter_num_{}'.format(number))
@@ -72,12 +72,12 @@ def main_func(number):
                                          'isBatchNorm': paramsDict['isBatchNorm']})
 
     # TRAIN AND TEST MODEL
-    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 100})
+    trainModel = Trainer(net=unetModel, argsDict={'printValidation': 10})
 
     trainModel.train(dataPipe=dataPipe,
-                     batchSize=32,
-                     numSteps=1001,
-                     printInterval=100,
+                     batchSize=2,
+                     numSteps=5,
+                     printInterval=1,
                      logPath=logFolder,
                      serialNum=number,
                      isRestore=True,

@@ -1,0 +1,2 @@
+model_checkpoint_path: "validation_save_step_100"
+all_model_checkpoint_paths: "validation_save_step_100"

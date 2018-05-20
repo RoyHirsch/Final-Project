@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_13_26__06_05_18/final_save__0_13_36__06_05_18.ckpt"
+all_model_checkpoint_paths: "/Users/royhirsch/Documents/GitHub/Final-Project/ProjectSrc/UnetModel/runData/RunFolder_13_26__06_05_18/final_save__0_13_36__06_05_18.ckpt"

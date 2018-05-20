@@ -29,7 +29,7 @@ class Trainer(object):
         with tf.Session() as session:
 
             tf.global_variables_initializer().run()
-            # train_writer = tf.summary.FileWriter(logPath, session.graph)
+            train_writer = tf.summary.FileWriter(logPath, session.graph)
 
             # Save checkPoint
             saver = tf.train.Saver(max_to_keep=6)

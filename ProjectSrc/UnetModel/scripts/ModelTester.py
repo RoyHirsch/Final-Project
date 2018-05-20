@@ -254,19 +254,6 @@ class ModelTester(object):
 				else:
 					print('Wrong option, please try again:\n')
 
-	def save_data_for_the_next_nn(self, samplesToSave, outFileDir):
-	# if being used samplesToSave needs to contain the ind that we would like to save
-
-		if not(samplesToSave):
-			samplesToSave = np.concatenate((self.dataPipe.testNumberList, self.dataPipe.valNumberList))
-
-		predictArraySave = []
-		for item in samplesToSave:
-			predictArraySave.append(np.squeeze(item))
-		np.save(outFileDir ,predictArraySave)
-		return
-
-
 
 def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
 	# converts an array of patches into slices
@@ -293,17 +280,14 @@ def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
 	return imageArray, labelArray
 
 
-# def save_data_for_the_next_nn(modelTesterObj, samplesToSave, outFileDir='/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5'+'/out_predict.npy'):
-# # if being used samplesToSave needs to contain the ind that we would like to save
-#
-# 	if not(samplesToSave):
-# 		samplesToSave = np.concatenate((modelTesterObj.dataPipe.testNumberList, modelTesterObj.dataPipe.valNumberList))
-#
-# 	predictArraySave = []
-# 	for item in samplesToSave:
-# 		predictArraySave.append(np.squeeze(item))
-# 	np.save(outFileDir, predictArraySave)
-# 	return
+def save_data_for_the_next_nn(modelTesterObj, outFileDir='/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5'+'/out_predict.npy'):
+# if being used samplesToSave needs to contain the ind that we would like to save
+
+	predictArraySave = []
+	for item in range(len(testObj.predictionList)):
+		predictArraySave.append(np.squeeze(testObj.predictionList[item]))
+	np.save(outFileDir, predictArraySave)
+	return
 
 #############################
 # Test code
@@ -311,6 +295,7 @@ def getSlicesFromPatches(patchArrayImage, patchArrayLabel, imageSize):
 runDir = '/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__05_44_iter_num_12'
 testObj = ModelTester(runDir)
 testObj.predict_test_data()
+save_data_for_the_next_nn(testObj, outFileDir='/Users/royhirsch/Documents/GitHub/runDataFromTheServer/08_05__14_55/bestRes/RunFolder_07_05_18__02_02_iter_num_5'+'/out_predict.npy')
 testObj.view_predictions_results()
 
 
